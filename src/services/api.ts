@@ -78,9 +78,9 @@ export const api = {
 
   quickSwitchUserRole: async (role: UserRole): Promise<User> => {
     const rolePresetMap: Record<UserRole, { userId: string; pass: string }> = {
-      ADMINISTRATOR: { userId: '1001', pass: 'password123' },
-      MANAGER: { userId: '4994', pass: 'password123' },
-      EMPLOYEE: { userId: '1245', pass: 'password123' }
+      ADMINISTRATOR: { userId: '4994', pass: 'Admin@360' },
+      MANAGER: { userId: '4994', pass: 'Manager@360' },
+      EMPLOYEE: { userId: '4994', pass: 'Employee@360' }
     };
 
     const preset = rolePresetMap[role];
@@ -88,14 +88,8 @@ export const api = {
       const data = await api.login(preset.userId, preset.pass);
       return data.user;
     } catch (err) {
-      try {
-        const altId = role === 'ADMINISTRATOR' ? 'admin' : role === 'MANAGER' ? 'manager1' : 'employee1';
-        const data = await api.login(altId, 'password123');
-        return data.user;
-      } catch (err2) {
-        const fallback = defaultUsers.find(u => u.role === role) || defaultUsers[0];
-        return fallback;
-      }
+      const fallback = defaultUsers.find(u => u.role === role) || defaultUsers[0];
+      return fallback;
     }
   },
 

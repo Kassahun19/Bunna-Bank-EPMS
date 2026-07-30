@@ -165,7 +165,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 disabled={lockoutTimer > 0}
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
-                placeholder="Enter Staff ID Number (e.g. 4994, 1245, 687)"
+                placeholder="Enter Staff ID Number"
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-[#D4AF37] focus:outline-none text-sm text-white placeholder-gray-500 font-medium disabled:opacity-50"
               />
             </div>

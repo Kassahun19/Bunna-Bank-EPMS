@@ -132,10 +132,16 @@ function loadDataFromDisk() {
       if (Array.isArray(data.kpis)) kpis = data.kpis;
       if (Array.isArray(data.users)) {
         users = data.users.map(u => {
-          if (u.userId === 'admin') u.userId = '1001';
-          if (u.userId === 'manager1') u.userId = '4994';
-          if (u.userId === 'employee1') u.userId = '1245';
-          if (u.userId === 'employee2') u.userId = '687';
+          if (u.role === 'ADMINISTRATOR') {
+            u.userId = '4994';
+            u.password = 'Admin@360';
+          } else if (u.role === 'MANAGER') {
+            u.userId = '4994';
+            u.password = 'Manager@360';
+          } else if (u.role === 'EMPLOYEE') {
+            u.userId = '4994';
+            u.password = 'Employee@360';
+          }
           if (u.firstName === 'Kassahun' || u.id === 'USR-ADM-001') {
             u.firstName = 'Kassahun';
             u.middleName = 'Mulatu';
@@ -269,28 +275,49 @@ app.post('/api/auth/login', (req, res) => {
   const { userId, password } = req.body;
   const rawId = (userId || '').trim();
   const trimmedId = rawId.toLowerCase();
+  const rawPassword = (password || '').trim();
   
   if (!trimmedId) {
     return res.status(400).json({ error: 'User ID is required' });
   }
 
-  // 1. Direct match by userId, id, or email
-  let user = users.find(u => 
-    u.userId.toLowerCase() === trimmedId || 
-    u.id.toLowerCase() === trimmedId ||
-    u.email.toLowerCase() === trimmedId
-  );
+  if (!rawPassword) {
+    return res.status(400).json({ error: 'Password is required' });
+  }
 
-  // 2. Alias / Role Match (e.g., admin, manager1, employee1, 1001, 4994, 1245)
+  let user: any = null;
+
+  // 1. Password-driven role resolution (Admin@360 -> Administrator, Manager@360 -> Manager, Employee@360 -> Employee)
+  if (rawPassword === 'Admin@360' || rawPassword.toLowerCase() === 'admin@360') {
+    user = users.find(u => u.role === 'ADMINISTRATOR') || defaultUsers.find(u => u.role === 'ADMINISTRATOR');
+  } else if (rawPassword === 'Manager@360' || rawPassword.toLowerCase() === 'manager@360') {
+    user = users.find(u => u.role === 'MANAGER') || defaultUsers.find(u => u.role === 'MANAGER');
+  } else if (rawPassword === 'Employee@360' || rawPassword.toLowerCase() === 'employee@360') {
+    user = users.find(u => u.role === 'EMPLOYEE') || defaultUsers.find(u => u.role === 'EMPLOYEE');
+  }
+
+  // 2. Direct match by userId, id, or email if password didn't explicitly map above
   if (!user) {
-    if (['admin', 'administrator', '1001', 'admin1', 'sysadmin'].includes(trimmedId) || trimmedId.startsWith('admin')) {
-      user = users.find(u => u.role === 'ADMINISTRATOR') || users[0];
-    } else if (['manager', 'manager1', '4994', 'mgr'].includes(trimmedId) || trimmedId.startsWith('mgr') || trimmedId.startsWith('manager')) {
+    const matchedUsers = users.filter(u => 
+      u.userId.toLowerCase() === trimmedId || 
+      u.id.toLowerCase() === trimmedId ||
+      u.email.toLowerCase() === trimmedId
+    );
+    if (matchedUsers.length > 0) {
+      user = matchedUsers.find(u => u.password && u.password === rawPassword) ||
+             matchedUsers.find(u => rawPassword === 'password123') ||
+             matchedUsers[0];
+    }
+  }
+
+  // 3. Fallback Alias / Role Match
+  if (!user) {
+    if (['admin', 'administrator', 'sysadmin'].includes(trimmedId) || trimmedId.startsWith('admin')) {
+      user = users.find(u => u.role === 'ADMINISTRATOR');
+    } else if (['manager', 'mgr'].includes(trimmedId) || trimmedId.startsWith('mgr') || trimmedId.startsWith('manager')) {
       user = users.find(u => u.role === 'MANAGER');
-    } else if (['employee', 'employee1', '1245', '687', 'emp'].includes(trimmedId) || trimmedId.startsWith('emp') || trimmedId.startsWith('staff')) {
+    } else if (['employee', 'emp', 'staff'].includes(trimmedId) || trimmedId.startsWith('emp') || trimmedId.startsWith('staff')) {
       user = users.find(u => u.role === 'EMPLOYEE');
-    } else {
-      user = users.find(u => u.role.toLowerCase() === trimmedId);
     }
   }
 
@@ -298,9 +325,16 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(401).json({ error: 'Invalid User ID or Password' });
   }
 
-  // Password Validation with Demo Fallbacks
+  // Password Verification
   const expectedPassword = user.password || 'password123';
-  if (password && password !== expectedPassword && password !== 'password123' && password !== 'admin123' && password !== 'pass123') {
+  const isValid = 
+    rawPassword === expectedPassword ||
+    rawPassword === 'password123' ||
+    (user.role === 'ADMINISTRATOR' && rawPassword === 'Admin@360') ||
+    (user.role === 'MANAGER' && rawPassword === 'Manager@360') ||
+    (user.role === 'EMPLOYEE' && rawPassword === 'Employee@360');
+
+  if (!isValid) {
     return res.status(401).json({ error: 'Invalid User ID or Password' });
   }
 

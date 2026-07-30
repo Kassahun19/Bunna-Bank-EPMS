@@ -161,7 +161,7 @@ export const initialKPIs: KPI[] = [
 export const defaultUsers: User[] = [
   {
     id: 'USR-ADM-001',
-    userId: '1001',
+    userId: '4994',
     email: 'kassahunmulatu273@gmail.com',
     firstName: 'Kassahun',
     middleName: 'Mulatu',
@@ -176,7 +176,8 @@ export const defaultUsers: User[] = [
     age: 32,
     phone: '+251911002233',
     status: 'Active',
-    createdAt: '2026-01-01'
+    createdAt: '2026-01-01',
+    password: 'Admin@360'
   },
   {
     id: 'USR-MGR-001',
@@ -195,11 +196,12 @@ export const defaultUsers: User[] = [
     age: 38,
     phone: '+251922334455',
     status: 'Active',
-    createdAt: '2026-01-15'
+    createdAt: '2026-01-15',
+    password: 'Manager@360'
   },
   {
     id: 'USR-EMP-001',
-    userId: '1245',
+    userId: '4994',
     email: 'employee.kebede@bunnabanksc.com',
     firstName: 'Abebe',
     middleName: 'Kebede',
@@ -214,11 +216,12 @@ export const defaultUsers: User[] = [
     age: 28,
     phone: '+251933445566',
     status: 'Active',
-    createdAt: '2026-02-01'
+    createdAt: '2026-02-01',
+    password: 'Employee@360'
   },
   {
     id: 'USR-EMP-002',
-    userId: '687',
+    userId: '4994',
     email: 'employee.marta@bunnabanksc.com',
     firstName: 'Marta',
     middleName: 'Hailu',
@@ -233,7 +236,8 @@ export const defaultUsers: User[] = [
     age: 26,
     phone: '+251944556677',
     status: 'Active',
-    createdAt: '2026-02-10'
+    createdAt: '2026-02-10',
+    password: 'Employee@360'
   }
 ];
 
