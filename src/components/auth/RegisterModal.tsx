@@ -240,22 +240,11 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   className="w-full px-4 py-3 rounded-xl bg-[#0B4228] border border-white/20 focus:border-[#D4AF37] text-sm text-white focus:outline-none"
                 >
                   <option value="">-- Choose District Office --</option>
-                  
-                  <optgroup label="🏢 Regional City Districts">
-                    {districts.filter(d => !d.region.includes('Zone')).map(d => (
-                      <option key={d.id} value={d.id}>
-                        {d.name} ({d.region})
-                      </option>
-                    ))}
-                  </optgroup>
-
-                  <optgroup label="📍 Zonal City Districts">
-                    {districts.filter(d => d.region.includes('Zone')).map(d => (
-                      <option key={d.id} value={d.id}>
-                        {d.name} ({d.region})
-                      </option>
-                    ))}
-                  </optgroup>
+                  {districts.map(d => (
+                    <option key={d.id} value={d.id}>
+                      {d.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
