@@ -1,0 +1,440 @@
+{
+  "districts": [
+    {
+      "id": "DIST-001",
+      "name": "Addis Ababa North District",
+      "code": "AAN",
+      "region": "Addis Ababa",
+      "branchCount": 42,
+      "totalEmployees": 850,
+      "managerName": "Abebe Kebede"
+    },
+    {
+      "id": "DIST-002",
+      "name": "Addis Ababa South District",
+      "code": "AAS",
+      "region": "Addis Ababa",
+      "branchCount": 38,
+      "totalEmployees": 790,
+      "managerName": "Tigist Haile"
+    },
+    {
+      "id": "DIST-003",
+      "name": "Addis Ababa East District",
+      "code": "AAE",
+      "region": "Addis Ababa",
+      "branchCount": 45,
+      "totalEmployees": 910,
+      "managerName": "Dawit Yohannes"
+    },
+    {
+      "id": "DIST-004",
+      "name": "Addis Ababa West District",
+      "code": "AAW",
+      "region": "Addis Ababa",
+      "branchCount": 40,
+      "totalEmployees": 820,
+      "managerName": "Genet Worku"
+    },
+    {
+      "id": "DIST-005",
+      "name": "Hawassa Area Office",
+      "code": "HWA",
+      "region": "Sidama / SNNPR",
+      "branchCount": 32,
+      "totalEmployees": 580,
+      "managerName": "Mulugeta Tadesse"
+    },
+    {
+      "id": "DIST-006",
+      "name": "Adama Area Office",
+      "code": "ADM",
+      "region": "Oromia",
+      "branchCount": 35,
+      "totalEmployees": 640,
+      "managerName": "Beti Assefa"
+    },
+    {
+      "id": "DIST-007",
+      "name": "Bahir Dar Area Office",
+      "code": "BDR",
+      "region": "Amhara",
+      "branchCount": 30,
+      "totalEmployees": 540,
+      "managerName": "Kassahun Belay"
+    },
+    {
+      "id": "DIST-008",
+      "name": "Dire Dawa Area Office",
+      "code": "DDW",
+      "region": "Dire Dawa & Harari",
+      "branchCount": 25,
+      "totalEmployees": 430,
+      "managerName": "Fatima Ahmed"
+    },
+    {
+      "id": "DIST-009",
+      "name": "Jimma Area Office",
+      "code": "JMA",
+      "region": "Oromia / SW",
+      "branchCount": 28,
+      "totalEmployees": 490,
+      "managerName": "Girma Demissie"
+    },
+    {
+      "id": "DIST-010",
+      "name": "Mekelle Area Office",
+      "code": "MKL",
+      "region": "Tigray",
+      "branchCount": 24,
+      "totalEmployees": 410,
+      "managerName": "Berhane Tekle"
+    }
+  ],
+  "branches": [
+    {
+      "id": "BR-001",
+      "districtId": "DIST-001",
+      "districtName": "Addis Ababa North District",
+      "name": "Main Headquarters Branch",
+      "code": "HQ001",
+      "type": "Main Branch",
+      "employeeCount": 120,
+      "managerName": "Selamawit Tadesse",
+      "location": "Arat Kilo, Addis Ababa"
+    },
+    {
+      "id": "BR-002",
+      "districtId": "DIST-001",
+      "districtName": "Addis Ababa North District",
+      "name": "Piazza Branch",
+      "code": "PZ002",
+      "type": "Grade I",
+      "employeeCount": 35,
+      "managerName": "Aman Kassaye",
+      "location": "Piazza, Addis Ababa"
+    },
+    {
+      "id": "BR-003",
+      "districtId": "DIST-002",
+      "districtName": "Addis Ababa South District",
+      "name": "Bole Medhanealem Branch",
+      "code": "BM003",
+      "type": "Grade I",
+      "employeeCount": 45,
+      "managerName": "Eleni Berhanu",
+      "location": "Bole, Addis Ababa"
+    },
+    {
+      "id": "BR-004",
+      "districtId": "DIST-002",
+      "districtName": "Addis Ababa South District",
+      "name": "Sarbet Branch",
+      "code": "SB004",
+      "type": "Grade II",
+      "employeeCount": 28,
+      "managerName": "Tewodros Bekele",
+      "location": "Sarbet, Addis Ababa"
+    },
+    {
+      "id": "BR-005",
+      "districtId": "DIST-003",
+      "districtName": "Addis Ababa East District",
+      "name": "Megenagna Branch",
+      "code": "MG005",
+      "type": "Grade I",
+      "employeeCount": 40,
+      "managerName": "Yared Alemayehu",
+      "location": "Megenagna, Addis Ababa"
+    },
+    {
+      "id": "BR-006",
+      "districtId": "DIST-005",
+      "districtName": "Hawassa Area Office",
+      "name": "Hawassa Main Branch",
+      "code": "HW006",
+      "type": "Main Branch",
+      "employeeCount": 50,
+      "managerName": "Ainshe Solomon",
+      "location": "Piazza, Hawassa"
+    },
+    {
+      "id": "BR-007",
+      "districtId": "DIST-006",
+      "districtName": "Adama Area Office",
+      "name": "Adama Central Branch",
+      "code": "AD007",
+      "type": "Grade I",
+      "employeeCount": 38,
+      "managerName": "Daniel Mengistu",
+      "location": "Central Market, Adama"
+    },
+    {
+      "id": "BR-008",
+      "districtId": "DIST-007",
+      "districtName": "Bahir Dar Area Office",
+      "name": "Bahir Dar Lake View Branch",
+      "code": "BD008",
+      "type": "Grade I",
+      "employeeCount": 36,
+      "managerName": "Aster Wolde",
+      "location": "Lake View, Bahir Dar"
+    }
+  ],
+  "departments": [
+    {
+      "id": "DEP-01",
+      "name": "Retail Banking & DFS",
+      "code": "RB",
+      "description": "Manages deposit mobilization, account opening, and digital banking activations."
+    },
+    {
+      "id": "DEP-02",
+      "name": "International Banking (FCY)",
+      "code": "IB",
+      "description": "Handles foreign currency trade, remittances, and SWIFT services."
+    },
+    {
+      "id": "DEP-03",
+      "name": "Credit & Loans",
+      "code": "CL",
+      "description": "Evaluates loan applications, SME finance, and credit monitoring."
+    },
+    {
+      "id": "DEP-04",
+      "name": "Human Resource Management",
+      "code": "HR",
+      "description": "Oversees staff performance, training, payroll, and promotions."
+    },
+    {
+      "id": "DEP-05",
+      "name": "Digital Banking & Innovation",
+      "code": "DBI",
+      "description": "Manages Bunna Mobile, Internet Banking, ATMs, and Merchant POS."
+    }
+  ],
+  "kpis": [
+    {
+      "id": "KPI-001",
+      "code": "DEP_ETB",
+      "name": "Deposits Mobilized (ETB)",
+      "category": "Financial",
+      "unit": "ETB",
+      "weight": 25,
+      "description": "Total value of savings, demand, and fixed time deposits mobilized."
+    },
+    {
+      "id": "KPI-002",
+      "code": "FCY_ETB",
+      "name": "Foreign Currency Inflow (ETB)",
+      "category": "Financial",
+      "unit": "ETB",
+      "weight": 20,
+      "description": "Total export earnings, foreign remittances, and FCY deposits in ETB equivalent."
+    },
+    {
+      "id": "KPI-003",
+      "code": "DFS_ETB",
+      "name": "Digital Financial Services (ETB)",
+      "category": "Financial",
+      "unit": "ETB",
+      "weight": 15,
+      "description": "Volume transacted via Bunna Mobile, Internet Banking, and POS merchant acquiring."
+    },
+    {
+      "id": "KPI-004",
+      "code": "ACC_OPEN",
+      "name": "Account Openings",
+      "category": "Customer Acquisition",
+      "unit": "Count",
+      "weight": 10,
+      "description": "Number of new individual, joint, and corporate accounts opened."
+    },
+    {
+      "id": "KPI-005",
+      "code": "MB_ACT",
+      "name": "Mobile Banking Activations",
+      "category": "Digital Banking",
+      "unit": "Count",
+      "weight": 10,
+      "description": "Number of customers onboarded and actively transacting on Bunna Mobile."
+    },
+    {
+      "id": "KPI-006",
+      "code": "IB_ACT",
+      "name": "Internet Banking Activations",
+      "category": "Digital Banking",
+      "unit": "Count",
+      "weight": 8,
+      "description": "Number of retail and corporate clients registered for Internet Banking."
+    },
+    {
+      "id": "KPI-007",
+      "code": "MERCH_SOL",
+      "name": "Merchant Solutions & QR",
+      "category": "Digital Banking",
+      "unit": "Count",
+      "weight": 7,
+      "description": "Number of Bunna POS merchants and QR Code merchants deployed."
+    },
+    {
+      "id": "KPI-008",
+      "code": "ATM_CARD",
+      "name": "ATM Card Activations",
+      "category": "Digital Banking",
+      "unit": "Count",
+      "weight": 5,
+      "description": "Number of debit/prepaid ATM cards issued and activated."
+    }
+  ],
+  "users": [
+    {
+      "id": "USR-ADM-001",
+      "userId": "1001",
+      "email": "kassahunmulatu273@gmail.com",
+      "firstName": "Kassahun",
+      "middleName": "Mulatu",
+      "lastName": "SystemAdmin",
+      "role": "ADMINISTRATOR",
+      "jobTitle": "EPMS System Architect & Enterprise Admin",
+      "districtId": "DIST-001",
+      "districtName": "Addis Ababa North District",
+      "branchId": "BR-001",
+      "branchName": "Main Headquarters Branch",
+      "gender": "Male",
+      "age": 32,
+      "phone": "+251911002233",
+      "status": "Active",
+      "createdAt": "2026-01-01"
+    },
+    {
+      "id": "USR-MGR-001",
+      "userId": "4994",
+      "email": "manager.selam@bunnabanksc.com",
+      "firstName": "Selamawit",
+      "middleName": "Tadesse",
+      "lastName": "Manager",
+      "role": "MANAGER",
+      "jobTitle": "Branch Operations Manager",
+      "districtId": "DIST-001",
+      "districtName": "Addis Ababa North District",
+      "branchId": "BR-001",
+      "branchName": "Main Headquarters Branch",
+      "gender": "Female",
+      "age": 38,
+      "phone": "+251922334455",
+      "status": "Active",
+      "createdAt": "2026-01-15"
+    },
+    {
+      "id": "USR-EMP-001",
+      "userId": "1245",
+      "email": "employee.kebede@bunnabanksc.com",
+      "firstName": "Abebe",
+      "middleName": "Kebede",
+      "lastName": "Teso",
+      "role": "EMPLOYEE",
+      "jobTitle": "Senior Customer Service Officer",
+      "districtId": "DIST-001",
+      "districtName": "Addis Ababa North District",
+      "branchId": "BR-001",
+      "branchName": "Main Headquarters Branch",
+      "gender": "Male",
+      "age": 28,
+      "phone": "+251933445566",
+      "status": "Active",
+      "createdAt": "2026-02-01"
+    },
+    {
+      "id": "USR-EMP-002",
+      "userId": "687",
+      "email": "employee.marta@bunnabanksc.com",
+      "firstName": "Marta",
+      "middleName": "Hailu",
+      "lastName": "Desta",
+      "role": "EMPLOYEE",
+      "jobTitle": "Relationship Officer - Digital Banking",
+      "districtId": "DIST-002",
+      "districtName": "Addis Ababa South District",
+      "branchId": "BR-003",
+      "branchName": "Bole Medhanealem Branch",
+      "gender": "Female",
+      "age": 26,
+      "phone": "+251944556677",
+      "status": "Active",
+      "createdAt": "2026-02-10"
+    }
+  ],
+  "holidays": [
+    {
+      "id": "HOL-001",
+      "name": "Ethiopian New Year (Enkutatash)",
+      "date": "2026-09-11",
+      "description": "Official National & Banking Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-002",
+      "name": "Finding of the True Cross (Meskel)",
+      "date": "2026-09-27",
+      "description": "Official Religious & Banking Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-003",
+      "name": "Ethiopian Christmas (Genna)",
+      "date": "2026-01-07",
+      "description": "Official Religious & Banking Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-004",
+      "name": "Ethiopian Epiphany (Timkat)",
+      "date": "2026-01-19",
+      "description": "Official Religious & Banking Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-005",
+      "name": "Victory of Adwa Day",
+      "date": "2026-03-02",
+      "description": "Official National Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-006",
+      "name": "International Workers Day",
+      "date": "2026-05-01",
+      "description": "Official Public & Banking Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-007",
+      "name": "Patriots Victory Day",
+      "date": "2026-05-05",
+      "description": "Official National Holiday",
+      "recurring": true
+    },
+    {
+      "id": "HOL-008",
+      "name": "Eid al-Fitr",
+      "date": "2026-03-20",
+      "description": "Islamic Public Holiday (Subject to moon sighting)",
+      "recurring": false
+    },
+    {
+      "id": "HOL-009",
+      "name": "Eid al-Adha (Arefa)",
+      "date": "2026-05-27",
+      "description": "Islamic Public Holiday (Subject to moon sighting)",
+      "recurring": false
+    }
+  ],
+  "announcements": [],
+  "notifications": [],
+  "auditLogs": [],
+  "dailyReports": [],
+  "targets": [],
+  "directMessages": [],
+  "contactMessages": []
+}

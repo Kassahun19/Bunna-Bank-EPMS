@@ -1,0 +1,659 @@
+import React, { useState, useEffect } from 'react';
+import { X, Check, AlertCircle, Shield, Building, MapPin, User as UserIcon, Lock, Phone, Mail } from 'lucide-react';
+import { District, Branch, User } from '../../types';
+import { api } from '../../services/api';
+
+interface RegisterModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onRegisterSuccess: (user: User) => void;
+  onOpenLogin: () => void;
+}
+
+export const RegisterModal: React.FC<RegisterModalProps> = ({
+  isOpen,
+  onClose,
+  onRegisterSuccess,
+  onOpenLogin
+}) => {
+  const [step, setStep] = useState(1);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
+
+  // Form State
+  const [selectedDistrictId, setSelectedDistrictId] = useState('');
+  const [selectedBranchId, setSelectedBranchId] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState<'Male' | 'Female'>('Male');
+  const [age, setAge] = useState<number | ''>(28);
+  const [phone, setPhone] = useState('+251911223344');
+  const [email, setEmail] = useState('');
+  const [roleType, setRoleType] = useState<'Managerial' | 'Non-Managerial'>('Non-Managerial');
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+
+  // Live validation state
+  const [userIdStatus, setUserIdStatus] = useState<{ checked: boolean; available: boolean; message: string }>({
+    checked: false,
+    available: false,
+    message: ''
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      api.getDistricts().then(setDistricts).catch(console.error);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (selectedDistrictId) {
+      api.getBranches(selectedDistrictId).then(setBranches).catch(console.error);
+    } else {
+      setBranches([]);
+    }
+  }, [selectedDistrictId]);
+
+  // Live User ID Validation check debounce
+  useEffect(() => {
+    const trimmed = userId.trim();
+    if (!trimmed) {
+      setUserIdStatus({ checked: false, available: false, message: '' });
+      return;
+    }
+
+    if (!/^\d+$/.test(trimmed)) {
+      setUserIdStatus({ checked: true, available: false, message: 'Staff ID must contain numbers only (e.g. 4994, 1245, 687).' });
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const res = await api.validateUserId(trimmed);
+        setUserIdStatus({ checked: true, available: res.available, message: res.message });
+      } catch (err) {
+        setUserIdStatus({ checked: true, available: true, message: 'Ready' });
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [userId]);
+
+  if (!isOpen) return null;
+
+  // Password requirement flags
+  const pwdCriteria = {
+    minLen: password.length >= 8,
+    hasUpper: /[A-Z]/.test(password),
+    hasLower: /[a-z]/.test(password),
+    hasNum: /[0-9]/.test(password),
+    hasSpecial: /[^A-Za-z0-9]/.test(password)
+  };
+
+  const isPasswordValid = Object.values(pwdCriteria).every(Boolean);
+
+  // Password strength calculator
+  const getPasswordStrength = (pass: string) => {
+    if (!pass) return { score: 0, label: 'None', color: 'bg-gray-600' };
+    let score = 0;
+    if (pwdCriteria.minLen) score++;
+    if (pwdCriteria.hasUpper) score++;
+    if (pwdCriteria.hasLower) score++;
+    if (pwdCriteria.hasNum) score++;
+    if (pwdCriteria.hasSpecial) score++;
+
+    if (score <= 2) return { score: 30, label: 'Weak', color: 'bg-rose-500' };
+    if (score <= 4) return { score: 70, label: 'Fair / Good', color: 'bg-[#D4AF37]' };
+    return { score: 100, label: 'Strong (Compliant)', color: 'bg-emerald-500' };
+  };
+
+  const strength = getPasswordStrength(password);
+
+  const handleNext = () => {
+    setError('');
+    if (step === 1 && !selectedDistrictId) {
+      setError('Please select a District or Area Office.');
+      return;
+    }
+    if (step === 2 && !selectedBranchId) {
+      setError('Please select a Branch.');
+      return;
+    }
+    if (step === 3) {
+      if (!firstName || !lastName || !email || !phone) {
+        setError('Please complete all personal information fields.');
+        return;
+      }
+      if (!email.includes('@')) {
+        setError('Please provide a valid email address.');
+        return;
+      }
+    }
+    setStep(s => Math.min(s + 1, 5));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError('Password and Confirm Password do not match.');
+      return;
+    }
+
+    if (!acceptTerms) {
+      setError('You must accept the terms and security policies to register.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const data = await api.register({
+        districtId: selectedDistrictId,
+        branchId: selectedBranchId,
+        firstName,
+        middleName,
+        lastName,
+        gender,
+        age,
+        phone,
+        email,
+        roleType,
+        userId,
+        password
+      });
+
+      onRegisterSuccess(data.user);
+      onClose();
+    } catch (err: any) {
+      setError(err.message || 'Registration failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-start justify-center pt-6 sm:pt-12 md:pt-16 pb-8 px-4">
+      <div className="w-full max-w-xl bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
+        
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Wizard Progress Indicator */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between text-xs font-bold text-[#D4AF37] mb-2">
+            <span>Step {step} of 5</span>
+            <span>
+              {step === 1 && 'District Selection'}
+              {step === 2 && 'Branch Selection'}
+              {step === 3 && 'Personal Details'}
+              {step === 4 && 'Role Selection'}
+              {step === 5 && 'Account Credentials'}
+            </span>
+          </div>
+          <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden flex">
+            <div
+              className="bg-gradient-to-r from-[#D4AF37] to-[#e0be4d] h-full transition-all duration-300"
+              style={{ width: `${(step / 5) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-xl bg-rose-500/20 border border-rose-500/50 text-rose-200 text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          
+          {/* STEP 1: District */}
+          {step === 1 && (
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3 mb-2">
+                <MapPin className="w-6 h-6 text-[#D4AF37]" />
+                <h3 className="text-lg font-bold text-white">Step 1: Select District</h3>
+              </div>
+              <p className="text-xs text-gray-300">
+                Choose your assigned District Office across Ethiopia.
+              </p>
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">District Office</label>
+                <select
+                  value={selectedDistrictId}
+                  onChange={(e) => {
+                    setSelectedDistrictId(e.target.value);
+                    setSelectedBranchId('');
+                  }}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0B4228] border border-white/20 focus:border-[#D4AF37] text-sm text-white focus:outline-none"
+                >
+                  <option value="">-- Choose District Office --</option>
+                  
+                  <optgroup label="🏢 Regional City Districts">
+                    {districts.filter(d => !d.region.includes('Zone')).map(d => (
+                      <option key={d.id} value={d.id}>
+                        {d.name} ({d.region})
+                      </option>
+                    ))}
+                  </optgroup>
+
+                  <optgroup label="📍 Zonal City Districts">
+                    {districts.filter(d => d.region.includes('Zone')).map(d => (
+                      <option key={d.id} value={d.id}>
+                        {d.name} ({d.region})
+                      </option>
+                    ))}
+                  </optgroup>
+                </select>
+              </div>
+
+              {selectedDistrictId && (
+                <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200">
+                  <div className="font-bold text-[#D4AF37] mb-1">Selected Location:</div>
+                  {(() => {
+                    const sel = districts.find(d => d.id === selectedDistrictId);
+                    if (!sel) return null;
+                    return (
+                      <div>
+                        <span className="font-semibold text-white">{sel.name}</span> • Region: {sel.region} • Managed by {sel.managerName}
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* STEP 2: Branch */}
+          {step === 2 && (
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3 mb-2">
+                <Building className="w-6 h-6 text-[#D4AF37]" />
+                <h3 className="text-lg font-bold text-white">Step 2: Select Branch</h3>
+              </div>
+              <p className="text-xs text-gray-300">
+                Select your specific branch under <span className="text-[#D4AF37] font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'Selected District'}</span>.
+              </p>
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">Branch Name</label>
+                <select
+                  value={selectedBranchId}
+                  onChange={(e) => setSelectedBranchId(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-[#0B4228] border border-white/20 focus:border-[#D4AF37] text-sm text-white focus:outline-none"
+                >
+                  <option value="">-- Choose Branch --</option>
+                  {(selectedDistrictId
+                    ? branches.filter(b => b.districtId === selectedDistrictId)
+                    : branches
+                  ).map(b => (
+                    <option key={b.id} value={b.id}>
+                      {b.name} ({b.code}) — {b.type} [{b.location}]
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {selectedBranchId && (
+                <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200">
+                  {(() => {
+                    const b = branches.find(br => br.id === selectedBranchId);
+                    if (!b) return null;
+                    return (
+                      <div className="space-y-1">
+                        <div className="font-bold text-[#D4AF37] flex items-center space-x-2">
+                          <Building className="w-4 h-4" />
+                          <span>{b.name}</span>
+                        </div>
+                        <div className="text-gray-300">
+                          Branch Code: <span className="font-mono text-white">{b.code}</span> • Type: <span className="text-white">{b.type}</span>
+                        </div>
+                        <div className="text-gray-300">
+                          Location: <span className="text-white">{b.location}</span> • Branch Manager: <span className="text-white">{b.managerName}</span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* STEP 3: Personal Information */}
+          {step === 3 && (
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 mb-2">
+                <UserIcon className="w-6 h-6 text-[#D4AF37]" />
+                <h3 className="text-lg font-bold text-white">Step 3: Personal Information</h3>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">First Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="e.g. Abebe"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Middle Name</label>
+                  <input
+                    type="text"
+                    value={middleName}
+                    onChange={(e) => setMiddleName(e.target.value)}
+                    placeholder="e.g. Kebede"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Last Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="e.g. Teso"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Gender</label>
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value as any)}
+                    className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Age</label>
+                  <input
+                    type="number"
+                    required
+                    value={age}
+                    onChange={(e) => setAge(Number(e.target.value))}
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Phone Number</label>
+                  <input
+                    type="tel"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+251..."
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="staff@bunnabanksc.com"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 4: Choose Role */}
+          {step === 4 && (
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3 mb-2">
+                <Shield className="w-6 h-6 text-[#D4AF37]" />
+                <h3 className="text-lg font-bold text-white">Step 4: Select Employment Category & Role Access</h3>
+              </div>
+
+              <p className="text-xs text-gray-300">
+                Please select your employment role type at Bunna Bank S.C. Selecting Managerial grants you full Managerial Role access (Manager Dashboard, Team Approvals, Reports, Employee Tracking). Selecting Non-Managerial grants you Employee Role access (Employee Dashboard, My Performance, MY KPIs, My Reports).
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setRoleType('Managerial')}
+                  className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden ${
+                    roleType === 'Managerial'
+                      ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] shadow-xl ring-2 ring-[#D4AF37]/50'
+                      : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]/50 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <h4 className="font-bold text-base">Managerial Track</h4>
+                    <span className={`text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md ${
+                      roleType === 'Managerial' ? 'bg-[#0B4228] text-[#D4AF37]' : 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                    }`}>
+                      Manager Role
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold opacity-90">Role Access: MANAGER</p>
+                  <p className="text-[11px] opacity-80 mt-2 leading-relaxed">
+                    Designed for Branch Operations Managers, Assistant Managers & Department Supervisors. Grants access to Manager Dashboard, Performance Review, Team Approvals, Reports & Direct Staff Messaging.
+                  </p>
+                  {roleType === 'Managerial' && (
+                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
+                      <Check className="w-4 h-4" />
+                      <span>Managerial Access Selected</span>
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setRoleType('Non-Managerial')}
+                  className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden ${
+                    roleType === 'Non-Managerial'
+                      ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] shadow-xl ring-2 ring-[#D4AF37]/50'
+                      : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]/50 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <h4 className="font-bold text-base">Non-Managerial Track</h4>
+                    <span className={`text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md ${
+                      roleType === 'Non-Managerial' ? 'bg-[#0B4228] text-[#D4AF37]' : 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                    }`}>
+                      Employee Role
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold opacity-90">Role Access: EMPLOYEE</p>
+                  <p className="text-[11px] opacity-80 mt-2 leading-relaxed">
+                    Designed for Customer Service Officers, Tellers, Relationship Officers & Front-line Staff. Grants access to Employee Dashboard, My Performance, MY KPIs, My Reports & Achievements.
+                  </p>
+                  {roleType === 'Non-Managerial' && (
+                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
+                      <Check className="w-4 h-4" />
+                      <span>Employee Access Selected</span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 5: Account & Validation */}
+          {step === 5 && (
+            <div className="space-y-3.5">
+              <div className="flex items-center space-x-3 mb-2">
+                <Lock className="w-6 h-6 text-[#D4AF37]" />
+                <h3 className="text-lg font-bold text-white">Step 5: Account Credentials & Security</h3>
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-[11px] font-semibold text-gray-300">User ID / Staff ID (Numerals Only)</label>
+                  {userIdStatus.checked && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                      userIdStatus.available 
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' 
+                        : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                    }`}>
+                      {userIdStatus.available ? '✓ User ID Available' : `✕ ${userIdStatus.message || 'Invalid User ID'}`}
+                    </span>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  required
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                  placeholder="e.g. 4994, 1245, 687"
+                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                  />
+                </div>
+                <div>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-[11px] font-semibold text-gray-300">Confirm Password</label>
+                    {confirmPassword && (
+                      <span className={`text-[10px] font-bold ${
+                        password === confirmPassword ? 'text-emerald-400' : 'text-rose-400'
+                      }`}>
+                        {password === confirmPassword ? '✓ Match' : '✕ Mismatch'}
+                      </span>
+                    )}
+                  </div>
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                  />
+                </div>
+              </div>
+
+              {/* Password Requirement Checklist */}
+              <div className="p-3 rounded-xl bg-black/30 border border-white/10 text-[11px] space-y-2">
+                <p className="font-bold text-gray-300 text-[10px]">Password Complexity Rules:</p>
+                <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.minLen ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    {pwdCriteria.minLen ? '✓' : '○'} Min 8 Characters
+                  </span>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasUpper ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    {pwdCriteria.hasUpper ? '✓' : '○'} Uppercase Letter (A-Z)
+                  </span>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasLower ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    {pwdCriteria.hasLower ? '✓' : '○'} Lowercase Letter (a-z)
+                  </span>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasNum ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    {pwdCriteria.hasNum ? '✓' : '○'} Number (0-9)
+                  </span>
+                  <span className={`flex items-center gap-1 font-semibold col-span-2 ${pwdCriteria.hasSpecial ? 'text-emerald-400' : 'text-gray-400'}`}>
+                    {pwdCriteria.hasSpecial ? '✓' : '○'} Special Symbol (!@#$%^&*)
+                  </span>
+                </div>
+              </div>
+
+              {/* Password Strength Meter */}
+              {password && (
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[10px] text-gray-300">
+                    <span>Password Security Level:</span>
+                    <span className="font-bold text-[#D4AF37]">{strength.label}</span>
+                  </div>
+                  <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                    <div className={`${strength.color} h-full transition-all`} style={{ width: `${strength.score}%` }} />
+                  </div>
+                </div>
+              )}
+
+              <div className="pt-2">
+                <label className="flex items-center space-x-2 text-xs text-gray-300 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    className="rounded border-white/20 bg-white/5 text-[#D4AF37]"
+                  />
+                  <span>I accept Bunna Bank S.C. EPMS Terms of Service & Security Guidelines.</span>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation Controls */}
+          <div className="mt-8 flex items-center justify-between pt-4 border-t border-white/10">
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={() => setStep(s => s - 1)}
+                className="px-5 py-2.5 rounded-xl bg-white/10 text-white font-bold text-xs hover:bg-white/20"
+              >
+                Back
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => { onClose(); onOpenLogin(); }}
+                className="text-xs text-[#D4AF37] font-semibold hover:underline"
+              >
+                Already have an account? Login
+              </button>
+            )}
+
+            {step < 5 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="px-6 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs hover:bg-[#e0be4d]"
+              >
+                Next Step
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-xs shadow-xl"
+              >
+                {loading ? 'Creating Account...' : 'Submit Registration'}
+              </button>
+            )}
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  );
+};
