@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Check, AlertCircle, Shield, Building, MapPin, User as UserIcon, Lock, Phone, Mail } from 'lucide-react';
 import { District, Branch, User } from '../../types';
 import { api } from '../../services/api';
+import { initialDistricts, initialBranches } from '../../data/mockData';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -48,13 +49,35 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      api.getDistricts().then(setDistricts).catch(console.error);
+      api.getDistricts()
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setDistricts(data);
+          } else {
+            setDistricts(initialDistricts);
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load districts:', err);
+          setDistricts(initialDistricts);
+        });
     }
   }, [isOpen]);
 
   useEffect(() => {
     if (selectedDistrictId) {
-      api.getBranches(selectedDistrictId).then(setBranches).catch(console.error);
+      api.getBranches(selectedDistrictId)
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setBranches(data);
+          } else {
+            setBranches(initialBranches.filter(b => b.districtId === selectedDistrictId));
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load branches:', err);
+          setBranches(initialBranches.filter(b => b.districtId === selectedDistrictId));
+        });
     } else {
       setBranches([]);
     }

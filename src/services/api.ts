@@ -11,7 +11,7 @@ import {
   AuditLog,
   UserRole
 } from '../types';
-import { defaultUsers } from '../data/mockData';
+import { defaultUsers, initialDistricts, initialBranches } from '../data/mockData';
 
 export const api = {
   // Auth
@@ -95,8 +95,16 @@ export const api = {
 
   // Locations & Organization
   getDistricts: async (): Promise<District[]> => {
-    const res = await fetch('/api/districts');
-    return res.json();
+    try {
+      const res = await fetch('/api/districts');
+      if (!res.ok) throw new Error('Failed to fetch districts');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+      return initialDistricts;
+    } catch (err) {
+      console.warn('API getDistricts failed, using initialDistricts fallback:', err);
+      return initialDistricts;
+    }
   },
 
   createDistrict: async (districtData: Partial<District>): Promise<District> => {
@@ -110,9 +118,23 @@ export const api = {
   },
 
   getBranches: async (districtId?: string): Promise<Branch[]> => {
-    const url = districtId ? `/api/branches?districtId=${districtId}` : '/api/branches';
-    const res = await fetch(url);
-    return res.json();
+    try {
+      const url = districtId ? `/api/branches?districtId=${districtId}` : '/api/branches';
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to fetch branches');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+      if (districtId) {
+        return initialBranches.filter(b => b.districtId === districtId);
+      }
+      return initialBranches;
+    } catch (err) {
+      console.warn('API getBranches failed, using initialBranches fallback:', err);
+      if (districtId) {
+        return initialBranches.filter(b => b.districtId === districtId);
+      }
+      return initialBranches;
+    }
   },
 
   createBranch: async (branchData: Partial<Branch>): Promise<Branch> => {
