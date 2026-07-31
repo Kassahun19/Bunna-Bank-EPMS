@@ -12,14 +12,14 @@ interface BranchEmployeeTargetManagerProps {
 }
 
 const DEFAULT_KPIS = [
-  { kpiId: 'KPI-001', kpiName: 'Deposits Mobilized', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 15000000 },
-  { kpiId: 'KPI-002', kpiName: 'Foreign Currency Inflow', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 2500000 },
-  { kpiId: 'KPI-003', kpiName: 'Digital Financial Services', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 5000000 },
-  { kpiId: 'KPI-004', kpiName: 'Account Openings', unit: 'Accounts', category: 'Customer Acquisition', isCurrency: false, defaultVal: 250 },
-  { kpiId: 'KPI-005', kpiName: 'Mobile Banking Activations', unit: 'Users', category: 'Digital Banking', isCurrency: false, defaultVal: 350 },
-  { kpiId: 'KPI-006', kpiName: 'Internet Banking Activations', unit: 'Users', category: 'Digital Banking', isCurrency: false, defaultVal: 80 },
-  { kpiId: 'KPI-007', kpiName: 'Merchant Solutions & QR', unit: 'Merchants', category: 'Digital Banking', isCurrency: false, defaultVal: 40 },
-  { kpiId: 'KPI-008', kpiName: 'ATM Card Activations', unit: 'Cards', category: 'Digital Banking', isCurrency: false, defaultVal: 200 },
+  { kpiId: 'KPI-001', kpiName: 'Deposits Mobilized', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 0 },
+  { kpiId: 'KPI-002', kpiName: 'Foreign Currency Inflow', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 0 },
+  { kpiId: 'KPI-003', kpiName: 'Digital Financial Services', unit: 'ETB', category: 'Financial', isCurrency: true, defaultVal: 0 },
+  { kpiId: 'KPI-004', kpiName: 'Account Openings', unit: 'Accounts', category: 'Customer Acquisition', isCurrency: false, defaultVal: 0 },
+  { kpiId: 'KPI-005', kpiName: 'Mobile Banking Activations', unit: 'Users', category: 'Digital Banking', isCurrency: false, defaultVal: 0 },
+  { kpiId: 'KPI-006', kpiName: 'Internet Banking Activations', unit: 'Users', category: 'Digital Banking', isCurrency: false, defaultVal: 0 },
+  { kpiId: 'KPI-007', kpiName: 'Merchant Solutions & QR', unit: 'Merchants', category: 'Digital Banking', isCurrency: false, defaultVal: 0 },
+  { kpiId: 'KPI-008', kpiName: 'ATM Card Activations', unit: 'Cards', category: 'Digital Banking', isCurrency: false, defaultVal: 0 },
 ];
 
 export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerProps> = ({

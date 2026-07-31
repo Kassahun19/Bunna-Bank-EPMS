@@ -46,15 +46,15 @@ export const SubmitReportSection: React.FC<SubmitReportSectionProps> = ({
 
   // Form State
   const [reportDate, setReportDate] = useState(new Date().toISOString().split('T')[0]);
-  const [depositsETB, setDepositsETB] = useState<number | ''>(250000);
-  const [foreignCurrencyETB, setForeignCurrencyETB] = useState<number | ''>(10000);
-  const [digitalFinancialServicesETB, setDigitalFinancialServicesETB] = useState<number | ''>(45000);
+  const [depositsETB, setDepositsETB] = useState<number | ''>('');
+  const [foreignCurrencyETB, setForeignCurrencyETB] = useState<number | ''>('');
+  const [digitalFinancialServicesETB, setDigitalFinancialServicesETB] = useState<number | ''>('');
 
-  const [accountOpenings, setAccountOpenings] = useState<number | ''>(12);
-  const [mobileBankingActivations, setMobileBankingActivations] = useState<number | ''>(20);
-  const [internetBankingActivations, setInternetBankingActivations] = useState<number | ''>(6);
-  const [merchantSolutionsActivations, setMerchantSolutionsActivations] = useState<number | ''>(3);
-  const [atmCardsIssued, setAtmCardsIssued] = useState<number | ''>(15);
+  const [accountOpenings, setAccountOpenings] = useState<number | ''>('');
+  const [mobileBankingActivations, setMobileBankingActivations] = useState<number | ''>('');
+  const [internetBankingActivations, setInternetBankingActivations] = useState<number | ''>('');
+  const [merchantSolutionsActivations, setMerchantSolutionsActivations] = useState<number | ''>('');
+  const [atmCardsIssued, setAtmCardsIssued] = useState<number | ''>('');
 
   const [submitting, setSubmitting] = useState(false);
   const [formMsg, setFormMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -82,8 +82,8 @@ export const SubmitReportSection: React.FC<SubmitReportSectionProps> = ({
   const totalDigitalCount = Number(accountOpenings || 0) + Number(mobileBankingActivations || 0) + Number(internetBankingActivations || 0) + Number(merchantSolutionsActivations || 0) + Number(atmCardsIssued || 0);
 
   // Calculated Motivation Score out of 100%
-  const targetVal = 300000;
-  const liveProgressPct = Math.min(Math.round((totalValMobilized / targetVal) * 100), 100);
+  const targetVal = 0;
+  const liveProgressPct = targetVal > 0 ? Math.min(Math.round((totalValMobilized / targetVal) * 100), 100) : 0;
 
   const handleSubmitReport = async (isDraft: boolean) => {
     if (isBlockedDate) {

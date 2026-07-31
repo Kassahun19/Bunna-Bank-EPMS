@@ -38,14 +38,14 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('monthly');
 
   const productsConfig = [
-    { key: 'depositsETB', code: 'DEP_ETB', name: 'Deposits Mobilized', unit: 'ETB', isCurrency: true, kpiId: 'KPI-001', defaultAnnualTarget: 15000000, icon: Coins, textColor: 'text-amber-400', border: 'border-amber-500/30' },
-    { key: 'foreignCurrencyETB', code: 'FCY_ETB', name: 'Foreign Currency Inflow', unit: 'ETB', isCurrency: true, kpiId: 'KPI-002', defaultAnnualTarget: 2500000, icon: DollarSign, textColor: 'text-emerald-400', border: 'border-emerald-500/30' },
-    { key: 'digitalFinancialServicesETB', code: 'DFS_ETB', name: 'Digital Financial Services', unit: 'ETB', isCurrency: true, kpiId: 'KPI-003', defaultAnnualTarget: 5000000, icon: TrendingUp, textColor: 'text-blue-400', border: 'border-blue-500/30' },
-    { key: 'accountOpenings', code: 'ACC_OPEN', name: 'Account Openings', unit: 'Accounts', isCurrency: false, kpiId: 'KPI-004', defaultAnnualTarget: 250, icon: UserPlus, textColor: 'text-purple-400', border: 'border-purple-500/30' },
-    { key: 'mobileBankingActivations', code: 'MB_ACT', name: 'Mobile Banking Activations', unit: 'Users', isCurrency: false, kpiId: 'KPI-005', defaultAnnualTarget: 350, icon: Smartphone, textColor: 'text-indigo-400', border: 'border-indigo-500/30' },
-    { key: 'internetBankingActivations', code: 'IB_ACT', name: 'Internet Banking Activations', unit: 'Users', isCurrency: false, kpiId: 'KPI-006', defaultAnnualTarget: 80, icon: Globe, textColor: 'text-cyan-400', border: 'border-cyan-500/30' },
-    { key: 'merchantSolutions', code: 'MERCH_SOL', name: 'Merchant Solutions & QR', unit: 'Merchants', isCurrency: false, kpiId: 'KPI-007', defaultAnnualTarget: 40, icon: QrCode, textColor: 'text-orange-400', border: 'border-orange-500/30' },
-    { key: 'atmCardActivations', code: 'ATM_CARD', name: 'ATM Card Activations', unit: 'Cards', isCurrency: false, kpiId: 'KPI-008', defaultAnnualTarget: 200, icon: CreditCard, textColor: 'text-teal-400', border: 'border-teal-500/30' }
+    { key: 'depositsETB', code: 'DEP_ETB', name: 'Deposits Mobilized', unit: 'ETB', isCurrency: true, kpiId: 'KPI-001', defaultAnnualTarget: 0, icon: Coins, textColor: 'text-amber-400', border: 'border-amber-500/30' },
+    { key: 'foreignCurrencyETB', code: 'FCY_ETB', name: 'Foreign Currency Inflow', unit: 'ETB', isCurrency: true, kpiId: 'KPI-002', defaultAnnualTarget: 0, icon: DollarSign, textColor: 'text-emerald-400', border: 'border-emerald-500/30' },
+    { key: 'digitalFinancialServicesETB', code: 'DFS_ETB', name: 'Digital Financial Services', unit: 'ETB', isCurrency: true, kpiId: 'KPI-003', defaultAnnualTarget: 0, icon: TrendingUp, textColor: 'text-blue-400', border: 'border-blue-500/30' },
+    { key: 'accountOpenings', code: 'ACC_OPEN', name: 'Account Openings', unit: 'Accounts', isCurrency: false, kpiId: 'KPI-004', defaultAnnualTarget: 0, icon: UserPlus, textColor: 'text-purple-400', border: 'border-purple-500/30' },
+    { key: 'mobileBankingActivations', code: 'MB_ACT', name: 'Mobile Banking Activations', unit: 'Users', isCurrency: false, kpiId: 'KPI-005', defaultAnnualTarget: 0, icon: Smartphone, textColor: 'text-indigo-400', border: 'border-indigo-500/30' },
+    { key: 'internetBankingActivations', code: 'IB_ACT', name: 'Internet Banking Activations', unit: 'Users', isCurrency: false, kpiId: 'KPI-006', defaultAnnualTarget: 0, icon: Globe, textColor: 'text-cyan-400', border: 'border-cyan-500/30' },
+    { key: 'merchantSolutions', code: 'MERCH_SOL', name: 'Merchant Solutions & QR', unit: 'Merchants', isCurrency: false, kpiId: 'KPI-007', defaultAnnualTarget: 0, icon: QrCode, textColor: 'text-orange-400', border: 'border-orange-500/30' },
+    { key: 'atmCardActivations', code: 'ATM_CARD', name: 'ATM Card Activations', unit: 'Cards', isCurrency: false, kpiId: 'KPI-008', defaultAnnualTarget: 0, icon: CreditCard, textColor: 'text-teal-400', border: 'border-teal-500/30' }
   ];
 
   // Helper for Period Multiplier & Days

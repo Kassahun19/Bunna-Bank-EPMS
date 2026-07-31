@@ -62,15 +62,17 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
   const employeePerformanceReports = myReports.length > 0 ? myReports : reports;
 
   // Targets & Progress Calculations
-  const depositTarget = 500000; // ETB 500k target
+  const depTargetObj = targets.find(t => (t.employeeId === user.id || t.branchId === user.branchId) && t.kpiName.toLowerCase().includes('deposit'));
+  const depositTarget = depTargetObj ? depTargetObj.targetValue : 0;
   const actualDeposits = employeePerformanceReports.reduce((acc, r) => acc + (r.depositsETB || 0), 0);
   const depositVariance = actualDeposits - depositTarget;
-  const depositCompletionPct = Math.min(Math.round((actualDeposits / depositTarget) * 100), 100);
+  const depositCompletionPct = depositTarget > 0 ? Math.min(Math.round((actualDeposits / depositTarget) * 100), 100) : 0;
   const depositRemaining = Math.max(0, depositTarget - actualDeposits);
 
-  const mobileTarget = 100;
+  const mobileTargetObj = targets.find(t => (t.employeeId === user.id || t.branchId === user.branchId) && t.kpiName.toLowerCase().includes('mobile'));
+  const mobileTarget = mobileTargetObj ? mobileTargetObj.targetValue : 0;
   const actualMobile = reports.reduce((acc, r) => acc + (r.mobileBankingActivations || 0), 0);
-  const mobileCompletionPct = Math.min(Math.round((actualMobile / mobileTarget) * 100), 100);
+  const mobileCompletionPct = mobileTarget > 0 ? Math.min(Math.round((actualMobile / mobileTarget) * 100), 100) : 0;
 
   return (
     <div className="space-y-8">

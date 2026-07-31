@@ -55,7 +55,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-amber-500/30',
       textColor: 'text-amber-400',
       kpiId: 'KPI-001',
-      defaultTarget: 15000000
+      defaultTarget: 0
     },
     {
       key: 'foreignCurrencyETB',
@@ -69,7 +69,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-emerald-500/30',
       textColor: 'text-emerald-400',
       kpiId: 'KPI-002',
-      defaultTarget: 2500000
+      defaultTarget: 0
     },
     {
       key: 'digitalFinancialServicesETB',
@@ -83,7 +83,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-blue-500/30',
       textColor: 'text-blue-400',
       kpiId: 'KPI-003',
-      defaultTarget: 5000000
+      defaultTarget: 0
     },
     {
       key: 'accountOpenings',
@@ -97,7 +97,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-purple-500/30',
       textColor: 'text-purple-400',
       kpiId: 'KPI-004',
-      defaultTarget: 250
+      defaultTarget: 0
     },
     {
       key: 'mobileBankingActivations',
@@ -111,7 +111,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-indigo-500/30',
       textColor: 'text-indigo-400',
       kpiId: 'KPI-005',
-      defaultTarget: 350
+      defaultTarget: 0
     },
     {
       key: 'internetBankingActivations',
@@ -125,7 +125,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-cyan-500/30',
       textColor: 'text-cyan-400',
       kpiId: 'KPI-006',
-      defaultTarget: 80
+      defaultTarget: 0
     },
     {
       key: 'merchantSolutions',
@@ -139,7 +139,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-orange-500/30',
       textColor: 'text-orange-400',
       kpiId: 'KPI-007',
-      defaultTarget: 40
+      defaultTarget: 0
     },
     {
       key: 'atmCardActivations',
@@ -153,7 +153,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       border: 'border-teal-500/30',
       textColor: 'text-teal-400',
       kpiId: 'KPI-008',
-      defaultTarget: 200
+      defaultTarget: 0
     }
   ];
 

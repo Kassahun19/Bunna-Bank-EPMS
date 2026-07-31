@@ -65,13 +65,13 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
 
       // Find monthly targets or defaults
       const depTargetObj = targets.find(t => t.month === month && t.year === year && t.kpiName.toLowerCase().includes('deposit'));
-      const depositsTarget = depTargetObj?.targetValue || 1500000; // Default ETB 1.5M target per month
+      const depositsTarget = depTargetObj?.targetValue || 0;
 
       const digitalTargetObj = targets.find(t => t.month === month && t.year === year && (t.kpiName.toLowerCase().includes('mobile') || t.kpiName.toLowerCase().includes('digital')));
-      const digitalTarget = digitalTargetObj?.targetValue || 80;
+      const digitalTarget = digitalTargetObj?.targetValue || 0;
 
       const accountsTargetObj = targets.find(t => t.month === month && t.year === year && t.kpiName.toLowerCase().includes('account'));
-      const accountsTarget = accountsTargetObj?.targetValue || 30;
+      const accountsTarget = accountsTargetObj?.targetValue || 0;
 
       // Calculate score percentages
       const depositPct = depositsTarget > 0 ? Math.min(100, Math.round((depositsActual / depositsTarget) * 100)) : 0;
