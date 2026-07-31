@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ language }) => {
               <span className="text-xl font-bold text-white tracking-tight">{t.bankName}</span>
             </div>
             <p className="text-xs text-gray-400 leading-relaxed">
-              Bunna Bank S.C. Employee Performance Management System (EPMS). Driving digital transformation, performance excellence, and data-driven HR leadership across 500+ branches nationwide.
+              Bunna Bank S.C. Employee Performance Management System (EPMS). Driving digital transformation, performance excellence, and data-driven HR leadership across all nationwide branches.
             </p>
             <div className="pt-2 flex items-center space-x-3 text-xs text-[#D4AF37]">
               <Shield className="w-4 h-4" />

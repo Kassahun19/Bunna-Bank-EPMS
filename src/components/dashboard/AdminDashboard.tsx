@@ -322,7 +322,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-[11px] text-emerald-400 mt-3 font-semibold">99.8% compliance rate</p>
+              <p className="text-[11px] text-emerald-400 mt-3 font-semibold">
+                {reports.length > 0
+                  ? `${((approvedCount / reports.length) * 100).toFixed(1)}% approval rate`
+                  : '100.0% approval rate'}
+              </p>
             </div>
           </div>
 

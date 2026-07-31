@@ -100,7 +100,7 @@ function generateClientSideAiResponse(prompt: string, userRole?: string, userId?
     textResult = `**About Bunna Bank S.C. EPMS**
 *Empowering Performance. Driving Excellence.*
 
-• **Overview:** The Employee Performance Management System (EPMS) powers Bunna Bank's 500+ branches and 10,000+ staff across Ethiopia.
+• **Overview:** The Employee Performance Management System (EPMS) powers Bunna Bank's nationwide branches and staff across Ethiopia in real time.
 • **Core Objectives:** Real-time KPI target tracking, daily report validation, automated manager approvals, district leaderboards, and AI performance coaching.
 • **Tagline:** Bank with Purpose, Perform with Excellence.`;
   }
@@ -146,42 +146,33 @@ function generateClientSideAiResponse(prompt: string, userRole?: string, userId?
   }
   // 10. General KPI Targets & Overall Performance
   else if (lowerPrompt.includes('target') || lowerPrompt.includes('kpi') || lowerPrompt.includes('goal')) {
-    textResult = `**Bunna Bank FY 2025/26 Target Breakdown**
+    textResult = `**Bunna Bank FY 2025/26 Target & Performance Tracking**
 
-• **Deposits Mobilized:** 15.0B ETB Target (**108.4% Achieved**)
-• **Foreign Currency:** $250.0M USD Target (**102.6% Achieved**)
-• **Digital Services:** 5.0B ETB Target (**115.2% Achieved**)
-• **Account Openings:** 250,000 Accounts Target (**104.5% Achieved**)
-• **Bunna Mobile Users:** 350,000 Target (**124.8% Achieved**)`;
+• **Live Integration:** All target metrics (Deposits, FCY, Digital Services, Accounts, Mobile Activations) are dynamically computed from targets assigned by managers and daily reports submitted by branch staff.
+• **Status:** Navigate to your role dashboard to view live targets and submit daily performance entries.`;
   }
   // 11. Leaderboard & District Rankings
   else if (lowerPrompt.includes('district') || lowerPrompt.includes('rank') || lowerPrompt.includes('leader') || lowerPrompt.includes('top')) {
     textResult = `**Bunna Bank District & Branch Leaderboard**
 
-🏆 **Top District Performers:**
-1. **Addis Ababa East District** (Score: 98.4/100 • Gold Champion)
-2. **Hawassa & Southern District** (Score: 94.2/100 • Silver Star)
-3. **Dire Dawa & Eastern District** (Score: 91.8/100 • Bronze Leader)
-
-⭐ **Top Branch:** Main Headquarters Branch (114.2% Attainment).`;
+• **Dynamic Rankings:** Districts and branches are ranked in real-time based on approved daily performance reports against manager-assigned targets.
+• **Leaderboards:** Check the District or Branch tab in the Admin or Manager dashboard to see live performance scores.`;
   }
   // 12. Branch / July / General Performance Summary
   else if (lowerPrompt.includes('branch') || lowerPrompt.includes('july') || lowerPrompt.includes('performance') || lowerPrompt.includes('summary') || lowerPrompt.includes('month')) {
-    textResult = `**July 2026 Branch Performance Summary**
-*Bunna Bank S.C. Live RAG Analysis*
+    textResult = `**Branch Performance Summary**
+*Bunna Bank S.C. Live Analysis*
 
-• **Deposits Mobilized:** **ETB 142.5M** logged today (**ETB 1.85B** July total, 108.4% of Target).
-• **Digital Onboarding:** **+1,480 Bunna Mobile** users & **+180 QR Merchants** added today.
-• **Efficiency Rating:** **99.4% On-Time Report Submissions** with zero pending manager escalations.
-• **Branch Ranking:** **#1 Position** in Addis Ababa District.`;
+• **Daily Submissions:** Branch performance reflects user-submitted daily logs for Deposits, FCY, DFS, and Digital Onboarding.
+• **Approval Workflow:** Managers review and approve submitted reports to update branch attainment scores.`;
   }
   // 13. Dynamic Catch-All Answer for any custom user question
   else {
     textResult = `**Bunna Bank AI EPMS Assistant**
 
 Regarding your question **"${prompt}"**:
-• **Status:** Bunna Bank S.C. EPMS currently tracks 8 major financial & digital KPIs across 500+ nationwide branches.
-• **Current Achievement:** Bank-wide target completion is operating at **107.8% (Exceeding Target)** for FY 2025/26.
+• **Status:** Bunna Bank S.C. EPMS tracks 8 major financial & digital KPIs across all nationwide districts and branches.
+• **Live Data:** Performance metrics update continuously as employees submit daily performance reports and managers approve them.
 • **Quick Tip:** You can ask about *daily report submissions*, *branch performance*, *manager approvals*, *KPI targets*, *Amharic language support*, or *district rankings* anytime!`;
   }
 

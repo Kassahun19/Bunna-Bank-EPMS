@@ -28,22 +28,78 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Language } from '../../types';
+import { Language, District, Branch, User, DailyPerformanceReport, PerformanceTarget } from '../../types';
 import { translations } from '../../i18n/translations';
 import { BunnaBankLogo } from '../common/BunnaBankLogo';
+import { api } from '../../services/api';
 
 interface LandingPageProps {
   language: Language;
   onGetStarted: () => void;
   onOpenLogin: () => void;
+  districts?: District[];
+  branches?: Branch[];
+  employees?: User[];
+  reports?: DailyPerformanceReport[];
+  targets?: PerformanceTarget[];
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({
   language,
   onGetStarted,
-  onOpenLogin
+  onOpenLogin,
+  districts,
+  branches,
+  employees,
+  reports,
+  targets
 }) => {
   const t = translations[language];
+
+  // Live Data State
+  const [liveDistricts, setLiveDistricts] = useState<District[]>(districts || []);
+  const [liveBranches, setLiveBranches] = useState<Branch[]>(branches || []);
+  const [liveEmployees, setLiveEmployees] = useState<User[]>(employees || []);
+  const [liveReports, setLiveReports] = useState<DailyPerformanceReport[]>(reports || []);
+  const [liveTargets, setLiveTargets] = useState<PerformanceTarget[]>(targets || []);
+
+  useEffect(() => {
+    if (districts) setLiveDistricts(districts);
+    if (branches) setLiveBranches(branches);
+    if (employees) setLiveEmployees(employees);
+    if (reports) setLiveReports(reports);
+    if (targets) setLiveTargets(targets);
+  }, [districts, branches, employees, reports, targets]);
+
+  useEffect(() => {
+    const fetchLiveData = async () => {
+      try {
+        if (!reports || reports.length === 0) {
+          const rList = await api.getDailyReports();
+          setLiveReports(rList);
+        }
+        if (!targets || targets.length === 0) {
+          const tList = await api.getTargets();
+          setLiveTargets(tList);
+        }
+        if (!districts || districts.length === 0) {
+          const dList = await api.getDistricts();
+          setLiveDistricts(dList);
+        }
+        if (!branches || branches.length === 0) {
+          const bList = await api.getBranches();
+          setLiveBranches(bList);
+        }
+        if (!employees || employees.length === 0) {
+          const eList = await api.getEmployees();
+          setLiveEmployees(eList);
+        }
+      } catch (err) {
+        console.warn("Failed to fetch live landing page data", err);
+      }
+    };
+    fetchLiveData();
+  }, []);
 
   // CountUp Counters Animation
   const [districtsCount, setDistrictsCount] = useState(0);
@@ -55,30 +111,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const [kpiCategory, setKpiCategory] = useState<'ALL' | 'FINANCIAL' | 'DIGITAL'>('ALL');
 
   useEffect(() => {
-    const duration = 2000;
-    const steps = 50;
+    const dTarget = liveDistricts.length;
+    const bTarget = liveBranches.length;
+    const eTarget = liveEmployees.length;
+    const effTarget = liveReports.length > 0
+      ? Number(((liveReports.filter(r => r.status === 'Approved').length / liveReports.length) * 100).toFixed(1))
+      : 0.0;
+
+    const duration = 1200;
+    const steps = 30;
     const intervalTime = duration / steps;
 
     let step = 0;
     const timer = setInterval(() => {
       step++;
       const progress = step / steps;
-      setDistrictsCount(Math.floor(25 * progress));
-      setBranchesCount(Math.floor(500 * progress));
-      setEmployeesCount(Math.floor(10000 * progress));
-      setEfficiencyCount(Number((99.8 * progress).toFixed(1)));
+      setDistrictsCount(Math.floor(dTarget * progress));
+      setBranchesCount(Math.floor(bTarget * progress));
+      setEmployeesCount(Math.floor(eTarget * progress));
+      setEfficiencyCount(Number((effTarget * progress).toFixed(1)));
 
       if (step >= steps) {
         clearInterval(timer);
-        setDistrictsCount(25);
-        setBranchesCount(500);
-        setEmployeesCount(10000);
-        setEfficiencyCount(99.8);
+        setDistrictsCount(dTarget);
+        setBranchesCount(bTarget);
+        setEmployeesCount(eTarget);
+        setEfficiencyCount(effTarget);
       }
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [liveDistricts, liveBranches, liveEmployees, liveReports]);
 
   // FAQ State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -86,7 +149,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const faqs = [
     {
       q: "What is Bunna Bank EPMS?",
-      a: "The Employee Performance Management System (EPMS) is an enterprise AI-powered platform designed for Bunna Bank S.C. to track daily financial mobilization, digital banking activations, and multi-tier approvals across 500+ branches."
+      a: "The Employee Performance Management System (EPMS) is an enterprise AI-powered platform designed for Bunna Bank S.C. to track daily financial mobilization, digital banking activations, and multi-tier approvals across all nationwide branches."
     },
     {
       q: "When can employees submit their daily performance reports?",
@@ -102,129 +165,180 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     }
   ];
 
-  // Overall Bunna Bank S.C. Fiscal Year Performance Across All KPIs
-  const bankKpisPerformance = [
+  // Dynamic KPI Configurations & Calculations
+  const kpiConfigs = [
     {
       id: 'KPI-001',
       name: 'Deposits Mobilized',
       code: 'DEP_ETB',
-      category: 'FINANCIAL',
+      category: 'FINANCIAL' as const,
       unit: 'ETB',
-      target: '15.00 Billion ETB',
-      achieved: '16.26 Billion ETB',
-      percentage: 108.4,
-      status: 'Exceeded',
+      key: 'depositsETB',
+      isCurrency: true,
+      currencySymbol: 'ETB',
       icon: Coins,
       gradient: 'from-[#D4AF37] to-amber-500',
-      textColor: 'text-[#D4AF37]',
-      bgBadge: 'bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/40'
+      textColor: 'text-[#D4AF37]'
     },
     {
       id: 'KPI-002',
       name: 'Foreign Currency Inflow',
       code: 'FCY_ETB',
-      category: 'FINANCIAL',
+      category: 'FINANCIAL' as const,
       unit: 'USD',
-      target: '$250.0 Million USD',
-      achieved: '$256.5 Million USD',
-      percentage: 102.6,
-      status: 'Achieved',
+      key: 'foreignCurrencyETB',
+      isCurrency: true,
+      currencySymbol: 'USD',
       icon: DollarSign,
       gradient: 'from-emerald-400 to-teal-500',
-      textColor: 'text-emerald-400',
-      bgBadge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+      textColor: 'text-emerald-400'
     },
     {
       id: 'KPI-003',
       name: 'Digital Financial Services',
       code: 'DFS_ETB',
-      category: 'FINANCIAL',
+      category: 'FINANCIAL' as const,
       unit: 'ETB',
-      target: '5.00 Billion ETB',
-      achieved: '5.76 Billion ETB',
-      percentage: 115.2,
-      status: 'Exceeded',
+      key: 'digitalFinancialServicesETB',
+      isCurrency: true,
+      currencySymbol: 'ETB',
       icon: TrendingUp,
       gradient: 'from-blue-400 to-cyan-500',
-      textColor: 'text-blue-400',
-      bgBadge: 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+      textColor: 'text-blue-400'
     },
     {
       id: 'KPI-004',
       name: 'Account Openings',
       code: 'ACC_OPEN',
-      category: 'DIGITAL',
+      category: 'DIGITAL' as const,
       unit: 'Accounts',
-      target: '250,000 Accounts',
-      achieved: '261,250 Accounts',
-      percentage: 104.5,
-      status: 'Achieved',
+      key: 'accountOpenings',
+      isCurrency: false,
+      currencySymbol: '',
       icon: UserPlus,
       gradient: 'from-purple-400 to-pink-500',
-      textColor: 'text-purple-400',
-      bgBadge: 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+      textColor: 'text-purple-400'
     },
     {
       id: 'KPI-005',
       name: 'Bunna Mobile Activations',
       code: 'MB_ACT',
-      category: 'DIGITAL',
+      category: 'DIGITAL' as const,
       unit: 'Users',
-      target: '350,000 Users',
-      achieved: '436,800 Users',
-      percentage: 124.8,
-      status: 'Exceeded',
+      key: 'mobileBankingActivations',
+      isCurrency: false,
+      currencySymbol: '',
       icon: Smartphone,
       gradient: 'from-indigo-400 to-purple-500',
-      textColor: 'text-indigo-400',
-      bgBadge: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+      textColor: 'text-indigo-400'
     },
     {
       id: 'KPI-006',
       name: 'Internet Banking',
       code: 'IB_ACT',
-      category: 'DIGITAL',
+      category: 'DIGITAL' as const,
       unit: 'Users',
-      target: '80,000 Users',
-      achieved: '77,440 Users',
-      percentage: 96.8,
-      status: 'Near Target',
+      key: 'internetBankingActivations',
+      isCurrency: false,
+      currencySymbol: '',
       icon: Globe,
       gradient: 'from-cyan-400 to-blue-500',
-      textColor: 'text-cyan-400',
-      bgBadge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+      textColor: 'text-cyan-400'
     },
     {
       id: 'KPI-007',
       name: 'Merchant QR Solutions',
       code: 'MERCH_SOL',
-      category: 'DIGITAL',
+      category: 'DIGITAL' as const,
       unit: 'Merchants',
-      target: '40,000 Merchants',
-      achieved: '44,120 Merchants',
-      percentage: 110.3,
-      status: 'Exceeded',
+      key: 'merchantSolutions',
+      isCurrency: false,
+      currencySymbol: '',
       icon: QrCode,
       gradient: 'from-orange-400 to-amber-500',
-      textColor: 'text-orange-400',
-      bgBadge: 'bg-orange-500/20 text-orange-300 border-orange-500/40'
+      textColor: 'text-orange-400'
     },
     {
       id: 'KPI-008',
       name: 'ATM Card Activations',
       code: 'ATM_CARD',
-      category: 'DIGITAL',
+      category: 'DIGITAL' as const,
       unit: 'Cards',
-      target: '200,000 Cards',
-      achieved: '210,200 Cards',
-      percentage: 105.1,
-      status: 'Achieved',
+      key: 'atmCardActivations',
+      isCurrency: false,
+      currencySymbol: '',
       icon: CreditCard,
       gradient: 'from-teal-400 to-emerald-500',
-      textColor: 'text-teal-400',
-      bgBadge: 'bg-teal-500/20 text-teal-300 border-teal-500/40'
+      textColor: 'text-teal-400'
     }
   ];
+
+  const formatKpiValue = (val: number, unit: string, isCurrency: boolean, symbol: string) => {
+    if (val === 0) {
+      if (symbol === 'USD') return '$0.00 USD';
+      if (isCurrency) return '0.00 ETB';
+      return `0 ${unit}`;
+    }
+    if (isCurrency) {
+      if (symbol === 'USD') {
+        if (val >= 1_000_000) return `$${(val / 1_000_000).toFixed(2)} Million USD`;
+        if (val >= 1_000) return `$${(val / 1_000).toFixed(1)}k USD`;
+        return `$${val.toLocaleString()} USD`;
+      }
+      if (val >= 1_000_000_000) return `${(val / 1_000_000_000).toFixed(2)} Billion ETB`;
+      if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(2)} Million ETB`;
+      if (val >= 1_000) return `${(val / 1_000).toFixed(1)}k ETB`;
+      return `${val.toLocaleString()} ETB`;
+    }
+    return `${val.toLocaleString()} ${unit}`;
+  };
+
+  const bankKpisPerformance = kpiConfigs.map(cfg => {
+    const targetObjList = liveTargets.filter(t =>
+      t.kpiId === cfg.id ||
+      (t.kpiName && t.kpiName.toLowerCase().includes(cfg.name.toLowerCase())) ||
+      t.kpiCode === cfg.code
+    );
+    const totalTargetNum = targetObjList.reduce((sum, t) => sum + (Number(t.targetValue) || 0), 0);
+    const totalAchievedNum = liveReports.reduce((sum, r) => sum + (Number((r as any)[cfg.key]) || 0), 0);
+
+    const percentage = totalTargetNum > 0 ? Number(((totalAchievedNum / totalTargetNum) * 100).toFixed(1)) : 0;
+
+    let status = 'Pending Data';
+    let bgBadge = 'bg-white/10 text-gray-300 border-white/20';
+
+    if (totalTargetNum > 0 || totalAchievedNum > 0) {
+      if (percentage >= 100) {
+        status = 'Exceeded';
+        bgBadge = 'bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/40';
+      } else if (percentage >= 80) {
+        status = 'Achieved';
+        bgBadge = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+      } else {
+        status = 'Below Target';
+        bgBadge = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+      }
+    }
+
+    return {
+      ...cfg,
+      target: formatKpiValue(totalTargetNum, cfg.unit, cfg.isCurrency, cfg.currencySymbol),
+      achieved: formatKpiValue(totalAchievedNum, cfg.unit, cfg.isCurrency, cfg.currencySymbol),
+      percentage,
+      status,
+      bgBadge
+    };
+  });
+
+  const validKpisWithTargets = bankKpisPerformance.filter(k => k.percentage > 0);
+  const overallAttainmentPct = validKpisWithTargets.length > 0
+    ? Number((validKpisWithTargets.reduce((acc, k) => acc + k.percentage, 0) / validKpisWithTargets.length).toFixed(1))
+    : 0;
+
+  let overallStatusLabel = 'Pending Data';
+  if (overallAttainmentPct >= 100) overallStatusLabel = 'Exceeding Target';
+  else if (overallAttainmentPct >= 80) overallStatusLabel = 'On Track';
+  else if (overallAttainmentPct > 0) overallStatusLabel = 'In Progress';
 
   const filteredKpis = bankKpisPerformance.filter(
     k => kpiCategory === 'ALL' || k.category === kpiCategory
@@ -345,9 +459,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       <div className="flex flex-col items-end">
                         <div className="flex items-center space-x-1 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-emerald-500/20 to-[#D4AF37]/20 border border-emerald-400/50 text-emerald-300 shadow-md">
                           <Trophy className="w-4 h-4 text-[#D4AF37] animate-bounce" />
-                          <span className="text-sm font-extrabold tracking-tight text-white">107.8%</span>
+                          <span className="text-sm font-extrabold tracking-tight text-white">{overallAttainmentPct.toFixed(1)}%</span>
                         </div>
-                        <span className="text-[9px] font-bold text-emerald-400 tracking-wider uppercase mt-1">Exceeding Target</span>
+                        <span className="text-[9px] font-bold text-emerald-400 tracking-wider uppercase mt-1">{overallStatusLabel}</span>
                       </div>
                     </div>
 
@@ -452,7 +566,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[10px]">
                     <div className="flex items-center space-x-1.5 text-emerald-400 font-medium">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Audit Verified • 500+ Branches</span>
+                      <span>Audit Verified • {liveBranches.length} Branches</span>
                     </div>
                     <span className="text-[#D4AF37] font-bold flex items-center space-x-1">
                       <span>Live EPMS Core</span>
@@ -465,8 +579,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <div className="absolute -bottom-6 -left-6 p-3.5 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] shadow-2xl z-20 flex items-center space-x-3 hidden sm:flex border border-white/30">
                   <Award className="w-7 h-7" />
                   <div>
-                    <p className="font-black text-xs tracking-tight">Grade A+ Bank Achievement</p>
-                    <p className="text-[10px] font-bold opacity-90">Fiscal Year 2025/26 Target: 107.8%</p>
+                    <p className="font-black text-xs tracking-tight">Bunna Bank Live Attainment</p>
+                    <p className="text-[10px] font-bold opacity-90">Fiscal Year 2025/26: {overallAttainmentPct.toFixed(1)}%</p>
                   </div>
                 </div>
 

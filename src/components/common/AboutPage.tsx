@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Building2,
   Target,
@@ -15,6 +15,7 @@ import {
 import { Language } from '../../types';
 import { translations } from '../../i18n/translations';
 import { BunnaBankLogo } from './BunnaBankLogo';
+import { api } from '../../services/api';
 
 interface AboutPageProps {
   language: Language;
@@ -28,6 +29,28 @@ export const AboutPage: React.FC<AboutPageProps> = ({
   onOpenContact
 }) => {
   const t = translations[language] || translations['en'];
+
+  const [districtsCount, setDistrictsCount] = useState<number>(0);
+  const [branchesCount, setBranchesCount] = useState<number>(0);
+  const [employeesCount, setEmployeesCount] = useState<number>(0);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const [dList, bList, eList] = await Promise.all([
+          api.getDistricts(),
+          api.getBranches(),
+          api.getEmployees()
+        ]);
+        setDistrictsCount(dList.length);
+        setBranchesCount(bList.length);
+        setEmployeesCount(eList.length);
+      } catch (err) {
+        console.warn('Failed to load AboutPage live stats', err);
+      }
+    };
+    loadStats();
+  }, []);
 
   return (
     <div className="space-y-12 py-4 text-white">
@@ -114,15 +137,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div className="space-y-1">
-            <p className="text-3xl font-black text-white">25+</p>
+            <p className="text-3xl font-black text-white">{districtsCount > 0 ? `${districtsCount}` : 'Districts'}</p>
             <p className="text-xs text-[#D4AF37] font-semibold">Districts & Area Offices</p>
           </div>
           <div className="space-y-1">
-            <p className="text-3xl font-black text-white">500+</p>
+            <p className="text-3xl font-black text-white">{branchesCount > 0 ? `${branchesCount}` : 'Branches'}</p>
             <p className="text-xs text-[#D4AF37] font-semibold">Branches Nationwide</p>
           </div>
           <div className="space-y-1">
-            <p className="text-3xl font-black text-white">10,000+</p>
+            <p className="text-3xl font-black text-white">{employeesCount > 0 ? `${employeesCount}` : 'Staff'}</p>
             <p className="text-xs text-[#D4AF37] font-semibold">Active Employees</p>
           </div>
           <div className="space-y-1">

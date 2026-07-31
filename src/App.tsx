@@ -169,6 +169,11 @@ export const App: React.FC = () => {
             language={language}
             onGetStarted={() => setIsGetStartedOpen(true)}
             onOpenLogin={() => setIsLoginOpen(true)}
+            districts={districts}
+            branches={branches}
+            employees={employees}
+            reports={reports}
+            targets={targets}
           />
         ) : (
           /* AUTHENTICATED DASHBOARD VIEWS */

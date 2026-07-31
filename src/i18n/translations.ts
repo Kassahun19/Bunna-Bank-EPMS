@@ -97,10 +97,10 @@ const translationData: Record<string, Record<string, string>> = {
     // Landing & Footer
     heroTitle: "Next-Generation Employee Performance Platform",
     heroSubtitle: "Real-time performance tracking, AI-driven insights, and seamless multi-level approvals for Bunna Bank S.C.",
-    statsDistricts: "25+ Districts",
-    statsBranches: "500+ Branches",
-    statsEmployees: "10,000+ Employees",
-    statsEfficiency: "99.8% Approval Efficiency",
+    statsDistricts: "Districts",
+    statsBranches: "Branches",
+    statsEmployees: "Employees",
+    statsEfficiency: "Approval Efficiency",
     copyright: "© 2026 Bunna Bank S.C. All Rights Reserved. Built by Kassahun Mulatu",
     
     // Progress & Targets
@@ -206,10 +206,10 @@ const translationData: Record<string, Record<string, string>> = {
     // Landing & Footer
     heroTitle: "ዘመናዊ የሰራተኞች የስራ አፈፃፀም መከታተያ ስርዓት",
     heroSubtitle: "የእውነተኛ ጊዜ አፈፃፀም ክትትል፣ የ AI ትንተና እና ፈጣን ማጽደቂያ ስርዓት ለቡና ባንክ አ.ማ.",
-    statsDistricts: "25+ ዲስትሪክቶች",
-    statsBranches: "500+ ቅርንጫፎች",
-    statsEmployees: "10,000+ ሰራተኞች",
-    statsEfficiency: "99.8% የማጽደቅ ቀልጣፋነት",
+    statsDistricts: "ዲስትሪክቶች",
+    statsBranches: "ቅርንጫፎች",
+    statsEmployees: "ሰራተኞች",
+    statsEfficiency: "የማጽደቅ ቀልጣፋነት",
     copyright: "© 2026 ቡና ባንክ አ.ማ. መብቱ በህግ የተጠበቀ ነው። በ ካሳሁን ሙላቱ የተሰራ።",
     
     // Progress & Targets
