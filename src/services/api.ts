@@ -284,6 +284,18 @@ export const api = {
     const dist = initialDistricts.find(d => d.id === payload.districtId);
     const br = initialBranches.find(b => b.id === payload.branchId);
 
+    const isManager = payload.roleType === 'Managerial' || payload.role === 'MANAGER';
+    const role: UserRole = isManager ? 'MANAGER' : 'EMPLOYEE';
+    const fullName = `${payload.firstName} ${payload.lastName}`;
+
+    if (br) {
+      if (isManager) {
+        br.managerName = fullName;
+      } else {
+        br.employeeCount = (br.employeeCount || 0) + 1;
+      }
+    }
+
     const newUser: User = {
       id: `USR-${Date.now().toString().slice(-6)}`,
       userId: payload.userId || String(Math.floor(1000 + Math.random() * 9000)),
@@ -291,19 +303,29 @@ export const api = {
       firstName: payload.firstName,
       middleName: payload.middleName || '',
       lastName: payload.lastName,
-      role: payload.role || 'EMPLOYEE',
+      role,
       districtId: payload.districtId || 'DIST-001',
       districtName: dist ? dist.name : 'Addis Ababa District',
       branchId: payload.branchId || 'BR-AAD-01',
       branchName: br ? br.name : 'Addis Ababa Main HQ Branch',
-      jobTitle: payload.position || 'Staff Member',
+      jobTitle: isManager ? 'Branch Operations Manager' : 'Customer Service Officer',
       gender: (payload.gender === 'Female' || payload.gender === 'FEMALE') ? 'Female' : 'Male',
       age: payload.age ? Number(payload.age) : 30,
       phone: payload.phone || '+251911000000',
       status: 'Active',
       createdAt: new Date().toISOString().split('T')[0]
     };
-    return { message: 'Registration successful', user: newUser };
+
+    if (!defaultUsers.some(u => u.id === newUser.id)) {
+      defaultUsers.push(newUser);
+    }
+
+    return { 
+      message: isManager 
+        ? `Registration successful! You are now assigned as Official Manager for ${newUser.branchName}.` 
+        : `Registration successful! You are assigned to ${newUser.branchName} under Manager ${br?.managerName || 'Branch Manager'}.`, 
+      user: newUser 
+    };
   },
 
   forgotPassword: async (email: string) => {

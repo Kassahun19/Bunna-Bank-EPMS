@@ -253,7 +253,10 @@ export const App: React.FC = () => {
       <RegisterModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
-        onRegisterSuccess={(user) => setCurrentUser(user)}
+        onRegisterSuccess={(user) => {
+          setCurrentUser(user);
+          loadData();
+        }}
         onOpenLogin={() => setIsLoginOpen(true)}
       />
 

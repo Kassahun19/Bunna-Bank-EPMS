@@ -440,6 +440,10 @@ app.post('/api/auth/register', (req, res) => {
   const selectedDistrict = districts.find(d => d.id === districtId);
   const selectedBranch = branches.find(b => b.id === branchId);
 
+  const isManager = roleType === 'Managerial' || req.body.role === 'MANAGER';
+  const role = isManager ? 'MANAGER' : 'EMPLOYEE';
+  const fullName = `${firstName.trim()} ${lastName.trim()}`;
+
   const newUser: any = {
     id: `USR-${Date.now()}`,
     userId: trimmedUserId,
@@ -448,24 +452,39 @@ app.post('/api/auth/register', (req, res) => {
     firstName: firstName.trim(),
     middleName: (middleName || '').trim(),
     lastName: lastName.trim(),
-    role: roleType === 'Managerial' ? 'MANAGER' : 'EMPLOYEE',
-    jobTitle: roleType === 'Managerial' ? 'Assistant Branch Manager' : 'Customer Service Officer',
-    districtId: selectedDistrict?.id || 'DIST-001',
-    districtName: selectedDistrict?.name || 'Addis Ababa North District',
-    branchId: selectedBranch?.id || 'BR-001',
-    branchName: selectedBranch?.name || 'Main Headquarters Branch',
+    role,
+    jobTitle: isManager ? 'Branch Operations Manager' : 'Customer Service Officer',
+    districtId: selectedDistrict?.id || districtId || 'DIST-001',
+    districtName: selectedDistrict?.name || 'Addis Ababa District',
+    branchId: selectedBranch?.id || branchId || 'BR-AAD-01',
+    branchName: selectedBranch?.name || 'Addis Ababa Main HQ Branch',
     gender,
-    age: Number(age),
+    age: Number(age) || 28,
     phone: (phone || '').trim(),
     status: 'Active',
     createdAt: new Date().toISOString().substring(0, 10)
   };
 
+  // Automatic organizational role assignment & hierarchy updates
+  if (selectedBranch) {
+    if (isManager) {
+      selectedBranch.managerName = fullName;
+    } else {
+      selectedBranch.employeeCount = (selectedBranch.employeeCount || 0) + 1;
+    }
+  }
+
+  if (selectedDistrict) {
+    selectedDistrict.totalEmployees = (selectedDistrict.totalEmployees || 0) + 1;
+  }
+
   users.push(newUser);
   saveDataToDisk();
 
   return res.status(201).json({
-    message: 'User account created successfully!',
+    message: isManager 
+      ? `Registration successful! You are now assigned as Official Manager for ${newUser.branchName}.`
+      : `Registration successful! You are assigned to ${newUser.branchName} under Manager ${selectedBranch?.managerName || 'Branch Manager'}.`,
     user: newUser
   });
 });

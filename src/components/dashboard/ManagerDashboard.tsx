@@ -58,7 +58,19 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
     { id: '1', sender: 'Selamawit Tadesse', text: 'Good morning Abebe! Great deposit mobilization yesterday.', time: '08:30 AM' }
   ]);
 
-  const filteredReports = reports.filter(r => {
+  // Filter employees belonging to manager's branch
+  const branchEmployees = employees.filter(e => {
+    if (!user.branchId) return e.role === 'EMPLOYEE';
+    return (e.branchId === user.branchId || e.branchName === user.branchName) && e.role === 'EMPLOYEE';
+  });
+
+  // Filter reports for manager's branch
+  const branchReports = reports.filter(r => {
+    if (!user.branchId) return true;
+    return r.branchId === user.branchId || r.branchName === user.branchName;
+  });
+
+  const filteredReports = branchReports.filter(r => {
     if (activeFilter === 'All') return true;
     return r.status === activeFilter;
   });
@@ -162,6 +174,111 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
         reports={reports}
         onReportSubmitted={onRefreshData}
       />
+
+      {/* Assigned Branch Team Roster & Organizational Hierarchy Section */}
+      <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] uppercase tracking-wider">
+                Organizational Hierarchy
+              </span>
+              <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                <UserCheck className="w-3.5 h-3.5" /> Automatic Branch Staff Assignment
+              </span>
+            </div>
+            <h3 className="text-xl font-extrabold text-white mt-1 flex items-center gap-2">
+              <Users className="w-5 h-5 text-[#D4AF37]" />
+              Assigned Branch Team Roster ({branchEmployees.length} Staff Assigned)
+            </h3>
+            <p className="text-xs text-gray-300">
+              Employees registering for <strong className="text-[#D4AF37]">{user.branchName || 'this Branch'}</strong> under <strong className="text-white">{user.districtName || 'District'}</strong> are automatically assigned under your managerial supervision.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs bg-black/40 px-4 py-2 rounded-2xl border border-white/10 text-gray-300">
+            <span>Branch Manager:</span>
+            <strong className="text-[#D4AF37]">{getUserFullName(user)}</strong>
+          </div>
+        </div>
+
+        {/* Staff Table / Cards */}
+        {branchEmployees.length === 0 ? (
+          <div className="p-8 text-center rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300 space-y-2">
+            <Users className="w-8 h-8 text-[#D4AF37] mx-auto opacity-60" />
+            <p className="font-bold text-white text-sm">No Non-Managerial Employees Assigned Yet</p>
+            <p className="max-w-md mx-auto text-gray-400 text-[11px]">
+              When new employees register selecting <strong>{user.branchName || 'this Branch'}</strong> during registration, they will automatically appear in this roster under your managerial oversight.
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs text-gray-300">
+              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase text-[11px]">
+                <tr>
+                  <th className="p-3">Staff Member</th>
+                  <th className="p-3">Staff ID</th>
+                  <th className="p-3">Job Title</th>
+                  <th className="p-3">Contact</th>
+                  <th className="p-3">Daily Submissions</th>
+                  <th className="p-3 text-right">Manager Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {branchEmployees.map(emp => {
+                  const empReports = branchReports.filter(r => r.employeeId === emp.id || r.employeeName?.toLowerCase().includes(emp.firstName.toLowerCase()));
+                  return (
+                    <tr key={emp.id} className="hover:bg-white/5 transition-colors">
+                      <td className="p-3">
+                        <div className="font-bold text-white text-sm">{getUserFullName(emp)}</div>
+                        <div className="text-[10px] text-gray-400">{emp.gender} • Age: {emp.age || 28} • Joined: {emp.createdAt || '2026'}</div>
+                      </td>
+                      <td className="p-3 font-mono font-bold text-[#D4AF37]">{emp.userId || emp.id}</td>
+                      <td className="p-3">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/10 text-emerald-300 border border-white/10">
+                          {emp.jobTitle || 'Customer Service Officer'}
+                        </span>
+                      </td>
+                      <td className="p-3 text-[11px]">
+                        <div>{emp.email}</div>
+                        <div className="text-gray-400">{emp.phone}</div>
+                      </td>
+                      <td className="p-3">
+                        <span className="font-extrabold text-white bg-[#0B4228] px-2.5 py-1 rounded-lg border border-[#D4AF37]/30">
+                          {empReports.length} Logs
+                        </span>
+                      </td>
+                      <td className="p-3 text-right">
+                        <div className="flex items-center justify-end space-x-2">
+                          <button
+                            onClick={() => setSelectedEmployeeId(emp.id)}
+                            className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#D4AF37] font-bold text-[11px] flex items-center gap-1"
+                            title="Direct Message Feedback"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5" />
+                            <span>Message</span>
+                          </button>
+
+                          {onOpenAiSummary && (
+                            <button
+                              onClick={() => onOpenAiSummary(emp)}
+                              className="px-2.5 py-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#e0be4d] text-[#0B4228] font-bold text-[11px] flex items-center gap-1 shadow"
+                              title="AI Performance Summary"
+                            >
+                              <Sparkles className="w-3.5 h-3.5" />
+                              <span>AI Evaluate</span>
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
       {/* Branch Employee Target & KPI Assignment Feed Engine */}
       <BranchEmployeeTargetManager

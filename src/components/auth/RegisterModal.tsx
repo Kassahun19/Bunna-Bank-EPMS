@@ -448,7 +448,19 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                 Please select your employment role type at Bunna Bank S.C. Selecting Managerial grants you full Managerial Role access (Manager Dashboard, Team Approvals, Reports, Employee Tracking). Selecting Non-Managerial grants you Employee Role access (Employee Dashboard, My Performance, MY KPIs, My Reports).
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              {/* District & Branch Confirmation Badge */}
+              <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200 flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span className="text-gray-400">Assigned Location:</span>{" "}
+                  <strong className="text-white">{districts.find(d => d.id === selectedDistrictId)?.name || 'District'}</strong>{" "}
+                  • <strong className="text-[#D4AF37]">{branches.find(b => b.id === selectedBranchId)?.name || 'Branch'}</strong>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37]">
+                  Automatic Role Routing
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                 <button
                   type="button"
                   onClick={() => setRoleType('Managerial')}
@@ -468,12 +480,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   </div>
                   <p className="text-xs font-semibold opacity-90">Role Access: MANAGER</p>
                   <p className="text-[11px] opacity-80 mt-2 leading-relaxed">
-                    Designed for Branch Operations Managers, Assistant Managers & Department Supervisors. Grants access to Manager Dashboard, Performance Review, Team Approvals, Reports & Direct Staff Messaging.
+                    Designed for Branch Operations Managers & Supervisors. Automatically assigns you as the official Manager of <strong>{branches.find(b => b.id === selectedBranchId)?.name || 'this Branch'}</strong> with full authority over branch staff.
                   </p>
                   {roleType === 'Managerial' && (
                     <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
                       <Check className="w-4 h-4" />
-                      <span>Managerial Access Selected</span>
+                      <span>Assigned as Official Branch Manager</span>
                     </div>
                   )}
                 </button>
@@ -497,12 +509,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   </div>
                   <p className="text-xs font-semibold opacity-90">Role Access: EMPLOYEE</p>
                   <p className="text-[11px] opacity-80 mt-2 leading-relaxed">
-                    Designed for Customer Service Officers, Tellers, Relationship Officers & Front-line Staff. Grants access to Employee Dashboard, My Performance, MY KPIs, My Reports & Achievements.
+                    Designed for Customer Service Officers & Tellers. Automatically assigns you as an employee under <strong>{branches.find(b => b.id === selectedBranchId)?.name || 'this Branch'}</strong>'s designated manager.
                   </p>
                   {roleType === 'Non-Managerial' && (
                     <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
                       <Check className="w-4 h-4" />
-                      <span>Employee Access Selected</span>
+                      <span>Assigned as Branch Employee</span>
                     </div>
                   )}
                 </button>
