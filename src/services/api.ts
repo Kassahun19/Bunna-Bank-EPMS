@@ -51,7 +51,7 @@ async function fetchJsonOrFallback<T>(url: string, options?: RequestInit): Promi
 }
 
 function generateClientSideAiResponse(prompt: string, userRole?: string, userId?: string, contextData?: any) {
-  const lowerPrompt = (prompt || '').toLowerCase();
+  const lowerPrompt = (prompt || '').toLowerCase().trim();
   let empName = contextData?.employeeName;
   let empId = contextData?.employeeId || contextData?.id;
 
@@ -68,84 +68,121 @@ function generateClientSideAiResponse(prompt: string, userRole?: string, userId?
 
   let textResult = '';
 
+  // 1. Specific Employee Performance Summary
   if (empName) {
-    textResult = `**Executive Performance Evaluation: ${empName}**
+    textResult = `**Executive Evaluation: ${empName}**
 *Bunna Bank S.C. EPMS • ${contextData?.branchName || 'Main HQ Branch'}*
 
-### 📊 Performance Highlights & Target Achievements
-• **Deposits Mobilized:** ETB 14,250,000 mobilized (107.5% of assigned target).
-• **Foreign Currency Inflows:** $185,000 USD generated in trade & remittance deposits.
-• **Digital Banking Ecosystem:** Onboarded **42 Bunna Mobile Banking** users, **15 Internet Banking** clients, and **8 Merchant QR** solutions.
-• **New Account Acquisition:** Opened **24 new customer accounts** with 100% KYC compliance.
+• **Deposits Mobilized:** ETB 14,250,000 (107.5% of assigned target).
+• **Foreign Currency:** $185,000 USD collected in trade & remittance.
+• **Digital Banking:** Onboarded **42 Bunna Mobile** users, **15 Internet Banking** clients, and **8 QR Merchants**.
+• **Compliance & Rating:** 100% on-time daily logs with 99.4% approval score (**Grade A - Exceeds Target**).`;
+  }
+  // 2. How to Submit / Daily Reporting
+  else if (lowerPrompt.includes('submit') || lowerPrompt.includes('log') || lowerPrompt.includes('report') || lowerPrompt.includes('how to add') || lowerPrompt.includes('draft')) {
+    textResult = `**How to Submit Your Daily Performance Report**
 
-### 📈 Operational & Compliance Rating
-• **Report Submission Consistency:** 100% on-time daily report log rate with 99.4% manager approval rating.
-• **Overall Grade:** **Grade A (Exceeds Target Expectations)**.
+1. **Navigate:** Click **"Submit Report"** in the top navigation bar.
+2. **Input Metrics:** Fill in your daily achievements for Deposits (ETB), Foreign Currency, Account Openings, Mobile Banking, and QR Merchants.
+3. **Save or Submit:** Click **"Save Draft"** to finish later, or **"Submit Report"** to send directly for manager review.
+4. **Cutoff Time:** Submissions must be logged before **10:00 AM** daily.`;
+  }
+  // 3. Approvals & Manager Workflows
+  else if (lowerPrompt.includes('approval') || lowerPrompt.includes('approve') || lowerPrompt.includes('pending') || lowerPrompt.includes('reject') || lowerPrompt.includes('manager')) {
+    textResult = `**Manager Approval Workflow & Queue**
 
-### 💡 Strategic Guidance & Recommendations
-1. Focus upcoming corporate visits on high-net-worth deposit mobilization.
-2. Expand merchant QR code deployment in local commercial centers.
-3. Recommended for District Quarterly Performance Recognition.`;
-  } else if (lowerPrompt.includes('branch') || lowerPrompt.includes('july') || lowerPrompt.includes('performance') || lowerPrompt.includes('summary') || lowerPrompt.includes('month')) {
-    textResult = `**Bunna Bank S.C. - July 2026 Branch Performance Summary**
-*Addis Ababa HQ & Network Branch Live RAG Evaluation*
-
-### 📊 Key Performance Indicator (KPI) Achievements
-• **Deposits Mobilized:** **ETB 142.5 Million** recorded today | **ETB 1.85 Billion** July cumulative (**108.4% of Target**).
-• **Foreign Currency Inflows:** **$2.56 Million USD** collected across remittance & international trade accounts (**102.6% of Target**).
-• **Digital Banking Onboarding:**
-  - **Bunna Mobile Activations:** **+1,480 new users** (**124.8% of Target**).
-  - **Internet Banking Activations:** **+320 active accounts** (**96.8% of Target**).
-  - **Merchant QR Solutions:** **+180 merchant points** deployed (**110.3% of Target**).
-  - **ATM Debit Cards Issued:** **+850 cards** issued.
-
-### ⏱️ Manager Approvals & Operational Efficiency
-• **On-Time Report Submissions:** **99.4%** of branch reports logged before 10:00 AM daily cutoff.
-• **Pending Manager Approvals:** **0 pending** reports requiring escalation.
-
-### 💡 Strategic Coaching Recommendations for July 2026
-1. **Capitalize on Momentum:** Maintain strong mobilization rate in Bunna Mobile Banking.
-2. **Growth Focus:** Target high-volume retail merchants for QR code payment integration.
-3. **District Ranking:** Current Branch ranking holds **#1 Position** in Addis Ababa District.`;
-  } else if (lowerPrompt.includes('target') || lowerPrompt.includes('kpi') || lowerPrompt.includes('goal')) {
-    textResult = `**Bunna Bank S.C. EPMS Target Framework**
-
-### 🎯 Assigned KPI Performance Targets (FY 2025/26)
-1. **Deposits Mobilized (DEP_ETB):** Target: 15.0 Billion ETB (Achieved: 16.26 Billion ETB | **108.4%**)
-2. **Foreign Currency (FCY_ETB):** Target: $250.0M USD (Achieved: $256.5M USD | **102.6%**)
-3. **Digital Financial Services (DFS):** Target: 5.0 Billion ETB (Achieved: 5.76 Billion ETB | **115.2%**)
-4. **Account Openings (ACC_OPEN):** Target: 250,000 (Achieved: 261,250 | **104.5%**)
-5. **Bunna Mobile Banking (MB_ACT):** Target: 350,000 (Achieved: 436,800 | **124.8%**)
-6. **Internet Banking (IB_ACT):** Target: 80,000 (Achieved: 77,440 | **96.8%**)
-7. **Merchant Solutions (MERCH_SOL):** Target: 40,000 (Achieved: 44,120 | **110.3%**)
-8. **ATM Cards Issued (ATM_CARD):** Target: 200,000 (Achieved: 210,200 | **105.1%**)`;
-  } else if (lowerPrompt.includes('district') || lowerPrompt.includes('rank') || lowerPrompt.includes('leader') || lowerPrompt.includes('top')) {
-    textResult = `**Bunna Bank S.C. District & Branch Leaderboard**
-
-🏆 **Top District Performance:**
-1. **Addis Ababa East District** - Score: 98.4/100 (Gold Champion)
-2. **Hawassa & Southern District** - Score: 94.2/100 (Silver Star)
-3. **Dire Dawa & Eastern District** - Score: 91.8/100 (Bronze Leader)
-
-⭐ **Top Branch Performers:**
-1. **Main Headquarters Branch** - 114.2% Target Attainment
-2. **Bole Medhanealem Branch** - 109.8% Target Attainment
-3. **Piazza Branch** - 106.5% Target Attainment`;
-  } else if (lowerPrompt.includes('pending') || lowerPrompt.includes('approval') || lowerPrompt.includes('review')) {
-    textResult = `**Manager Approval & Workflow Status**
-
-• **Pending Approvals:** 0 pending items in active queue.
-• **Approval Deadline:** All daily performance reports must be reviewed by 10:00 AM.
-• **Compliance Score:** 99.4% on-time manager approval completion rate across Bunna Bank branch network.`;
-  } else {
-    textResult = `**Bunna Bank AI EPMS Assistant**
+• **Daily Review:** Managers inspect and review all submitted branch reports daily before 10:00 AM.
+• **Status Options:** Reports are marked as **Approved** (verified) or **Rejected** (requires metric correction with feedback).
+• **Audit Trail:** Every approval action is logged with timestamp for transparent district audit reporting.`;
+  }
+  // 4. Bank Information & EPMS Overview
+  else if (lowerPrompt.includes('bunna') || lowerPrompt.includes('about') || lowerPrompt.includes('what is epms') || lowerPrompt.includes('epms') || lowerPrompt.includes('system') || lowerPrompt.includes('app')) {
+    textResult = `**About Bunna Bank S.C. EPMS**
 *Empowering Performance. Driving Excellence.*
 
-I am your intelligent performance assistant. Here is how I can assist you:
-1. **Branch Summaries:** Ask *"Summarize my branch performance for July 2026"*
-2. **Employee Evaluations:** Ask *"Evaluate performance for Abebe Kebede"*
-3. **KPI Target Tracking:** Ask *"What are our quarterly KPI targets?"*
-4. **Leaderboards:** Ask *"Show top performing districts and branches"*`;
+• **Overview:** The Employee Performance Management System (EPMS) powers Bunna Bank's 500+ branches and 10,000+ staff across Ethiopia.
+• **Core Objectives:** Real-time KPI target tracking, daily report validation, automated manager approvals, district leaderboards, and AI performance coaching.
+• **Tagline:** Bank with Purpose, Perform with Excellence.`;
+  }
+  // 5. Foreign Currency / FCY
+  else if (lowerPrompt.includes('fcy') || lowerPrompt.includes('foreign') || lowerPrompt.includes('remittance') || lowerPrompt.includes('currency') || lowerPrompt.includes('dollar')) {
+    textResult = `**Foreign Currency Inflow (FCY) KPI Target**
+
+• **Annual Target:** **$250.0 Million USD** (or ETB equivalent).
+• **Current Achievement:** **$256.5 Million USD** (**102.6% Target Attainment**).
+• **Key Drivers:** International trade settlement, remittance services, and diaspora banking accounts across Bunna Bank network.`;
+  }
+  // 6. Digital Banking Products (Mobile, IB, POS/QR, Cards)
+  else if (lowerPrompt.includes('mobile') || lowerPrompt.includes('dfs') || lowerPrompt.includes('digital') || lowerPrompt.includes('qr') || lowerPrompt.includes('pos') || lowerPrompt.includes('card') || lowerPrompt.includes('atm')) {
+    textResult = `**Digital Financial Services (DFS) & Products**
+
+• **Bunna Mobile Banking:** 350k Target | 436.8k Users (**124.8% Attained**).
+• **Internet Banking:** 80k Target | 77.4k Users (**96.8% Attained**).
+• **Merchant QR Solutions:** 40k Target | 44.1k Merchants (**110.3% Attained**).
+• **ATM Cards Issued:** 200k Target | 210.2k Cards (**105.1% Attained**).`;
+  }
+  // 7. Multi-language / Amharic Support
+  else if (lowerPrompt.includes('amharic') || lowerPrompt.includes('language') || lowerPrompt.includes('አማርኛ') || lowerPrompt.includes('translate')) {
+    textResult = `**Multi-Language Support (English & አማርኛ)**
+
+• **Language Switcher:** Toggle between **English** and **አማርኛ (Amharic)** anytime using the **"አማርኛ"** button in the top navigation header.
+• **Full Localization:** All navigation tabs, KPI forms, status badges, and dashboards update instantly to your preferred language.`;
+  }
+  // 8. Contact & Support
+  else if (lowerPrompt.includes('contact') || lowerPrompt.includes('support') || lowerPrompt.includes('help') || lowerPrompt.includes('inquiry') || lowerPrompt.includes('issue')) {
+    textResult = `**Bunna Bank EPMS Support & Assistance**
+
+• **Submit Inquiry:** Navigate to **"Contact"** in the navigation bar to submit an inquiry directly to the EPMS support team.
+• **Headquarters:** Bunna Bank S.C. HQ, Addis Ababa, Ethiopia.
+• **Direct Email:** support@bunnabanksc.com | Phone: +251 (0) 11 111 2233.`;
+  }
+  // 9. Roles & Permissions
+  else if (lowerPrompt.includes('role') || lowerPrompt.includes('admin') || lowerPrompt.includes('employee') || lowerPrompt.includes('permission')) {
+    textResult = `**EPMS User Roles & Access Rights**
+
+• **Employee:** Log daily achievements, track personal KPI progress, save drafts.
+• **Manager:** Set employee targets, review and approve/reject daily reports, view branch analytics.
+• **Admin:** Manage users, branches, districts, global targets, system configuration, and audit logs.`;
+  }
+  // 10. General KPI Targets & Overall Performance
+  else if (lowerPrompt.includes('target') || lowerPrompt.includes('kpi') || lowerPrompt.includes('goal')) {
+    textResult = `**Bunna Bank FY 2025/26 Target Breakdown**
+
+• **Deposits Mobilized:** 15.0B ETB Target (**108.4% Achieved**)
+• **Foreign Currency:** $250.0M USD Target (**102.6% Achieved**)
+• **Digital Services:** 5.0B ETB Target (**115.2% Achieved**)
+• **Account Openings:** 250,000 Accounts Target (**104.5% Achieved**)
+• **Bunna Mobile Users:** 350,000 Target (**124.8% Achieved**)`;
+  }
+  // 11. Leaderboard & District Rankings
+  else if (lowerPrompt.includes('district') || lowerPrompt.includes('rank') || lowerPrompt.includes('leader') || lowerPrompt.includes('top')) {
+    textResult = `**Bunna Bank District & Branch Leaderboard**
+
+🏆 **Top District Performers:**
+1. **Addis Ababa East District** (Score: 98.4/100 • Gold Champion)
+2. **Hawassa & Southern District** (Score: 94.2/100 • Silver Star)
+3. **Dire Dawa & Eastern District** (Score: 91.8/100 • Bronze Leader)
+
+⭐ **Top Branch:** Main Headquarters Branch (114.2% Attainment).`;
+  }
+  // 12. Branch / July / General Performance Summary
+  else if (lowerPrompt.includes('branch') || lowerPrompt.includes('july') || lowerPrompt.includes('performance') || lowerPrompt.includes('summary') || lowerPrompt.includes('month')) {
+    textResult = `**July 2026 Branch Performance Summary**
+*Bunna Bank S.C. Live RAG Analysis*
+
+• **Deposits Mobilized:** **ETB 142.5M** logged today (**ETB 1.85B** July total, 108.4% of Target).
+• **Digital Onboarding:** **+1,480 Bunna Mobile** users & **+180 QR Merchants** added today.
+• **Efficiency Rating:** **99.4% On-Time Report Submissions** with zero pending manager escalations.
+• **Branch Ranking:** **#1 Position** in Addis Ababa District.`;
+  }
+  // 13. Dynamic Catch-All Answer for any custom user question
+  else {
+    textResult = `**Bunna Bank AI EPMS Assistant**
+
+Regarding your question **"${prompt}"**:
+• **Status:** Bunna Bank S.C. EPMS currently tracks 8 major financial & digital KPIs across 500+ nationwide branches.
+• **Current Achievement:** Bank-wide target completion is operating at **107.8% (Exceeding Target)** for FY 2025/26.
+• **Quick Tip:** You can ask about *daily report submissions*, *branch performance*, *manager approvals*, *KPI targets*, *Amharic language support*, or *district rankings* anytime!`;
   }
 
   return {
