@@ -65,7 +65,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
         }
       );
 
-      const aiReply = data.response || data.reply || 'Summary generated successfully.';
+      const aiReply = data.response || data.reply || data.answer || data.text || 'Summary generated successfully.';
 
       setMessages(prev => [
         ...prev,
@@ -98,7 +98,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
         targetEmployee?.id,
         targetEmployee ? { employeeId: targetEmployee.id, employeeName: getUserFullName(targetEmployee) } : undefined
       );
-      const replyText = data.response || data.reply || 'Completed response.';
+      const replyText = data.response || data.reply || data.answer || data.text || 'Bunna AI evaluation complete.';
       setMessages(prev => [
         ...prev,
         { id: String(Date.now() + 1), sender: 'ai', text: replyText }
