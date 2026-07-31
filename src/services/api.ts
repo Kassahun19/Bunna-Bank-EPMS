@@ -371,7 +371,12 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(districtData)
     });
-    if (res.data) return res.data;
+    if (res.data) {
+      if (!initialDistricts.some(d => d.id === res.data!.id)) {
+        initialDistricts.push(res.data);
+      }
+      return res.data;
+    }
     const newDistrict: District = {
       id: `DIST-${Date.now().toString().slice(-4)}`,
       name: districtData.name || 'New District',
@@ -381,6 +386,9 @@ export const api = {
       totalEmployees: 0,
       managerName: districtData.managerName || 'Unassigned'
     };
+    if (!initialDistricts.some(d => d.id === newDistrict.id)) {
+      initialDistricts.push(newDistrict);
+    }
     return newDistrict;
   },
 
@@ -400,18 +408,30 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(branchData)
     });
-    if (res.data) return res.data;
+    if (res.data) {
+      if (!initialBranches.some(b => b.id === res.data!.id)) {
+        initialBranches.push(res.data);
+      }
+      return res.data;
+    }
     const newBranch: Branch = {
       id: `BR-${Date.now().toString().slice(-4)}`,
       districtId: branchData.districtId || 'DIST-001',
       districtName: branchData.districtName || 'Addis Ababa District',
       name: branchData.name || 'New Branch',
       code: branchData.code || 'NB',
-      type: branchData.type || 'Grade II',
-      employeeCount: 10,
+      type: branchData.type || 'Grade I',
+      employeeCount: 0,
       managerName: branchData.managerName || 'Unassigned',
-      location: branchData.location || 'Addis Ababa'
+      location: branchData.location || 'Commercial Area'
     };
+    if (!initialBranches.some(b => b.id === newBranch.id)) {
+      initialBranches.push(newBranch);
+    }
+    const parentDist = initialDistricts.find(d => d.id === newBranch.districtId);
+    if (parentDist) {
+      parentDist.branchCount = (parentDist.branchCount || 0) + 1;
+    }
     return newBranch;
   },
 

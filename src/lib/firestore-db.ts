@@ -66,19 +66,23 @@ export async function saveDocument(collectionName: string, id: string, data: any
 }
 
 /**
- * Generic Firestore batch collection writer
+ * Generic Firestore batch collection writer with automatic 400-item chunking
  */
 export async function saveCollectionBatch(collectionName: string, items: any[]): Promise<void> {
   try {
     if (!items || items.length === 0) return;
-    const batch = writeBatch(db);
-    items.forEach(item => {
-      const docId = item.id ? String(item.id) : `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-      const docRef = doc(db, collectionName, docId);
-      const cleanData = JSON.parse(JSON.stringify(item));
-      batch.set(docRef, cleanData, { merge: true });
-    });
-    await batch.commit();
+    const chunkSize = 400;
+    for (let i = 0; i < items.length; i += chunkSize) {
+      const chunk = items.slice(i, i + chunkSize);
+      const batch = writeBatch(db);
+      chunk.forEach(item => {
+        const docId = item.id ? String(item.id) : `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+        const docRef = doc(db, collectionName, docId);
+        const cleanData = JSON.parse(JSON.stringify(item));
+        batch.set(docRef, cleanData, { merge: true });
+      });
+      await batch.commit();
+    }
   } catch (err) {
     console.error(`Error saving batch to ${collectionName}:`, err);
   }

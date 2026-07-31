@@ -18,7 +18,7 @@ export const initialDistricts: District[] = [
   { id: 'DIST-002', name: 'Hawassa District', code: 'HWD', region: 'Sidama Region', branchCount: 4, totalEmployees: 280, managerName: 'Tigist Haile' },
   { id: 'DIST-003', name: 'Adama District', code: 'ADM', region: 'Oromia Region', branchCount: 4, totalEmployees: 250, managerName: 'Dawit Yohannes' },
   { id: 'DIST-004', name: 'Dire Dawa District', code: 'DDW', region: 'Dire Dawa & Harari Region', branchCount: 3, totalEmployees: 210, managerName: 'Genet Worku' },
-  { id: 'DIST-005', name: 'Bahir Dar District', code: 'BDR', region: 'Amhara Region', branchCount: 3, totalEmployees: 220, managerName: 'Kassahun Belay' },
+  { id: 'DIST-005', name: 'Bahir Dar District', code: '954', region: 'Amhara Region', branchCount: 4, totalEmployees: 220, managerName: 'Molla Minwuyelet' },
   { id: 'DIST-006', name: 'Mekelle District', code: 'MKL', region: 'Tigray Region', branchCount: 3, totalEmployees: 190, managerName: 'Berhane Tekle' },
   { id: 'DIST-007', name: 'Jimma District', code: 'JMA', region: 'Oromia Region', branchCount: 3, totalEmployees: 180, managerName: 'Girma Demissie' },
   { id: 'DIST-008', name: 'Gondar District', code: 'GDR', region: 'Amhara Region', branchCount: 3, totalEmployees: 175, managerName: 'Mulugeta Tadesse' },
@@ -71,6 +71,7 @@ export const initialBranches: Branch[] = [
   { id: 'BR-BDR-01', districtId: 'DIST-005', districtName: 'Bahir Dar District', name: 'Bahir Dar Main Branch', code: 'BDR-01', type: 'Main Branch', employeeCount: 48, managerName: 'Aster Wolde', location: 'City Center, Bahir Dar' },
   { id: 'BR-BDR-02', districtId: 'DIST-005', districtName: 'Bahir Dar District', name: 'Bahir Dar Lake Tana Branch', code: 'BDR-02', type: 'Grade I', employeeCount: 32, managerName: 'Mulugeta Belay', location: 'Lake Tana Shore, Bahir Dar' },
   { id: 'BR-BDR-03', districtId: 'DIST-005', districtName: 'Bahir Dar District', name: 'Bahir Dar Kebele 11 Branch', code: 'BDR-03', type: 'Grade II', employeeCount: 24, managerName: 'Tizita Mengesha', location: 'Kebele 11, Bahir Dar' },
+  { id: 'BR-BDR-360', districtId: 'DIST-005', districtName: 'Bahir Dar District', name: 'Hamusit Branch', code: '360', type: 'Grade I', employeeCount: 18, managerName: 'Molla Minwuyelet', location: 'Hamusit Town, Bahir Dar' },
 
   // Mekelle District Branches
   { id: 'BR-MKL-01', districtId: 'DIST-006', districtName: 'Mekelle District', name: 'Mekelle Main Branch', code: 'MKL-01', type: 'Main Branch', employeeCount: 42, managerName: 'Berhane Tekle', location: 'City Center, Mekelle' },

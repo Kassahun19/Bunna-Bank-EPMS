@@ -709,7 +709,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <label className="block text-xs font-semibold text-gray-300 mb-1">District Code</label>
                 <input
                   type="text"
-                  placeholder="e.g., HRD, GND, NKT"
+                  placeholder="e.g., 954, HRD, BDR"
                   value={newDistrictCode}
                   onChange={(e) => setNewDistrictCode(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
@@ -750,9 +750,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold"
+                  className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold hover:bg-[#c2a030] transition-colors"
                 >
-                  Save Location
+                  Create District
                 </button>
               </div>
             </form>
@@ -806,10 +806,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">Branch Code</label>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">Branch Code / Sol ID</label>
                 <input
                   type="text"
-                  placeholder="e.g., HRR-01"
+                  placeholder="e.g., 360, BDR-01, HRR-01"
                   value={newBranchCode}
                   onChange={(e) => setNewBranchCode(e.target.value)}
                   className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"

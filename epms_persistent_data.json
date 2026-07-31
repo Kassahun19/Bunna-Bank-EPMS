@@ -56,12 +56,12 @@
     },
     {
       "id": "DIST-007",
-      "name": "Bahir Dar Area Office",
-      "code": "BDR",
+      "name": "Bahir Dar District",
+      "code": "954",
       "region": "Amhara",
       "branchCount": 30,
       "totalEmployees": 540,
-      "managerName": "Kassahun Belay"
+      "managerName": "Molla Minwuyelet"
     },
     {
       "id": "DIST-008",
@@ -179,6 +179,17 @@
       "employeeCount": 36,
       "managerName": "Aster Wolde",
       "location": "Lake View, Bahir Dar"
+    },
+    {
+      "id": "BR-BDR-360",
+      "districtId": "DIST-005",
+      "districtName": "Bahir Dar District",
+      "name": "Hamusit Branch",
+      "code": "360",
+      "type": "Grade I",
+      "employeeCount": 18,
+      "managerName": "Molla Minwuyelet",
+      "location": "Hamusit Town, Bahir Dar"
     }
   ],
   "departments": [

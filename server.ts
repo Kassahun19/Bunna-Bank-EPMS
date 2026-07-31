@@ -112,19 +112,26 @@ function loadDataFromDisk() {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, 'utf-8');
       const data = JSON.parse(raw);
-      if (Array.isArray(data.districts)) {
-        districts = data.districts.map(d => ({
+      if (Array.isArray(data.districts) && data.districts.length > 0) {
+        const loadedDistricts = data.districts.map(d => ({
           ...d,
           name: d.name.replace(/\bArea Office\b/g, 'District')
         }));
+        const existingIds = new Set(loadedDistricts.map(d => d.id));
+        const missing = initialDistricts.filter(d => !existingIds.has(d.id));
+        districts = [...loadedDistricts, ...missing];
       } else {
         districts = [...initialDistricts];
       }
-      if (Array.isArray(data.branches)) {
-        branches = data.branches.map(b => ({
+      if (Array.isArray(data.branches) && data.branches.length > 0) {
+        const loadedBranches = data.branches.map(b => ({
           ...b,
           districtName: b.districtName.replace(/\bArea Office\b/g, 'District')
         }));
+        const existingIds = new Set(loadedBranches.map(b => b.id));
+        const existingCodes = new Set(loadedBranches.map(b => b.code));
+        const missing = initialBranches.filter(b => !existingIds.has(b.id) && !existingCodes.has(b.code));
+        branches = [...loadedBranches, ...missing];
       } else {
         branches = [...initialBranches];
       }
@@ -171,62 +178,76 @@ function loadDataFromDisk() {
 async function syncFirestoreDataOnStartup() {
   try {
     console.log('⚡ Initializing connection with Google Cloud Firestore database...');
-    const fsUsers = await getCollectionItems<any>('users');
-    if (fsUsers.length > 0) {
-      users = fsUsers;
-      console.log(`Loaded ${users.length} users from Firestore.`);
-    } else if (users.length > 0) {
-      console.log('Seeding initial users to Firestore...');
-      await saveCollectionBatch('users', users);
+
+    async function syncCollection<T extends { id?: string; code?: string }>(
+      colName: string,
+      currentLocalItems: T[],
+      assignFn: (merged: T[]) => void
+    ) {
+      const fsItems = await getCollectionItems<T>(colName);
+      if (fsItems && fsItems.length > 0) {
+        const mergedMap = new Map<string, T>();
+
+        fsItems.forEach(item => {
+          const key = item.id || item.code || '';
+          if (key) {
+            mergedMap.set(key, item);
+          }
+        });
+
+        const newLocalItemsToPush: T[] = [];
+        currentLocalItems.forEach(localItem => {
+          const key = localItem.id || localItem.code || '';
+          if (key && !mergedMap.has(key)) {
+            mergedMap.set(key, localItem);
+            newLocalItemsToPush.push(localItem);
+          }
+        });
+
+        const finalMerged = Array.from(mergedMap.values());
+        assignFn(finalMerged);
+
+        if (newLocalItemsToPush.length > 0) {
+          console.log(`Syncing ${newLocalItemsToPush.length} missing local ${colName} to Firestore...`);
+          await saveCollectionBatch(colName, newLocalItemsToPush);
+        }
+      } else if (currentLocalItems.length > 0) {
+        console.log(`Seeding initial ${currentLocalItems.length} ${colName} to Firestore...`);
+        await saveCollectionBatch(colName, currentLocalItems);
+      }
     }
 
-    const fsDistricts = await getCollectionItems<any>('districts');
-    if (fsDistricts.length > 0) districts = fsDistricts;
-    else if (districts.length > 0) await saveCollectionBatch('districts', districts);
+    await syncCollection('users', users, merged => { users = merged; });
+    await syncCollection('districts', districts, merged => { districts = merged; });
+    await syncCollection('branches', branches, merged => { branches = merged; });
+    await syncCollection('departments', departments, merged => { departments = merged; });
+    await syncCollection('kpis', kpis, merged => { kpis = merged; });
+    await syncCollection('holidays', holidays, merged => { holidays = merged; });
+    await syncCollection('announcements', announcements, merged => { announcements = merged; });
+    await syncCollection('notifications', notifications, merged => { notifications = merged; });
+    await syncCollection('auditLogs', auditLogs, merged => { auditLogs = merged; });
+    await syncCollection('dailyReports', dailyReports, merged => { dailyReports = merged; });
+    await syncCollection('targets', targets, merged => { targets = merged; });
+    await syncCollection('directMessages', directMessages, merged => { directMessages = merged; });
+    await syncCollection('contactMessages', contactMessages, merged => { contactMessages = merged; });
 
-    const fsBranches = await getCollectionItems<any>('branches');
-    if (fsBranches.length > 0) branches = fsBranches;
-    else if (branches.length > 0) await saveCollectionBatch('branches', branches);
-
-    const fsDepartments = await getCollectionItems<any>('departments');
-    if (fsDepartments.length > 0) departments = fsDepartments;
-    else if (departments.length > 0) await saveCollectionBatch('departments', departments);
-
-    const fsKPIs = await getCollectionItems<any>('kpis');
-    if (fsKPIs.length > 0) kpis = fsKPIs;
-    else if (kpis.length > 0) await saveCollectionBatch('kpis', kpis);
-
-    const fsHolidays = await getCollectionItems<any>('holidays');
-    if (fsHolidays.length > 0) holidays = fsHolidays;
-    else if (holidays.length > 0) await saveCollectionBatch('holidays', holidays);
-
-    const fsAnnouncements = await getCollectionItems<any>('announcements');
-    if (fsAnnouncements.length > 0) announcements = fsAnnouncements;
-    else if (announcements.length > 0) await saveCollectionBatch('announcements', announcements);
-
-    const fsNotifications = await getCollectionItems<any>('notifications');
-    if (fsNotifications.length > 0) notifications = fsNotifications;
-    else if (notifications.length > 0) await saveCollectionBatch('notifications', notifications);
-
-    const fsAuditLogs = await getCollectionItems<any>('auditLogs');
-    if (fsAuditLogs.length > 0) auditLogs = fsAuditLogs;
-    else if (auditLogs.length > 0) await saveCollectionBatch('auditLogs', auditLogs);
-
-    const fsDailyReports = await getCollectionItems<any>('dailyReports');
-    if (fsDailyReports.length > 0) dailyReports = fsDailyReports;
-    else if (dailyReports.length > 0) await saveCollectionBatch('dailyReports', dailyReports);
-
-    const fsTargets = await getCollectionItems<any>('targets');
-    if (fsTargets.length > 0) targets = fsTargets;
-    else if (targets.length > 0) await saveCollectionBatch('targets', targets);
-
-    const fsDirectMessages = await getCollectionItems<any>('directMessages');
-    if (fsDirectMessages.length > 0) directMessages = fsDirectMessages;
-    else if (directMessages.length > 0) await saveCollectionBatch('directMessages', directMessages);
-
-    const fsContactMessages = await getCollectionItems<any>('contactMessages');
-    if (fsContactMessages.length > 0) contactMessages = fsContactMessages;
-    else if (contactMessages.length > 0) await saveCollectionBatch('contactMessages', contactMessages);
+    // Save synchronized dataset to disk
+    const payload = {
+      districts,
+      branches,
+      departments,
+      kpis,
+      users,
+      holidays,
+      announcements,
+      notifications,
+      auditLogs,
+      dailyReports,
+      targets,
+      directMessages,
+      contactMessages
+    };
+    fs.writeFileSync(DATA_FILE, JSON.stringify(payload, null, 2), 'utf-8');
 
     console.log('✅ Google Cloud Firestore data synchronization complete.');
   } catch (err) {
