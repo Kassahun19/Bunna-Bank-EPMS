@@ -593,6 +593,28 @@ app.post('/api/districts', (req, res) => {
   res.status(201).json(newDist);
 });
 
+app.put('/api/districts/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = districts.findIndex(d => d.id === id);
+  if (idx !== -1) {
+    districts[idx] = { ...districts[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(districts[idx]);
+  }
+  return res.status(404).json({ error: 'District not found' });
+});
+
+app.delete('/api/districts/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = districts.findIndex(d => d.id === id);
+  if (idx !== -1) {
+    districts.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'District deleted' });
+  }
+  return res.status(404).json({ error: 'District not found' });
+});
+
 app.get('/api/branches', (req, res) => {
   const { districtId } = req.query;
   if (districtId) {
@@ -611,6 +633,33 @@ app.post('/api/branches', (req, res) => {
   res.status(201).json(newBr);
 });
 
+app.put('/api/branches/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = branches.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    branches[idx] = { ...branches[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(branches[idx]);
+  }
+  return res.status(404).json({ error: 'Branch not found' });
+});
+
+app.delete('/api/branches/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = branches.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    const deletedBranch = branches[idx];
+    const parentDist = districts.find(d => d.id === deletedBranch.districtId);
+    if (parentDist && parentDist.branchCount > 0) {
+      parentDist.branchCount -= 1;
+    }
+    branches.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Branch deleted' });
+  }
+  return res.status(404).json({ error: 'Branch not found' });
+});
+
 // Users & Employees
 app.get('/api/employees', (req, res) => {
   const { districtId, branchId, role } = req.query;
@@ -619,6 +668,28 @@ app.get('/api/employees', (req, res) => {
   if (branchId) filtered = filtered.filter(u => u.branchId === branchId);
   if (role) filtered = filtered.filter(u => u.role === role);
   res.json(filtered);
+});
+
+app.put('/api/employees/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = users.findIndex(u => u.id === id);
+  if (idx !== -1) {
+    users[idx] = { ...users[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(users[idx]);
+  }
+  return res.status(404).json({ error: 'Employee not found' });
+});
+
+app.delete('/api/employees/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = users.findIndex(u => u.id === id);
+  if (idx !== -1) {
+    users.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Employee deleted' });
+  }
+  return res.status(404).json({ error: 'Employee not found' });
 });
 
 // KPIs & Targets
@@ -634,6 +705,28 @@ app.post('/api/kpis', (req, res) => {
   kpis.push(newKpi);
   saveDataToDisk();
   res.status(201).json(newKpi);
+});
+
+app.put('/api/kpis/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = kpis.findIndex(k => k.id === id);
+  if (idx !== -1) {
+    kpis[idx] = { ...kpis[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(kpis[idx]);
+  }
+  return res.status(404).json({ error: 'KPI not found' });
+});
+
+app.delete('/api/kpis/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = kpis.findIndex(k => k.id === id);
+  if (idx !== -1) {
+    kpis.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'KPI deleted' });
+  }
+  return res.status(404).json({ error: 'KPI not found' });
 });
 
 app.get('/api/targets', (req, res) => {
@@ -834,6 +927,28 @@ app.post('/api/reports', (req, res) => {
     message: status === 'Draft' ? 'Draft saved successfully' : 'Report submitted to manager successfully',
     report: newReport
   });
+});
+
+app.put('/api/reports/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = dailyReports.findIndex(r => r.id === id);
+  if (idx !== -1) {
+    dailyReports[idx] = { ...dailyReports[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(dailyReports[idx]);
+  }
+  return res.status(404).json({ error: 'Report not found' });
+});
+
+app.delete('/api/reports/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = dailyReports.findIndex(r => r.id === id);
+  if (idx !== -1) {
+    dailyReports.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Report deleted' });
+  }
+  return res.status(404).json({ error: 'Report not found' });
 });
 
 // Export Reports Endpoint
@@ -1176,6 +1291,28 @@ app.post('/api/calendar/holidays', (req, res) => {
   holidays.push(newHol);
   saveDataToDisk();
   res.status(201).json(newHol);
+});
+
+app.put('/api/calendar/holidays/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = holidays.findIndex(h => h.id === id);
+  if (idx !== -1) {
+    holidays[idx] = { ...holidays[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(holidays[idx]);
+  }
+  return res.status(404).json({ error: 'Holiday not found' });
+});
+
+app.delete('/api/calendar/holidays/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = holidays.findIndex(h => h.id === id);
+  if (idx !== -1) {
+    holidays.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Holiday deleted' });
+  }
+  return res.status(404).json({ error: 'Holiday not found' });
 });
 
 app.get('/api/audit-logs', (req, res) => {

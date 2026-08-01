@@ -334,3 +334,160 @@ export function printOrDownloadPDF(reports: DailyPerformanceReport[], employeeNa
   `);
   printWindow.document.close();
 }
+
+import { Branch } from '../types';
+
+export function downloadBranchesCSV(branches: Branch[]) {
+  const headers = ['SOL ID', 'Branch Name', 'Telephone Lines', 'Parent District / Area Office', 'Region', 'Location / Address', 'Type', 'Status', 'Manager Name'];
+  const rows = branches.map(b => [
+    `"${b.solId || b.code || ''}"`,
+    `"${(b.name || '').replace(/"/g, '""')}"`,
+    `"${(b.phone || '').replace(/"/g, '""')}"`,
+    `"${(b.districtName || '').replace(/"/g, '""')}"`,
+    `"${(b.region || '').replace(/"/g, '""')}"`,
+    `"${(b.location || '').replace(/"/g, '""')}"`,
+    `"${b.type || 'Grade I'}"`,
+    `"${b.status || 'Active'}"`,
+    `"${(b.managerName || '').replace(/"/g, '""')}"`
+  ]);
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `Bunna_Bank_Branch_Directory_${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+export function downloadBranchesExcel(branches: Branch[]) {
+  const htmlContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+      <meta charset="utf-8" />
+      <style>
+        body { font-family: Calibri, sans-serif; }
+        .header { background-color: #0B4228; color: #D4AF37; font-weight: bold; font-size: 16px; text-align: center; }
+        .sub { background-color: #08321E; color: #ffffff; font-size: 11px; text-align: center; }
+        th { background-color: #0B4228; color: #D4AF37; font-weight: bold; border: 1px solid #cccccc; padding: 6px; }
+        td { border: 1px solid #dddddd; padding: 6px; text-align: left; }
+      </style>
+    </head>
+    <body>
+      <table>
+        <tr><td colspan="9" class="header">BUNNA BANK S.C. - BRANCH & AREA OFFICE DIRECTORY</td></tr>
+        <tr><td colspan="9" class="sub">Exported on ${new Date().toLocaleDateString()} | Total Branches: ${branches.length}</td></tr>
+        <tr><td colspan="9"></td></tr>
+        <tr>
+          <th>SOL ID</th>
+          <th>Branch Name</th>
+          <th>Telephone Line(s)</th>
+          <th>Parent District / Area Office</th>
+          <th>Region</th>
+          <th>Branch Address / Location</th>
+          <th>Grade / Type</th>
+          <th>Status</th>
+          <th>Branch Manager</th>
+        </tr>
+        ${branches.map(b => `
+          <tr>
+            <td><strong>${b.solId || b.code || ''}</strong></td>
+            <td>${b.name}</td>
+            <td>${b.phone || '-'}</td>
+            <td>${b.districtName}</td>
+            <td>${b.region || '-'}</td>
+            <td>${b.location || '-'}</td>
+            <td>${b.type || 'Grade I'}</td>
+            <td>${b.status || 'Active'}</td>
+            <td>${b.managerName || '-'}</td>
+          </tr>
+        `).join('')}
+      </table>
+    </body>
+    </html>
+  `;
+
+  const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `Bunna_Bank_Branches_${new Date().toISOString().split('T')[0]}.xls`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+export function printOrDownloadBranchesPDF(branches: Branch[]) {
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    alert("Please allow popups to view and print the Branch Directory PDF.");
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Bunna Bank S.C. - Branch & Area Office Directory</title>
+      <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; color: #1f2937; }
+        .header { text-align: center; border-bottom: 3px solid #D4AF37; padding-bottom: 12px; margin-bottom: 20px; }
+        .header h1 { margin: 0; color: #0B4228; font-size: 22px; }
+        .header p { margin: 4px 0 0; color: #4b5563; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+        th { background-color: #0B4228; color: #D4AF37; padding: 8px; text-align: left; font-weight: bold; border: 1px solid #0B4228; }
+        td { border: 1px solid #e5e7eb; padding: 6px; }
+        tr:nth-child(even) { background-color: #f9fafb; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>BUNNA BANK S.C.</h1>
+        <p><strong>Branch, District & Area Office Directory Report</strong> • Generated on ${new Date().toLocaleDateString()}</p>
+        <p>Total Registered Branches: ${branches.length}</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>SOL ID</th>
+            <th>Branch Name</th>
+            <th>Telephone Line(s)</th>
+            <th>Parent District / Area Office</th>
+            <th>Region</th>
+            <th>Location / Address</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${branches.map(b => `
+            <tr>
+              <td><strong>${b.solId || b.code || ''}</strong></td>
+              <td>${b.name}</td>
+              <td>${b.phone || '-'}</td>
+              <td>${b.districtName}</td>
+              <td>${b.region || '-'}</td>
+              <td>${b.location || '-'}</td>
+              <td>${b.type || 'Grade I'}</td>
+              <td>${b.status || 'Active'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      </script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+}

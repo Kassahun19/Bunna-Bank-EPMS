@@ -6,24 +6,36 @@ export type ApprovalStatus = 'Draft' | 'Submitted' | 'Pending' | 'Approved' | 'R
 
 export interface District {
   id: string;
+  solId?: string;
   name: string;
   code: string;
   region: string;
+  status?: 'Active' | 'Inactive';
+  type?: 'District' | 'Area Office';
   branchCount: number;
   totalEmployees: number;
   managerName: string;
+  phone?: string;
+  email?: string;
+  secEmail?: string;
+  location?: string;
+  operationManager?: string;
 }
 
 export interface Branch {
   id: string;
+  solId?: string;
   districtId: string;
   districtName: string;
   name: string;
   code: string;
-  type: 'Main Branch' | 'Grade I' | 'Grade II' | 'Grade III' | 'Special Branch';
+  phone?: string;
+  type?: 'Main Branch' | 'Grade I' | 'Grade II' | 'Grade III' | 'Special Branch' | string;
   employeeCount: number;
   managerName: string;
   location: string;
+  region?: string;
+  status?: 'Active' | 'Inactive';
 }
 
 export interface Department {

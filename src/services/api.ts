@@ -352,8 +352,18 @@ export const api = {
   // Locations & Organization
   getDistricts: async (): Promise<District[]> => {
     const res = await fetchJsonOrFallback<District[]>('/api/districts');
-    if (res.data && Array.isArray(res.data) && res.data.length > 0) return res.data;
-    return initialDistricts;
+    const dList = (res.data && Array.isArray(res.data) && res.data.length > 0) ? res.data : initialDistricts;
+    
+    return dList.map(d => {
+      const assignedBranches = initialBranches.filter(b => b.districtId === d.id || b.districtName === d.name);
+      const bCount = assignedBranches.length;
+      const eCount = assignedBranches.reduce((sum, b) => sum + (b.employeeCount || 0), 0);
+      return {
+        ...d,
+        branchCount: bCount > 0 ? bCount : d.branchCount,
+        totalEmployees: eCount > 0 ? eCount : d.totalEmployees
+      };
+    });
   },
 
   createDistrict: async (districtData: Partial<District>): Promise<District> => {
@@ -381,6 +391,29 @@ export const api = {
       initialDistricts.push(newDistrict);
     }
     return newDistrict;
+  },
+
+  updateDistrict: async (id: string, districtData: Partial<District>): Promise<District> => {
+    await fetchJsonOrFallback(`/api/districts/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(districtData)
+    });
+    const idx = initialDistricts.findIndex(d => d.id === id);
+    if (idx !== -1) {
+      initialDistricts[idx] = { ...initialDistricts[idx], ...districtData };
+      return initialDistricts[idx];
+    }
+    return districtData as District;
+  },
+
+  deleteDistrict: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/districts/${id}`, { method: 'DELETE' });
+    const idx = initialDistricts.findIndex(d => d.id === id);
+    if (idx !== -1) {
+      initialDistricts.splice(idx, 1);
+    }
+    return true;
   },
 
   getBranches: async (districtId?: string): Promise<Branch[]> => {
@@ -426,6 +459,34 @@ export const api = {
     return newBranch;
   },
 
+  updateBranch: async (id: string, branchData: Partial<Branch>): Promise<Branch> => {
+    await fetchJsonOrFallback(`/api/branches/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(branchData)
+    });
+    const idx = initialBranches.findIndex(b => b.id === id);
+    if (idx !== -1) {
+      initialBranches[idx] = { ...initialBranches[idx], ...branchData };
+      return initialBranches[idx];
+    }
+    return branchData as Branch;
+  },
+
+  deleteBranch: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/branches/${id}`, { method: 'DELETE' });
+    const idx = initialBranches.findIndex(b => b.id === id);
+    if (idx !== -1) {
+      const b = initialBranches[idx];
+      const parentDist = initialDistricts.find(d => d.id === b.districtId);
+      if (parentDist && parentDist.branchCount > 0) {
+        parentDist.branchCount -= 1;
+      }
+      initialBranches.splice(idx, 1);
+    }
+    return true;
+  },
+
   getEmployees: async (filters?: { districtId?: string; branchId?: string; role?: string }): Promise<User[]> => {
     const params = new URLSearchParams(filters as any).toString();
     const res = await fetchJsonOrFallback<User[]>(`/api/employees?${params}`);
@@ -437,11 +498,78 @@ export const api = {
     return list;
   },
 
+  updateEmployee: async (id: string, empData: Partial<User>): Promise<User> => {
+    await fetchJsonOrFallback(`/api/employees/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(empData)
+    });
+    const idx = defaultUsers.findIndex(u => u.id === id);
+    if (idx !== -1) {
+      defaultUsers[idx] = { ...defaultUsers[idx], ...empData };
+      return defaultUsers[idx];
+    }
+    return empData as User;
+  },
+
+  deleteEmployee: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/employees/${id}`, { method: 'DELETE' });
+    const idx = defaultUsers.findIndex(u => u.id === id);
+    if (idx !== -1) {
+      defaultUsers.splice(idx, 1);
+    }
+    return true;
+  },
+
   // KPIs & Targets
   getKPIs: async (): Promise<KPI[]> => {
     const res = await fetchJsonOrFallback<KPI[]>('/api/kpis');
     if (res.data && Array.isArray(res.data) && res.data.length > 0) return res.data;
     return initialKPIs;
+  },
+
+  createKPI: async (kpiData: Partial<KPI>): Promise<KPI> => {
+    const res = await fetchJsonOrFallback<KPI>('/api/kpis', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kpiData)
+    });
+    if (res.data) {
+      if (!initialKPIs.some(k => k.id === res.data!.id)) initialKPIs.push(res.data);
+      return res.data;
+    }
+    const newKpi: KPI = {
+      id: `KPI-${Date.now().toString().slice(-4)}`,
+      code: kpiData.code || 'KPI-X',
+      name: kpiData.name || 'New KPI',
+      category: kpiData.category || 'Financial',
+      unit: kpiData.unit || 'ETB',
+      description: kpiData.description || 'Description',
+      weight: kpiData.weight || 10
+    };
+    initialKPIs.push(newKpi);
+    return newKpi;
+  },
+
+  updateKPI: async (id: string, kpiData: Partial<KPI>): Promise<KPI> => {
+    await fetchJsonOrFallback(`/api/kpis/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(kpiData)
+    });
+    const idx = initialKPIs.findIndex(k => k.id === id);
+    if (idx !== -1) {
+      initialKPIs[idx] = { ...initialKPIs[idx], ...kpiData };
+      return initialKPIs[idx];
+    }
+    return kpiData as KPI;
+  },
+
+  deleteKPI: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/kpis/${id}`, { method: 'DELETE' });
+    const idx = initialKPIs.findIndex(k => k.id === id);
+    if (idx !== -1) initialKPIs.splice(idx, 1);
+    return true;
   },
 
   getTargets: async (filters?: { employeeId?: string; branchId?: string }): Promise<PerformanceTarget[]> => {
@@ -516,6 +644,29 @@ export const api = {
 
   submitDailyReport: async (payload: any) => {
     return api.submitReport(payload);
+  },
+
+  updateReport: async (id: string, reportData: Partial<DailyPerformanceReport>): Promise<DailyPerformanceReport> => {
+    await fetchJsonOrFallback(`/api/reports/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reportData)
+    });
+    const idx = initialDailyReports.findIndex(r => r.id === id);
+    if (idx !== -1) {
+      initialDailyReports[idx] = { ...initialDailyReports[idx], ...reportData };
+      return initialDailyReports[idx];
+    }
+    return reportData as DailyPerformanceReport;
+  },
+
+  deleteReport: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/reports/${id}`, { method: 'DELETE' });
+    const idx = initialDailyReports.findIndex(r => r.id === id);
+    if (idx !== -1) {
+      initialDailyReports.splice(idx, 1);
+    }
+    return true;
   },
 
   exportReports: async (format: string, filters: any): Promise<Blob> => {
@@ -599,6 +750,48 @@ export const api = {
     const res = await fetchJsonOrFallback<BankHoliday[]>('/api/calendar/holidays');
     if (res.data && Array.isArray(res.data)) return res.data;
     return initialHolidays;
+  },
+
+  createHoliday: async (holidayData: Partial<BankHoliday>): Promise<BankHoliday> => {
+    const res = await fetchJsonOrFallback<BankHoliday>('/api/calendar/holidays', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(holidayData)
+    });
+    if (res.data) {
+      if (!initialHolidays.some(h => h.id === res.data!.id)) initialHolidays.push(res.data);
+      return res.data;
+    }
+    const newHol: BankHoliday = {
+      id: `HOL-${Date.now().toString().slice(-4)}`,
+      name: holidayData.name || 'New Bank Holiday',
+      date: holidayData.date || new Date().toISOString().split('T')[0],
+      recurring: holidayData.recurring ?? true,
+      description: holidayData.description || 'Official Bunna Bank holiday'
+    };
+    initialHolidays.push(newHol);
+    return newHol;
+  },
+
+  updateHoliday: async (id: string, holidayData: Partial<BankHoliday>): Promise<BankHoliday> => {
+    await fetchJsonOrFallback(`/api/calendar/holidays/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(holidayData)
+    });
+    const idx = initialHolidays.findIndex(h => h.id === id);
+    if (idx !== -1) {
+      initialHolidays[idx] = { ...initialHolidays[idx], ...holidayData };
+      return initialHolidays[idx];
+    }
+    return holidayData as BankHoliday;
+  },
+
+  deleteHoliday: async (id: string): Promise<boolean> => {
+    await fetchJsonOrFallback(`/api/calendar/holidays/${id}`, { method: 'DELETE' });
+    const idx = initialHolidays.findIndex(h => h.id === id);
+    if (idx !== -1) initialHolidays.splice(idx, 1);
+    return true;
   },
 
   getBankHolidays: async (): Promise<BankHoliday[]> => {

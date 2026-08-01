@@ -3,6 +3,7 @@ import {
   Send,
   Save,
   Trash2,
+  Eye,
   AlertTriangle,
   CheckCircle2,
   Sparkles,
@@ -56,6 +57,18 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
 }) => {
   const t = translations[language] || translations['en'];
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [viewingReport, setViewingReport] = useState<DailyPerformanceReport | null>(null);
+
+  const handleDeleteReport = async (reportId: string) => {
+    if (window.confirm("Are you sure you want to withdraw/delete this report entry?")) {
+      try {
+        await api.deleteReport(reportId);
+        onRefreshData();
+      } catch (err) {
+        console.error("Failed to delete report", err);
+      }
+    }
+  };
 
   // Employee's Personal Reports
   const myReports = reports.filter(r => r.employeeId === user.id || r.employeeName.toLowerCase().includes(user.firstName.toLowerCase()));
@@ -332,10 +345,11 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
                 <th className="p-3">Mobile Banking</th>
                 <th className="p-3">Status</th>
                 <th className="p-3">Manager Notes</th>
+                <th className="p-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
-              {reports.filter(r => r.employeeId === user.id).map(r => (
+              {reports.filter(r => r.employeeId === user.id || r.employeeName.toLowerCase().includes(user.firstName.toLowerCase())).map(r => (
                 <tr key={r.id} className="hover:bg-white/5">
                   <td className="p-3 font-bold text-[#D4AF37]">{r.reportDate}</td>
                   <td className="p-3">{r.dayOfWeek}</td>
@@ -352,12 +366,86 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
                     </span>
                   </td>
                   <td className="p-3 text-gray-300 text-[11px]">{r.managerComment || '-'}</td>
+                  <td className="p-3 text-right">
+                    <div className="flex items-center justify-end space-x-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setViewingReport(r)}
+                        title="View Full Report Details"
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/20 text-cyan-300 transition-colors"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteReport(r.id)}
+                        title="Delete / Withdraw Report"
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/20 text-rose-400 transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* VIEW REPORT MODAL */}
+      {viewingReport && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-lg text-white space-y-4 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-white/10 pb-3">
+              <div>
+                <h3 className="font-bold text-lg text-[#D4AF37]">Daily Performance Entry Details</h3>
+                <p className="text-xs text-gray-300">{viewingReport.reportDate} ({viewingReport.dayOfWeek})</p>
+              </div>
+              <button onClick={() => setViewingReport(null)} className="text-gray-400 hover:text-white">
+                ✕
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Deposits Mobilized</span>
+                <strong className="text-emerald-400 text-sm font-bold">ETB {viewingReport.depositsETB?.toLocaleString()}</strong>
+              </div>
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Foreign Currency (FCY)</span>
+                <strong className="text-emerald-400 text-sm font-bold">ETB {viewingReport.foreignCurrencyETB?.toLocaleString()}</strong>
+              </div>
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Digital Financial Services</span>
+                <strong className="text-[#D4AF37] text-sm font-bold">ETB {viewingReport.digitalFinancialServicesETB?.toLocaleString()}</strong>
+              </div>
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Accounts Opened</span>
+                <strong className="text-white text-sm font-bold">{viewingReport.accountOpenings} Accounts</strong>
+              </div>
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Mobile Banking</span>
+                <strong className="text-white text-sm font-bold">{viewingReport.mobileBankingActivations} Users</strong>
+              </div>
+              <div className="p-3 bg-white/5 rounded-xl">
+                <span className="text-gray-400 block text-[10px]">Internet Banking</span>
+                <strong className="text-white text-sm font-bold">{viewingReport.internetBankingActivations} Users</strong>
+              </div>
+            </div>
+            {viewingReport.managerComment && (
+              <div className="p-3 bg-[#08321E] border border-[#D4AF37]/30 rounded-xl text-xs">
+                <span className="text-[#D4AF37] font-bold block mb-0.5">Manager Feedback & Notes:</span>
+                <p className="text-gray-200">{viewingReport.managerComment}</p>
+              </div>
+            )}
+            <div className="flex justify-end pt-2">
+              <button onClick={() => setViewingReport(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

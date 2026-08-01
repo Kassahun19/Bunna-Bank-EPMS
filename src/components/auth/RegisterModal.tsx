@@ -265,7 +265,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   <option value="">-- Choose District Office --</option>
                   {districts.map(d => (
                     <option key={d.id} value={d.id}>
-                      {d.name}
+                      {d.name} {d.solId ? `(SOL ${d.solId})` : `(${d.code})`}
                     </option>
                   ))}
                 </select>

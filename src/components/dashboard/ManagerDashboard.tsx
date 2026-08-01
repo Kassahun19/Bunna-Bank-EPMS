@@ -97,6 +97,12 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
       return;
     }
 
+    if (action === 'delete') {
+      if (!window.confirm(`Are you sure you want to delete the ${selectedReportIds.length} selected report(s)? This action cannot be undone.`)) {
+        return;
+      }
+    }
+
     setActionLoading(true);
     try {
       await api.managerAction(selectedReportIds, action, user.id, commentText);
