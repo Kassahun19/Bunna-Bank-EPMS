@@ -1,5 +1,7 @@
 export type UserRole = 'ADMINISTRATOR' | 'MANAGER' | 'EMPLOYEE';
 
+export * from './competitor';
+
 export type Language = 'en' | 'am';
 
 export type ApprovalStatus = 'Draft' | 'Submitted' | 'Pending' | 'Approved' | 'Rejected' | 'Returned' | 'Suspended';

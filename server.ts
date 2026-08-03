@@ -17,6 +17,15 @@ import {
   initialTargets
 } from './src/data/mockData.js';
 import {
+  initialCommercialBanks,
+  initialCompetitorBranches,
+  initialCompetitorKpis,
+  initialCompetitorPerformance,
+  initialAreaRankings,
+  initialAiInsights,
+  initialCompetitorAlerts
+} from './src/data/competitorMockData.js';
+import {
   getCollectionItems,
   saveDocument,
   saveCollectionBatch
@@ -39,6 +48,15 @@ let branches = [...initialBranches];
 let departments = [...initialDepartments];
 let kpis = [...initialKPIs];
 let users = [...defaultUsers];
+
+// Competitor Intelligence Module Store
+let commercialBanks = [...initialCommercialBanks];
+let competitorBranches = [...initialCompetitorBranches];
+let competitorKpis = [...initialCompetitorKpis];
+let competitorPerformance = [...initialCompetitorPerformance];
+let areaRankings = [...initialAreaRankings];
+let aiCompetitorInsights = [...initialAiInsights];
+let competitorAlerts = [...initialCompetitorAlerts];
 
 function getUserFullName(u: any): string {
   if (!u) return '';
@@ -82,7 +100,14 @@ function saveDataToDisk() {
       dailyReports,
       targets,
       directMessages,
-      contactMessages
+      contactMessages,
+      commercialBanks,
+      competitorBranches,
+      competitorKpis,
+      competitorPerformance,
+      areaRankings,
+      aiCompetitorInsights,
+      competitorAlerts
     };
     fs.writeFileSync(DATA_FILE, JSON.stringify(payload, null, 2), 'utf-8');
 
@@ -99,6 +124,11 @@ function saveDataToDisk() {
     saveCollectionBatch('dailyReports', dailyReports).catch(err => console.error('Firestore dailyReports batch save error:', err));
     saveCollectionBatch('targets', targets).catch(err => console.error('Firestore targets batch save error:', err));
     saveCollectionBatch('directMessages', directMessages).catch(err => console.error('Firestore directMessages batch save error:', err));
+    saveCollectionBatch('commercialBanks', commercialBanks).catch(err => console.error('Firestore commercialBanks batch save error:', err));
+    saveCollectionBatch('competitorBranches', competitorBranches).catch(err => console.error('Firestore competitorBranches batch save error:', err));
+    saveCollectionBatch('competitorKpis', competitorKpis).catch(err => console.error('Firestore competitorKpis batch save error:', err));
+    saveCollectionBatch('competitorPerformance', competitorPerformance).catch(err => console.error('Firestore competitorPerformance batch save error:', err));
+    saveCollectionBatch('competitorAlerts', competitorAlerts).catch(err => console.error('Firestore competitorAlerts batch save error:', err));
     if (contactMessages.length > 0) {
       saveCollectionBatch('contactMessages', contactMessages).catch(err => console.error('Firestore contactMessages batch save error:', err));
     }
@@ -165,6 +195,29 @@ function loadDataFromDisk() {
       if (Array.isArray(data.targets)) targets = data.targets;
       if (Array.isArray(data.directMessages)) directMessages = data.directMessages;
       if (Array.isArray(data.contactMessages)) contactMessages = data.contactMessages;
+
+      // Competitor intelligence data loading
+      if (Array.isArray(data.commercialBanks) && data.commercialBanks.length > 0) {
+        commercialBanks = data.commercialBanks;
+      }
+      if (Array.isArray(data.competitorBranches) && data.competitorBranches.length > 0) {
+        competitorBranches = data.competitorBranches;
+      }
+      if (Array.isArray(data.competitorKpis) && data.competitorKpis.length > 0) {
+        competitorKpis = data.competitorKpis;
+      }
+      if (Array.isArray(data.competitorPerformance) && data.competitorPerformance.length > 0) {
+        competitorPerformance = data.competitorPerformance;
+      }
+      if (Array.isArray(data.areaRankings) && data.areaRankings.length > 0) {
+        areaRankings = data.areaRankings;
+      }
+      if (Array.isArray(data.aiCompetitorInsights) && data.aiCompetitorInsights.length > 0) {
+        aiCompetitorInsights = data.aiCompetitorInsights;
+      }
+      if (Array.isArray(data.competitorAlerts) && data.competitorAlerts.length > 0) {
+        competitorAlerts = data.competitorAlerts;
+      }
       console.log('Successfully loaded persistent EPMS data store from disk.');
     } else {
       saveDataToDisk();
@@ -1496,6 +1549,446 @@ app.post('/api/ai/insights', async (req, res) => {
   }
 
   return res.json({ text: generatedText });
+});
+
+// ==========================================
+// BANKING COMPETITOR INTELLIGENCE API ROUTES
+// ==========================================
+
+// 1. Commercial Banks Management
+app.get('/api/competitors/banks', (req, res) => {
+  res.json(commercialBanks);
+});
+
+app.post('/api/competitors/banks', (req, res) => {
+  const { code, name, shortName, establishedYear, logoUrl, swiftCode, totalBranchesNationwide, color } = req.body;
+  if (!code || !name) {
+    return res.status(400).json({ error: 'Bank Code and Name are required' });
+  }
+
+  const existing = commercialBanks.find(b => b.code.toUpperCase() === code.toUpperCase());
+  if (existing) {
+    return res.status(400).json({ error: `Bank with code ${code} already exists.` });
+  }
+
+  const newBank = {
+    id: `BNK-${code.toUpperCase()}`,
+    code: code.toUpperCase(),
+    name,
+    shortName: shortName || name,
+    establishedYear: Number(establishedYear) || new Date().getFullYear(),
+    logoUrl: logoUrl || 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?auto=format&fit=crop&q=80&w=120',
+    swiftCode: swiftCode || `${code.toUpperCase()}ETAA`,
+    status: 'Active' as const,
+    totalBranchesNationwide: Number(totalBranchesNationwide) || 1,
+    color: color || '#003399',
+    isBunna: code.toUpperCase() === 'BUNNA'
+  };
+
+  commercialBanks.push(newBank);
+  saveDataToDisk();
+  res.status(201).json(newBank);
+});
+
+app.put('/api/competitors/banks/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = commercialBanks.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    commercialBanks[idx] = { ...commercialBanks[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(commercialBanks[idx]);
+  }
+  return res.status(404).json({ error: 'Bank not found' });
+});
+
+app.delete('/api/competitors/banks/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = commercialBanks.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    if (commercialBanks[idx].isBunna) {
+      return res.status(400).json({ error: 'Cannot delete primary Bunna Bank record.' });
+    }
+    commercialBanks.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Bank removed successfully' });
+  }
+  return res.status(404).json({ error: 'Bank not found' });
+});
+
+app.post('/api/competitors/banks/import', (req, res) => {
+  const { items } = req.body;
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'No valid bank items provided for import' });
+  }
+
+  let count = 0;
+  items.forEach((item: any) => {
+    if (item.name && item.code) {
+      const codeUpper = String(item.code).trim().toUpperCase();
+      const existingIdx = commercialBanks.findIndex(b => b.code.toUpperCase() === codeUpper);
+      const bankData = {
+        id: `BNK-${codeUpper}`,
+        code: codeUpper,
+        name: String(item.name).trim(),
+        shortName: String(item.shortName || item.name).trim(),
+        establishedYear: Number(item.establishedYear) || 2010,
+        logoUrl: item.logoUrl || 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?auto=format&fit=crop&q=80&w=120',
+        swiftCode: item.swiftCode || `${codeUpper}ETAA`,
+        status: (item.status === 'Inactive' ? 'Inactive' : 'Active') as 'Active' | 'Inactive',
+        totalBranchesNationwide: Number(item.totalBranchesNationwide) || 50,
+        color: item.color || '#003399',
+        isBunna: codeUpper === 'BUNNA'
+      };
+
+      if (existingIdx !== -1) {
+        commercialBanks[existingIdx] = { ...commercialBanks[existingIdx], ...bankData };
+      } else {
+        commercialBanks.push(bankData);
+      }
+      count++;
+    }
+  });
+
+  saveDataToDisk();
+  res.json({ success: true, count, message: `Successfully imported/updated ${count} commercial banks.` });
+});
+
+// 2. Competitor Branch Management
+app.get('/api/competitors/branches', (req, res) => {
+  const { bankId, city, region } = req.query;
+  let results = [...competitorBranches];
+  if (bankId) {
+    results = results.filter(b => b.bankId === bankId);
+  }
+  if (city) {
+    results = results.filter(b => b.city.toLowerCase() === String(city).toLowerCase());
+  }
+  if (region) {
+    results = results.filter(b => b.region.toLowerCase() === String(region).toLowerCase());
+  }
+  res.json(results);
+});
+
+app.post('/api/competitors/branches', (req, res) => {
+  const { bankId, branchName, solId, region, zone, city, woreda, districtName, latitude, longitude } = req.body;
+  if (!bankId || !branchName || !city) {
+    return res.status(400).json({ error: 'Bank ID, Branch Name, and City are required' });
+  }
+
+  const bank = commercialBanks.find(b => b.id === bankId || b.code === bankId);
+  const bankName = bank ? bank.name : 'Commercial Bank';
+  const bankCode = bank ? bank.code : 'BNK';
+
+  const newBranch = {
+    id: `CBR-${Date.now()}`,
+    bankId: bank ? bank.id : bankId,
+    bankName,
+    bankCode,
+    branchName,
+    solId: solId || `SOL-${Math.floor(100 + Math.random() * 900)}`,
+    region: region || 'Addis Ababa',
+    zone: zone || '',
+    city,
+    woreda: woreda || '',
+    districtName: districtName || 'East A.A District',
+    latitude: Number(latitude) || 9.0100,
+    longitude: Number(longitude) || 38.7600,
+    openingDate: new Date().toISOString().substring(0, 10),
+    status: 'Active' as const
+  };
+
+  competitorBranches.push(newBranch);
+  saveDataToDisk();
+  res.status(201).json(newBranch);
+});
+
+app.put('/api/competitors/branches/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = competitorBranches.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    competitorBranches[idx] = { ...competitorBranches[idx], ...req.body };
+    saveDataToDisk();
+    return res.json(competitorBranches[idx]);
+  }
+  return res.status(404).json({ error: 'Competitor branch not found' });
+});
+
+app.delete('/api/competitors/branches/:id', (req, res) => {
+  const { id } = req.params;
+  const idx = competitorBranches.findIndex(b => b.id === id);
+  if (idx !== -1) {
+    competitorBranches.splice(idx, 1);
+    saveDataToDisk();
+    return res.json({ success: true, message: 'Branch removed successfully' });
+  }
+  return res.status(404).json({ error: 'Competitor branch not found' });
+});
+
+app.post('/api/competitors/branches/import', (req, res) => {
+  const { items } = req.body;
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'No valid competitor branch items provided for import' });
+  }
+
+  let count = 0;
+  items.forEach((item: any) => {
+    if (item.branchName && item.city) {
+      const bankCode = item.bankCode ? String(item.bankCode).trim().toUpperCase() : 'CBE';
+      const bank = commercialBanks.find(b => b.code.toUpperCase() === bankCode);
+
+      const branchData = {
+        id: `CBR-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        bankId: bank ? bank.id : `BNK-${bankCode}`,
+        bankName: bank ? bank.name : (item.bankName || 'Commercial Bank'),
+        bankCode,
+        branchName: String(item.branchName).trim(),
+        solId: item.solId || `SOL-${Math.floor(100 + Math.random() * 900)}`,
+        region: item.region || 'Addis Ababa',
+        zone: item.zone || '',
+        city: String(item.city).trim(),
+        woreda: item.woreda || '',
+        districtName: item.districtName || 'East A.A District',
+        latitude: Number(item.latitude) || 9.0100,
+        longitude: Number(item.longitude) || 38.7600,
+        openingDate: item.openingDate || new Date().toISOString().substring(0, 10),
+        status: (item.status === 'Inactive' ? 'Inactive' : 'Active') as 'Active' | 'Inactive'
+      };
+
+      competitorBranches.push(branchData);
+      count++;
+    }
+  });
+
+  saveDataToDisk();
+  res.json({ success: true, count, message: `Successfully imported ${count} competitor branches.` });
+});
+
+// 3. Competitor KPIs & Banking Performance Index (BPI) Configuration
+app.get('/api/competitors/kpis', (req, res) => {
+  res.json(competitorKpis);
+});
+
+app.post('/api/competitors/kpis', (req, res) => {
+  const { kpis: newKpiWeights } = req.body;
+  if (Array.isArray(newKpiWeights)) {
+    // Validate that total weights equal 100
+    const totalWeight = newKpiWeights.reduce((s: number, k: any) => s + (Number(k.bpiWeight) || 0), 0);
+    if (Math.abs(totalWeight - 100) > 1.0) {
+      return res.status(400).json({ error: `Total BPI KPI weights must equal 100%. Current sum: ${totalWeight.toFixed(1)}%` });
+    }
+
+    competitorKpis = newKpiWeights;
+    saveDataToDisk();
+    return res.json({ success: true, competitorKpis, message: 'Updated BPI KPI weights successfully.' });
+  }
+
+  // Single KPI create
+  const { code, name, category, unit, bpiWeight, description } = req.body;
+  if (!code || !name) {
+    return res.status(400).json({ error: 'KPI Code and Name are required' });
+  }
+
+  const newKpi = {
+    id: `CKPI-${Date.now()}`,
+    code: code.toUpperCase(),
+    name,
+    category: category || 'Financial',
+    unit: unit || 'ETB',
+    bpiWeight: Number(bpiWeight) || 10,
+    description: description || '',
+    isCustom: true
+  };
+
+  competitorKpis.push(newKpi);
+  saveDataToDisk();
+  res.status(201).json(newKpi);
+});
+
+// 4. Monthly Performance Records & Area Rankings Engine
+app.get('/api/competitors/performance', (req, res) => {
+  const { city, period } = req.query;
+  let results = [...competitorPerformance];
+  if (city) {
+    results = results.filter(p => p.city.toLowerCase() === String(city).toLowerCase());
+  }
+  if (period) {
+    results = results.filter(p => p.period === String(period));
+  }
+  res.json(results);
+});
+
+app.post('/api/competitors/performance', (req, res) => {
+  const { branchId, year, month, metrics } = req.body;
+  const branch = competitorBranches.find(b => b.id === branchId);
+  if (!branch) {
+    return res.status(404).json({ error: 'Competitor branch not found' });
+  }
+
+  const period = `${year || 2026}-${String(month || 8).padStart(2, '0')}`;
+  
+  // Compute BPI Score out of 100 dynamically
+  const m = metrics || {};
+  const depScore = Math.min(100, ((m.depositsETB || 0) / 100000000) * 100);
+  const custScore = Math.min(100, ((m.totalCustomers || 0) / 50000) * 100);
+  const loanScore = Math.min(100, ((m.loanPortfolioETB || 0) / 50000000) * 100);
+  const digScore = Math.min(100, (((m.mobileBankingUsers || 0) + (m.internetBankingUsers || 0)) / 30000) * 100);
+  const profitScore = Math.min(100, ((m.profitETB || 0) / 3000000) * 100);
+  const csatScore = m.customerSatisfactionScore || 80;
+  const opsScore = 100 - (m.costToIncomeRatio || 45);
+
+  const calculatedBpi = Number(
+    (
+      (depScore * 0.25) +
+      (custScore * 0.20) +
+      (loanScore * 0.15) +
+      (digScore * 0.15) +
+      (profitScore * 0.10) +
+      (csatScore * 0.10) +
+      (opsScore * 0.05)
+    ).toFixed(1)
+  );
+
+  const perfRecord = {
+    id: `PERF-${branch.id}-${period}`,
+    branchId: branch.id,
+    bankId: branch.bankId,
+    bankName: branch.bankName,
+    bankCode: branch.bankCode,
+    branchName: branch.branchName,
+    city: branch.city,
+    districtName: branch.districtName,
+    year: year || 2026,
+    month: month || 8,
+    period,
+    metrics: {
+      totalCustomers: Number(m.totalCustomers) || 0,
+      newCustomers: Number(m.newCustomers) || 0,
+      depositsETB: Number(m.depositsETB) || 0,
+      casaETB: Number(m.casaETB) || 0,
+      loanPortfolioETB: Number(m.loanPortfolioETB) || 0,
+      mobileBankingUsers: Number(m.mobileBankingUsers) || 0,
+      internetBankingUsers: Number(m.internetBankingUsers) || 0,
+      atmUsers: Number(m.atmUsers) || 0,
+      posUsers: Number(m.posUsers) || 0,
+      qrUsers: Number(m.qrUsers) || 0,
+      revenueETB: Number(m.revenueETB) || 0,
+      profitETB: Number(m.profitETB) || 0,
+      costToIncomeRatio: Number(m.costToIncomeRatio) || 45,
+      customerSatisfactionScore: Number(m.customerSatisfactionScore) || 85,
+      complaintResolutionRate: Number(m.complaintResolutionRate) || 90,
+      employeeProductivityScore: Number(m.employeeProductivityScore) || 85,
+      branchGrowthRate: Number(m.branchGrowthRate) || 10,
+      marketSharePercentage: Number(m.marketSharePercentage) || 10
+    },
+    bpiScore: calculatedBpi
+  };
+
+  const existingIdx = competitorPerformance.findIndex(p => p.branchId === branch.id && p.period === period);
+  if (existingIdx !== -1) {
+    competitorPerformance[existingIdx] = perfRecord;
+  } else {
+    competitorPerformance.push(perfRecord);
+  }
+
+  saveDataToDisk();
+  res.status(201).json(perfRecord);
+});
+
+// 5. Area Rankings & Gap Analysis
+app.get('/api/competitors/rankings', (req, res) => {
+  res.json(areaRankings);
+});
+
+app.get('/api/competitors/gap-analysis', (req, res) => {
+  const { area } = req.query;
+  const found = areaRankings.find(a => a.areaName.toLowerCase().includes(String(area || '').toLowerCase()));
+  if (found) {
+    return res.json({
+      areaName: found.areaName,
+      bunnaRank: found.bunnaRank,
+      bunnaBpiScore: found.bunnaBpiScore,
+      gapAnalysis: found.gapAnalysis
+    });
+  }
+  return res.json(areaRankings[0] || { gapAnalysis: [] });
+});
+
+// 6. AI Competitor Insights & Recommendations (Server-Side Gemini Integration)
+app.post('/api/competitors/ai-insights', async (req, res) => {
+  const { areaName, query } = req.body;
+  const targetArea = areaName || 'Bahir Dar';
+
+  const areaData = areaRankings.find(a => a.areaName.toLowerCase().includes(targetArea.toLowerCase())) || areaRankings[0];
+
+  const userPrompt = query || `Provide strategic competitive intelligence analysis and prioritized manager recommendations for Bunna Bank S.C. in ${targetArea}. Explain why Bunna Bank is currently ranked #${areaData.bunnaRank} and which specific KPIs need urgent attention.`;
+
+  const competitorContext = `
+AREA COMPETITIVE INTELLIGENCE CONTEXT:
+- Targeted Hub: ${areaData.areaName} (${areaData.districtName}, ${areaData.region})
+- Total Operating Commercial Banks in Hub: ${areaData.totalBanks}
+- Bunna Bank Rank in Area: Rank #${areaData.bunnaRank} out of ${areaData.totalBanks}
+- Bunna Bank BPI Performance Index: ${areaData.bunnaBpiScore} / 100
+
+AREA RANKINGS LEADERBOARD:
+${areaData.rankings.map(r => `${r.rank}. ${r.bankName} (${r.branchName}): BPI ${r.bpiScore}, Deposits ETB ${(r.depositsETB/1e6).toFixed(1)}M, Customers ${r.customerCount.toLocaleString()}, Digital Users ${r.digitalUsers.toLocaleString()}, Profit ETB ${(r.profitETB/1e6).toFixed(1)}M`).join('\n')}
+
+GAP ANALYSIS VS #1 BANK (${areaData.rankings[0]?.bankName}):
+${areaData.gapAnalysis.map(g => `- ${g.kpiName}: Bunna ${g.bunnaValue.toLocaleString()} vs Best ${g.bestCompetitorValue.toLocaleString()} (Gap: ${g.gapPercentage}% | Target to #1: ${g.targetToRankOne.toLocaleString()})`).join('\n')}
+`;
+
+  if (aiClient) {
+    try {
+      const response = await aiClient.models.generateContent({
+        model: 'gemini-3.6-flash',
+        contents: `${competitorContext}\n\nUSER CONSULTING QUERY:\n${userPrompt}`,
+        config: {
+          systemInstruction: `You are the Bunna Bank Senior Competitive Intelligence AI Analyst. You analyze Ethiopian commercial banking market dynamics (CBE, Dashen, Awash, Bunna, Abyssinia, Coop Bank), identify KPI gaps, and formulate concrete, quantitative, high-impact recommendations to boost Bunna Bank's market rank. Keep responses executive-grade, structured, concise, and actionable.`,
+          temperature: 0.7
+        }
+      });
+
+      const aiResponseText = response.text;
+      if (aiResponseText) {
+        return res.json({
+          areaName: targetArea,
+          bunnaRank: areaData.bunnaRank,
+          aiResponseText,
+          insight: {
+            ...initialAiInsights[0],
+            areaName: targetArea,
+            bunnaRank: areaData.bunnaRank,
+            summary: aiResponseText.substring(0, 300) + '...'
+          }
+        });
+      }
+    } catch (err) {
+      console.error('Gemini Competitor AI Error:', err);
+    }
+  }
+
+  // Fallback intelligent insight if Gemini key is unconfigured
+  const fallbackInsight = initialAiInsights.find(i => i.areaName.toLowerCase().includes(targetArea.toLowerCase())) || initialAiInsights[0];
+  res.json({
+    areaName: targetArea,
+    bunnaRank: areaData.bunnaRank,
+    aiResponseText: fallbackInsight.summary + "\n\n### Strategic Recommendations:\n" + fallbackInsight.recommendations.map(r => `1. **${r.title}**: ${r.actionItem} (Impact: ${r.expectedRankImprovement}, Expected Deposit Boost: ETB ${(r.estimatedDepositIncreaseETB/1e6).toFixed(1)}M)`).join('\n'),
+    insight: fallbackInsight
+  });
+});
+
+// 7. Competitor Alerts
+app.get('/api/competitors/alerts', (req, res) => {
+  res.json(competitorAlerts);
+});
+
+app.post('/api/competitors/alerts/mark-read', (req, res) => {
+  const { alertId } = req.body;
+  const alert = competitorAlerts.find(a => a.id === alertId);
+  if (alert) {
+    alert.read = true;
+    saveDataToDisk();
+  }
+  res.json({ success: true });
 });
 
 export default app;

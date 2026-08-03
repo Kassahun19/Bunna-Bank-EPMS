@@ -15,13 +15,16 @@ import {
   ChevronRight,
   Send,
   FileSpreadsheet,
-  UserCheck
+  UserCheck,
+  BarChart3,
+  TrendingUp
 } from 'lucide-react';
 import { User, DailyPerformanceReport, PerformanceTarget, getUserFullName } from '../../types';
 import { api } from '../../services/api';
 import { AllProductsOverview } from './AllProductsOverview';
 import { BranchCampaignWidget } from './BranchCampaignWidget';
 import { BranchEmployeeTargetManager } from './BranchEmployeeTargetManager';
+import { EmployeePerformanceModal } from './EmployeePerformanceModal';
 
 interface ManagerDashboardProps {
   user: User;
@@ -51,6 +54,10 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
   const [commentText, setCommentText] = useState('');
   const [actionLoading, setActionLoading] = useState(false);
 
+  // Employee Performance Modal State
+  const [isPerfModalOpen, setIsPerfModalOpen] = useState(false);
+  const [perfModalSelectedEmpId, setPerfModalSelectedEmpId] = useState<string | undefined>(undefined);
+
   // Direct Message State
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>(employees[0]?.id || '');
   const [directMessageInput, setDirectMessageInput] = useState('');
@@ -60,14 +67,19 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
 
   // Filter employees belonging to manager's branch
   const branchEmployees = employees.filter(e => {
-    if (!user.branchId) return e.role === 'EMPLOYEE';
-    return (e.branchId === user.branchId || e.branchName === user.branchName) && e.role === 'EMPLOYEE';
+    if (e.role !== 'EMPLOYEE') return false;
+    if (!user.branchId && !user.branchName) return true;
+    const sameBranchId = user.branchId && e.branchId && user.branchId === e.branchId;
+    const sameBranchName = user.branchName && e.branchName && user.branchName.trim().toLowerCase() === e.branchName.trim().toLowerCase();
+    return Boolean(sameBranchId || sameBranchName);
   });
 
   // Filter reports for manager's branch
   const branchReports = reports.filter(r => {
-    if (!user.branchId) return true;
-    return r.branchId === user.branchId || r.branchName === user.branchName;
+    if (!user.branchId && !user.branchName) return true;
+    const sameBranchId = user.branchId && r.branchId && user.branchId === r.branchId;
+    const sameBranchName = user.branchName && r.branchName && user.branchName.trim().toLowerCase() === r.branchName.trim().toLowerCase();
+    return Boolean(sameBranchId || sameBranchName);
   });
 
   const filteredReports = branchReports.filter(r => {
@@ -144,7 +156,18 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => {
+              setPerfModalSelectedEmpId(branchEmployees[0]?.id || employees[0]?.id);
+              setIsPerfModalOpen(true);
+            }}
+            className="px-4 py-2.5 rounded-xl bg-[#0B4228] hover:bg-[#0e5232] border border-[#D4AF37]/60 text-xs font-bold flex items-center space-x-2 text-white shadow-lg transition-all"
+          >
+            <BarChart3 className="w-4 h-4 text-[#D4AF37]" />
+            <span>View Employee Performance</span>
+          </button>
+
           {onOpenProfile && (
             <button
               onClick={onOpenProfile}
@@ -256,6 +279,18 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
                       </td>
                       <td className="p-3 text-right">
                         <div className="flex items-center justify-end space-x-2">
+                          <button
+                            onClick={() => {
+                              setPerfModalSelectedEmpId(emp.id);
+                              setIsPerfModalOpen(true);
+                            }}
+                            className="px-2.5 py-1.5 rounded-xl bg-[#0B4228] hover:bg-[#0e5232] border border-[#D4AF37]/50 text-white font-bold text-[11px] flex items-center gap-1 shadow"
+                            title="View Product & Overall Performance"
+                          >
+                            <BarChart3 className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            <span>Performance</span>
+                          </button>
+
                           <button
                             onClick={() => setSelectedEmployeeId(emp.id)}
                             className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#D4AF37] font-bold text-[11px] flex items-center gap-1"
@@ -527,6 +562,18 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Employee Performance Analytics Modal */}
+      <EmployeePerformanceModal
+        isOpen={isPerfModalOpen}
+        onClose={() => setIsPerfModalOpen(false)}
+        employees={branchEmployees.length > 0 ? branchEmployees : employees}
+        reports={reports}
+        targets={targets}
+        initialEmployeeId={perfModalSelectedEmpId}
+        onOpenAiSummary={onOpenAiSummary}
+        onOpenDirectMessage={(empId) => setSelectedEmployeeId(empId)}
+      />
 
     </div>
   );

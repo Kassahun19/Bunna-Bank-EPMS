@@ -113,6 +113,7 @@ export const App: React.FC = () => {
 
     if (roleGroup === 'ADMINISTRATOR' || (!roleGroup && currentUser?.role === 'ADMINISTRATOR')) {
       if (itemId === 'admin_dashboard') setAdminActiveTab('overview');
+      else if (itemId === 'competitor_intelligence') setAdminActiveTab('competitor');
       else if (itemId === 'districts') setAdminActiveTab('districts');
       else if (itemId === 'branches') setAdminActiveTab('branches');
       else if (itemId === 'employees' || itemId === 'user_management') setAdminActiveTab('employees');

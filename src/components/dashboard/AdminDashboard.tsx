@@ -53,6 +53,7 @@ import {
 import { User, District, Branch, KPI, DailyPerformanceReport, AuditLog, BankHoliday, PerformanceTarget, getUserFullName } from '../../types';
 import { AllProductsOverview } from './AllProductsOverview';
 import { BranchCampaignWidget } from './BranchCampaignWidget';
+import { CompetitorIntelligenceModule } from '../competitor/CompetitorIntelligenceModule';
 
 interface AdminDashboardProps {
   user: User;
@@ -64,6 +65,8 @@ interface AdminDashboardProps {
   auditLogs: AuditLog[];
   holidays: BankHoliday[];
   targets?: PerformanceTarget[];
+  activeTab?: string;
+  onTabChange?: (tab: any) => void;
   onRefreshData: () => void;
   onOpenAiAssistant: () => void;
   onOpenExportModal: () => void;
@@ -81,6 +84,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   auditLogs,
   holidays,
   targets = [],
+  activeTab: propActiveTab,
+  onTabChange,
   onRefreshData,
   onOpenAiAssistant,
   onOpenExportModal,
@@ -88,8 +93,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onOpenAiSummary
 }) => {
   const [activeTab, setActiveTab] = useState<
-    'overview' | 'products' | 'districts' | 'branches' | 'employees' | 'kpis' | 'reports' | 'audit' | 'holidays'
-  >('overview');
+    'overview' | 'products' | 'competitor' | 'districts' | 'branches' | 'employees' | 'kpis' | 'reports' | 'audit' | 'holidays'
+  >((propActiveTab as any) || 'overview');
+
+  React.useEffect(() => {
+    if (propActiveTab) {
+      setActiveTab(propActiveTab as any);
+    }
+  }, [propActiveTab]);
+
+  const handleTabSelect = (tabId: any) => {
+    setActiveTab(tabId);
+    if (onTabChange) {
+      onTabChange(tabId);
+    }
+  };
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -529,6 +547,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className="flex items-center space-x-2 overflow-x-auto pb-2 border-b border-white/10 text-xs font-bold text-gray-300">
         {[
           { id: 'overview', label: 'Executive Dashboard' },
+          { id: 'competitor', label: 'Competitor Intelligence' },
           { id: 'products', label: 'All Products Performance' },
           { id: 'districts', label: 'Districts' },
           { id: 'branches', label: 'Branches' },
@@ -540,7 +559,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => handleTabSelect(tab.id as any)}
             className={`px-4 py-2.5 rounded-xl whitespace-nowrap transition-all ${
               activeTab === tab.id
                 ? 'bg-[#D4AF37] text-[#0B4228] shadow-md font-extrabold'
@@ -551,6 +570,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </button>
         ))}
       </div>
+
+      {/* TAB FOR COMPETITOR INTELLIGENCE */}
+      {activeTab === 'competitor' && (
+        <CompetitorIntelligenceModule userRole={user.role} userDistrict={user.districtName} userBranch={user.branchName} />
+      )}
 
       {/* TAB FOR ALL PRODUCTS */}
       {activeTab === 'products' && (

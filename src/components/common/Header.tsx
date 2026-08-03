@@ -343,6 +343,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                           </div>
                           {[
                             { id: 'admin_dashboard', label: 'Admin Dashboard', icon: LayoutDashboard },
+                            { id: 'competitor_intelligence', label: 'Competitor Intelligence', icon: BarChart3 },
                             { id: 'districts', label: 'Districts/Area Offices', icon: MapPin },
                             { id: 'branches', label: 'Branches', icon: Building2 },
                             { id: 'employees', label: 'Employees', icon: Users },

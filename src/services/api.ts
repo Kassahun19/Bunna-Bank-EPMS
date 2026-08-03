@@ -9,7 +9,14 @@ import {
   Notification,
   BankHoliday,
   AuditLog,
-  UserRole
+  UserRole,
+  CommercialBank,
+  CompetitorBranch,
+  CompetitorKpi,
+  CompetitorMonthlyPerformance,
+  AreaRanking,
+  AiCompetitorInsight,
+  CompetitorAlert
 } from '../types';
 import {
   defaultUsers,
@@ -23,6 +30,15 @@ import {
   initialHolidays,
   initialAuditLogs
 } from '../data/mockData';
+import {
+  initialCommercialBanks,
+  initialCompetitorBranches,
+  initialCompetitorKpis,
+  initialCompetitorPerformance,
+  initialAreaRankings,
+  initialAiInsights,
+  initialCompetitorAlerts
+} from '../data/competitorMockData';
 
 // Helper to safely parse JSON response or throw formatted error or return null for non-JSON
 async function fetchJsonOrFallback<T>(url: string, options?: RequestInit): Promise<{ data?: T; error?: string; isHtmlOrOffline?: boolean }> {
@@ -855,6 +871,210 @@ export const api = {
     if (res.data) return res.data;
     if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
     return { message: 'Inquiry submitted successfully to Bunna Bank support.' };
+  },
+
+  // ==========================================
+  // BANKING COMPETITOR INTELLIGENCE SERVICE METHODS
+  // ==========================================
+  getCommercialBanks: async (): Promise<CommercialBank[]> => {
+    const res = await fetchJsonOrFallback<CommercialBank[]>('/api/competitors/banks');
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialCommercialBanks;
+  },
+
+  addCommercialBank: async (bankData: Partial<CommercialBank>): Promise<CommercialBank> => {
+    const res = await fetchJsonOrFallback<CommercialBank>('/api/competitors/banks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bankData)
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return {
+      id: `BNK-${bankData.code || 'BNK'}`,
+      code: bankData.code || 'BNK',
+      name: bankData.name || 'New Bank',
+      shortName: bankData.shortName || bankData.name || 'New Bank',
+      establishedYear: bankData.establishedYear || 2015,
+      status: 'Active',
+      totalBranchesNationwide: bankData.totalBranchesNationwide || 50,
+      color: bankData.color || '#003399'
+    };
+  },
+
+  updateCommercialBank: async (id: string, bankData: Partial<CommercialBank>): Promise<CommercialBank> => {
+    const res = await fetchJsonOrFallback<CommercialBank>(`/api/competitors/banks/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bankData)
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { id, ...bankData } as CommercialBank;
+  },
+
+  deleteCommercialBank: async (id: string): Promise<{ success: boolean; message?: string }> => {
+    const res = await fetchJsonOrFallback<{ success: boolean; message?: string }>(`/api/competitors/banks/${id}`, {
+      method: 'DELETE'
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { success: true };
+  },
+
+  importCommercialBanks: async (items: any[]): Promise<{ count: number; message: string }> => {
+    const res = await fetchJsonOrFallback<{ count: number; message: string }>('/api/competitors/banks/import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { count: items.length, message: `Imported ${items.length} banks successfully` };
+  },
+
+  getCompetitorBranches: async (params?: { bankId?: string; city?: string; region?: string }): Promise<CompetitorBranch[]> => {
+    const query = new URLSearchParams();
+    if (params?.bankId) query.set('bankId', params.bankId);
+    if (params?.city) query.set('city', params.city);
+    if (params?.region) query.set('region', params.region);
+    const url = `/api/competitors/branches${query.toString() ? `?${query.toString()}` : ''}`;
+    const res = await fetchJsonOrFallback<CompetitorBranch[]>(url);
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialCompetitorBranches;
+  },
+
+  addCompetitorBranch: async (branchData: Partial<CompetitorBranch>): Promise<CompetitorBranch> => {
+    const res = await fetchJsonOrFallback<CompetitorBranch>('/api/competitors/branches', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(branchData)
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return {
+      id: `CBR-${Date.now()}`,
+      bankId: branchData.bankId || 'BNK-CBE',
+      bankName: branchData.bankName || 'Commercial Bank',
+      bankCode: branchData.bankCode || 'CBE',
+      branchName: branchData.branchName || 'New Competitor Branch',
+      city: branchData.city || 'Addis Ababa',
+      districtName: branchData.districtName || 'East A.A District',
+      latitude: branchData.latitude || 9.0100,
+      longitude: branchData.longitude || 38.7600,
+      region: branchData.region || 'Addis Ababa',
+      status: 'Active'
+    };
+  },
+
+  updateCompetitorBranch: async (id: string, branchData: Partial<CompetitorBranch>): Promise<CompetitorBranch> => {
+    const res = await fetchJsonOrFallback<CompetitorBranch>(`/api/competitors/branches/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(branchData)
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { id, ...branchData } as CompetitorBranch;
+  },
+
+  deleteCompetitorBranch: async (id: string): Promise<{ success: boolean; message?: string }> => {
+    const res = await fetchJsonOrFallback<{ success: boolean; message?: string }>(`/api/competitors/branches/${id}`, {
+      method: 'DELETE'
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { success: true };
+  },
+
+  importCompetitorBranches: async (items: any[]): Promise<{ count: number; message: string }> => {
+    const res = await fetchJsonOrFallback<{ count: number; message: string }>('/api/competitors/branches/import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return { count: items.length, message: `Imported ${items.length} competitor branches` };
+  },
+
+  getCompetitorKpis: async (): Promise<CompetitorKpi[]> => {
+    const res = await fetchJsonOrFallback<CompetitorKpi[]>('/api/competitors/kpis');
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialCompetitorKpis;
+  },
+
+  saveCompetitorKpis: async (kpis: CompetitorKpi[]): Promise<CompetitorKpi[]> => {
+    const res = await fetchJsonOrFallback<{ competitorKpis: CompetitorKpi[] }>('/api/competitors/kpis', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kpis })
+    });
+    if (res.data?.competitorKpis) return res.data.competitorKpis;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return kpis;
+  },
+
+  getCompetitorPerformance: async (params?: { city?: string; period?: string }): Promise<CompetitorMonthlyPerformance[]> => {
+    const query = new URLSearchParams();
+    if (params?.city) query.set('city', params.city);
+    if (params?.period) query.set('period', params.period);
+    const url = `/api/competitors/performance${query.toString() ? `?${query.toString()}` : ''}`;
+    const res = await fetchJsonOrFallback<CompetitorMonthlyPerformance[]>(url);
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialCompetitorPerformance;
+  },
+
+  saveCompetitorPerformance: async (perfData: any): Promise<CompetitorMonthlyPerformance> => {
+    const res = await fetchJsonOrFallback<CompetitorMonthlyPerformance>('/api/competitors/performance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(perfData)
+    });
+    if (res.data) return res.data;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    return initialCompetitorPerformance[0];
+  },
+
+  getCompetitorRankings: async (): Promise<AreaRanking[]> => {
+    const res = await fetchJsonOrFallback<AreaRanking[]>('/api/competitors/rankings');
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialAreaRankings;
+  },
+
+  getCompetitorGapAnalysis: async (area?: string): Promise<any> => {
+    const res = await fetchJsonOrFallback<any>(`/api/competitors/gap-analysis${area ? `?area=${encodeURIComponent(area)}` : ''}`);
+    if (res.data) return res.data;
+    return initialAreaRankings[0]?.gapAnalysis || [];
+  },
+
+  askCompetitorAiInsights: async (areaName: string, query?: string): Promise<{ areaName: string; bunnaRank: number; aiResponseText: string; insight: AiCompetitorInsight }> => {
+    const res = await fetchJsonOrFallback<any>('/api/competitors/ai-insights', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ areaName, query })
+    });
+    if (res.data) return res.data;
+    return {
+      areaName,
+      bunnaRank: 4,
+      aiResponseText: initialAiInsights[0].summary,
+      insight: initialAiInsights[0]
+    };
+  },
+
+  getCompetitorAlerts: async (): Promise<CompetitorAlert[]> => {
+    const res = await fetchJsonOrFallback<CompetitorAlert[]>('/api/competitors/alerts');
+    if (res.data && Array.isArray(res.data)) return res.data;
+    return initialCompetitorAlerts;
+  },
+
+  markCompetitorAlertRead: async (alertId: string): Promise<void> => {
+    await fetchJsonOrFallback<void>('/api/competitors/alerts/mark-read', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alertId })
+    });
   },
 
   // Vercel / Express vercel.json helper
