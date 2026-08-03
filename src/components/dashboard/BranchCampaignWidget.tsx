@@ -23,7 +23,7 @@ interface BranchCampaignWidgetProps {
 }
 
 export const BranchCampaignWidget: React.FC<BranchCampaignWidgetProps> = ({
-  branchName = 'Hamusit / Local Branch',
+  branchName = 'Hamusit Branch (SOL 360)',
   userRole = 'EMPLOYEE',
   reports = [],
   onReportSubmitted

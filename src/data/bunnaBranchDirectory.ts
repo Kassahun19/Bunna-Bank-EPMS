@@ -1080,7 +1080,8 @@ const districtDataMap: Record<string, { id: string; name: string; region: string
       { name: "GILGEL BELES (ግልገል በለስ)", loc: "ግልገል በለስ ከተማ" },
       { name: "PAWI (ፓዊ)", loc: "ፓዊ ከተማ ሆስፒታል ጎን" },
       { name: "ADDIS ZEMEN (አዲስ ዘመን)", loc: "አዲስ ዘመን ከተማ ገበያ" },
-      { name: "MERAWI (መራዊ)", loc: "መራዊ ከተማ አደባባይ" }
+      { name: "MERAWI (መራዊ)", loc: "መራዊ ከተማ አደባባይ" },
+      { name: "HAMUSIT (ሐሙሲት)", loc: "ሐሙሲት ከተማ ዋና መንገድ" }
     ]
   },
   "DIST-MKL": {
@@ -1231,31 +1232,49 @@ export function generateBranchesFrom151To579(): Branch[] {
     const cycleNumber = Math.floor((sol - 151) / distObj.locations.length) + 1;
     const suffix = cycleNumber > 1 ? " " + cycleNumber : "";
 
-    const branchName = locObj.name.replace(")", suffix + ")");
+    let bDistrictId = distObj.id;
+    let bDistrictName = distObj.name;
+    let bRegion = distObj.region;
+    let bBranchName = locObj.name.replace(")", suffix + ")");
+    let bLocation = locObj.loc;
+
     const fn = managerFirstNames[(sol * 3) % managerFirstNames.length];
     const ln = managerLastNames[(sol * 7) % managerLastNames.length];
+    let mgr = fn + " " + ln;
+
+    if (sol === 158) {
+      bDistrictId = "DIST-BDR";
+      bDistrictName = "Bahir Dar District";
+      bRegion = "Amhara";
+      bBranchName = "MERAWI (መራዊ)";
+      bLocation = "መራዊ ከተማ አደባባይ";
+    } else if (sol === 360) {
+      bDistrictId = "DIST-BDR";
+      bDistrictName = "Bahir Dar District";
+      bRegion = "Amhara";
+      bBranchName = "HAMUSIT (ሐሙሲት)";
+      bLocation = "ሐሙሲት ከተማ ዋና መንገድ";
+      mgr = "Negash Adugna (0918530066)";
+    } else if (bBranchName.includes("HAMUSIT") || bBranchName.includes("ሐሙሲት")) {
+      mgr = "Negash Adugna (0918530066)";
+    }
 
     const p1 = (sol * 13) % 90 + 10;
     const p2 = (sol * 37) % 90 + 10;
 
-    let mgr = fn + " " + ln;
-    if (sol === 360 || branchName.includes("HAMUSIT") || branchName.includes("ሐሙሲት")) {
-      mgr = "Negash Adugna (0918530066)";
-    }
-
     list.push({
       id: "BR-" + sol,
       solId: String(sol),
-      districtId: distObj.id,
-      districtName: distObj.name,
-      name: branchName,
+      districtId: bDistrictId,
+      districtName: bDistrictName,
+      name: bBranchName,
       code: String(sol),
       phone: distObj.phoneCode + "-" + p1 + "-" + p2,
       type: branchTypes[sol % branchTypes.length],
       employeeCount: 12 + (sol % 24),
       managerName: mgr,
-      location: locObj.loc,
-      region: distObj.region,
+      location: bLocation,
+      region: bRegion,
       status: "Active"
     });
   }

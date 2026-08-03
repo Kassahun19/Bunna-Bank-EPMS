@@ -36,6 +36,22 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSuccessMsg, setForgotSuccessMsg] = useState('');
 
+  // Clear credentials & state when modal opens or closes (logout/re-login clean slate)
+  useEffect(() => {
+    if (isOpen) {
+      setUserId('');
+      setPassword('');
+      setError('');
+      setShowPassword(false);
+      setRememberMe(false);
+      setFailedAttempts(0);
+      setLockoutTimer(0);
+      setForgotModalOpen(false);
+      setForgotEmail('');
+      setForgotSuccessMsg('');
+    }
+  }, [isOpen]);
+
   // Lockout countdown timer effect
   useEffect(() => {
     let timer: any;

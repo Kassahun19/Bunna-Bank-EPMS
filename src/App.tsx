@@ -28,7 +28,15 @@ import { ApiDocsModal } from './components/docs/ApiDocsModal';
 export const App: React.FC = () => {
   // Global State
   const [language, setLanguage] = useState<Language>('en');
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    try {
+      const saved = localStorage.getItem('bunna_user');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.warn("Failed to parse saved user from storage", e);
+    }
+    return null;
+  });
   const [currentNavView, setCurrentNavView] = useState<'home' | 'about' | 'contact'>('home');
 
   // App Data
@@ -95,6 +103,19 @@ export const App: React.FC = () => {
     loadData();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await api.logout();
+    } catch (err) {
+      console.warn("Logout API call warning", err);
+    }
+    setCurrentUser(null);
+    setCurrentNavView('home');
+    localStorage.removeItem('bunna_user');
+    localStorage.removeItem('bunna_token');
+    sessionStorage.clear();
+  };
+
   const handleRoleSwitch = async (role: UserRole) => {
     try {
       const user = await api.quickSwitchUserRole(role);
@@ -143,7 +164,7 @@ export const App: React.FC = () => {
         currentUser={currentUser}
         onOpenLogin={() => setIsLoginOpen(true)}
         onOpenRegister={() => setIsRegisterOpen(true)}
-        onLogout={() => { setCurrentUser(null); setCurrentNavView('home'); }}
+        onLogout={handleLogout}
         onRoleSwitch={handleRoleSwitch}
         unreadNotifications={unreadNotificationCount}
         onOpenNotifications={() => setIsNotificationOpen(true)}
@@ -251,7 +272,10 @@ export const App: React.FC = () => {
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
-        onLoginSuccess={(user) => setCurrentUser(user)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          localStorage.setItem('bunna_user', JSON.stringify(user));
+        }}
         onOpenRegister={() => setIsRegisterOpen(true)}
         selectedRoleHint={roleHint}
       />
@@ -318,8 +342,12 @@ export const App: React.FC = () => {
           onRefreshData={loadData}
           onOpenAiSummary={handleOpenAiForEmployee}
           onNavigateTab={handleSelectNavTab}
-          onLogout={() => { setCurrentUser(null); setCurrentNavView('home'); setIsProfileOpen(false); }}
+          onLogout={() => { setCurrentUser(null); setCurrentNavView('home'); setIsProfileOpen(false); localStorage.removeItem('bunna_user'); }}
           language={language}
+          onUserUpdated={(updated) => {
+            setCurrentUser(updated);
+            localStorage.setItem('bunna_user', JSON.stringify(updated));
+          }}
         />
       )}
 

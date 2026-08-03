@@ -35,7 +35,9 @@ import {
   MessageSquare,
   Bell,
   LogOut,
-  ChevronRight
+  ChevronRight,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { User, UserRole, PerformanceTarget, DailyPerformanceReport, getUserFullName, Language } from '../../types';
 import { api } from '../../services/api';
@@ -55,6 +57,8 @@ interface UserProfileModalProps {
   onNavigateTab?: (itemId: string, roleGroup: UserRole) => void;
   onLogout?: () => void;
   language?: Language;
+  onUserUpdated?: (updatedUser: User) => void;
+  initialTab?: 'profile' | 'createReport' | 'navigation' | 'targets' | 'badges' | 'security' | 'activity';
 }
 
 export const UserProfileModal: React.FC<UserProfileModalProps> = ({
@@ -68,15 +72,20 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   onOpenAiSummary,
   onNavigateTab,
   onLogout,
-  language = 'en'
+  language = 'en',
+  onUserUpdated,
+  initialTab
 }) => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'createReport' | 'navigation' | 'targets' | 'badges' | 'security' | 'activity'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'createReport' | 'navigation' | 'targets' | 'badges' | 'security' | 'activity'>(initialTab || 'profile');
   const t = translations[language] || translations['en'];
   const [selectedUser, setSelectedUser] = useState<User>(user);
 
   useEffect(() => {
     setSelectedUser(user);
-  }, [user]);
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [user, initialTab]);
 
   const activeEmployee = selectedUser || user;
 
@@ -89,6 +98,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [pwdLoading, setPwdLoading] = useState(false);
   const [pwdError, setPwdError] = useState('');
   const [pwdSuccess, setPwdSuccess] = useState('');
@@ -130,7 +142,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     }
 
     if (!Object.values(pwdCriteria).every(Boolean)) {
-      setPwdError('New password does not fulfill all security complexity requirements.');
+      setPwdError('New password does not fulfill all security complexity requirements (at least 8 chars, 1 uppercase, 1 lowercase, 1 number, and 1 special symbol).');
       return;
     }
 
@@ -138,16 +150,24 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
     try {
       const res = await api.changePassword({
-        userId: user.id,
+        userId: user.id || activeEmployee.id,
         currentPassword,
         newPassword
       });
-      setPwdSuccess(res.message || 'Password updated successfully!');
+
+      const updatedUser = res.user || { ...activeEmployee, password: newPassword };
+      setPwdSuccess(res.message || '✓ Password updated successfully! Use your new password for future logins.');
+      
+      if (onUserUpdated) {
+        onUserUpdated(updatedUser);
+      }
+      localStorage.setItem('bunna_user', JSON.stringify(updatedUser));
+
       setCurrentPassword('');
       setNewPassword('');
       setConfirmNewPassword('');
     } catch (err: any) {
-      setPwdError(err.message || 'Failed to update password.');
+      setPwdError(err.message || 'Failed to update password. Please check your current password and try again.');
     } finally {
       setPwdLoading(false);
     }
@@ -729,27 +749,45 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <form onSubmit={handleChangePassword} className="space-y-3.5">
                   <div>
                     <label className="block text-[11px] font-bold text-gray-300 mb-1">Current Password</label>
-                    <input
-                      type="password"
-                      required
-                      value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                      placeholder="Enter current password"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showCurrentPassword ? "text" : "password"}
+                        required
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        placeholder="Enter current password"
+                        className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        {showCurrentPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-[11px] font-bold text-gray-300 mb-1">New Password</label>
-                      <input
-                        type="password"
-                        required
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="New password"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                      />
+                      <div className="relative">
+                        <input
+                          type={showNewPassword ? "text" : "password"}
+                          required
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="New password"
+                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowNewPassword(!showNewPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                        >
+                          {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
                     </div>
 
                     <div>
@@ -763,14 +801,23 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           </span>
                         )}
                       </div>
-                      <input
-                        type="password"
-                        required
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        placeholder="Confirm new password"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                      />
+                      <div className="relative">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          required
+                          value={confirmNewPassword}
+                          onChange={(e) => setConfirmNewPassword(e.target.value)}
+                          placeholder="Confirm new password"
+                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                        >
+                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
                     </div>
                   </div>
 
