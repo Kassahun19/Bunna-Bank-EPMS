@@ -20,7 +20,7 @@ export const initialCommercialBanks: CommercialBank[] = [
     swiftCode: 'BUNAETAA',
     status: 'Active',
     totalBranchesNationwide: 542,
-    color: '#D4AF37',
+    color: '#C89A2B',
     isBunna: true
   },
   {

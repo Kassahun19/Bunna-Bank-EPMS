@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS competitor_alerts (
 -- Seed Initial Ethiopian Commercial Banks
 INSERT INTO commercial_banks (id, code, name, short_name, established_year, swift_code, total_branches_nationwide, color, is_bunna)
 VALUES 
-('BNK-BUNNA', 'BUNNA', 'Bunna Bank S.C.', 'Bunna Bank', 2009, 'BUNAETAA', 542, '#D4AF37', TRUE),
+('BNK-BUNNA', 'BUNNA', 'Bunna Bank S.C.', 'Bunna Bank', 2009, 'BUNAETAA', 542, '#C89A2B', TRUE),
 ('BNK-CBE', 'CBE', 'Commercial Bank of Ethiopia', 'CBE', 1942, 'CBETETAA', 1920, '#800080', FALSE),
 ('BNK-DASHEN', 'DASHEN', 'Dashen Bank S.C.', 'Dashen Bank', 1995, 'DASHETAA', 850, '#003399', FALSE),
 ('BNK-AWASH', 'AWASH', 'Awash Bank S.C.', 'Awash Bank', 1994, 'AWASHTAA', 910, '#008000', FALSE),

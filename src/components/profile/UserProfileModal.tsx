@@ -189,10 +189,10 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto pt-4 sm:pt-8 md:pt-10">
-      <div className="bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl w-full max-w-4xl shadow-2xl text-white overflow-hidden mb-8 transform transition-all">
+      <div className="bg-[#4A2C17] border border-[#C89A2B]/40 rounded-3xl w-full max-w-4xl shadow-2xl text-white overflow-hidden mb-8 transform transition-all">
         
         {/* Banner & Header */}
-        <div className="relative p-6 bg-gradient-to-r from-[#0B4228] via-[#08321E] to-[#0B4228] border-b border-white/10">
+        <div className="relative p-6 bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#6B3F1D] border-b border-white/10">
           <button
             onClick={onClose}
             className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors"
@@ -201,8 +201,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           </button>
 
           <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-5">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-[#0B4228] p-1 shadow-xl flex items-center justify-center">
-              <div className="w-full h-full bg-[#0B4228] rounded-[14px] flex items-center justify-center text-2xl font-black text-[#D4AF37]">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#C89A2B] to-[#6B3F1D] p-1 shadow-xl flex items-center justify-center">
+              <div className="w-full h-full bg-[#6B3F1D] rounded-[14px] flex items-center justify-center text-2xl font-black text-[#C89A2B]">
                 {activeEmployee.firstName[0]}{(activeEmployee.middleName || activeEmployee.lastName || '')[0]}
               </div>
             </div>
@@ -216,10 +216,10 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </span>
               </div>
 
-              <p className="text-xs text-[#D4AF37] font-semibold">{activeEmployee.jobTitle || 'Banking Professional'} • Bunna Bank S.C.</p>
+              <p className="text-xs text-[#C89A2B] font-semibold">{activeEmployee.jobTitle || 'Banking Professional'} • Bunna Bank S.C.</p>
               
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-[11px] text-gray-300 pt-1">
-                <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#D4AF37]" /> {activeEmployee.branchName || 'Head Office'}</span>
+                <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5 text-[#C89A2B]" /> {activeEmployee.branchName || 'Head Office'}</span>
                 <span>•</span>
                 <span>Staff ID: <strong className="text-white">{activeEmployee.id}</strong></span>
                 <span>•</span>
@@ -235,9 +235,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       onOpenAiSummary(activeEmployee);
                     }
                   }}
-                  className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#e0be4d] text-[#0B4228] font-extrabold text-xs flex items-center space-x-1.5 shadow-lg hover:brightness-110 transition-all cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-extrabold text-xs flex items-center space-x-1.5 shadow-lg hover:brightness-110 transition-all cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-[#0B4228]" />
+                  <Sparkles className="w-4 h-4 text-[#6B3F1D]" />
                   <span>AI Performance Summary in Drawer</span>
                 </button>
               </div>
@@ -249,7 +249,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('profile')}
               className={`px-4 py-2 rounded-xl transition-all ${
-                activeTab === 'profile' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'profile' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               {t.personalProfile || 'Personal Profile'}
@@ -259,7 +259,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               onClick={() => setActiveTab('createReport')}
               className={`px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 shadow-lg border ${
                 activeTab === 'createReport' 
-                  ? 'bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#0B4228] border-[#D4AF37] font-black' 
+                  ? 'bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] border-[#C89A2B] font-black' 
                   : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/30'
               }`}
             >
@@ -270,7 +270,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('navigation')}
               className={`px-4 py-2 rounded-xl transition-all flex items-center space-x-1.5 ${
-                activeTab === 'navigation' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'navigation' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
@@ -280,7 +280,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('targets')}
               className={`px-4 py-2 rounded-xl transition-all ${
-                activeTab === 'targets' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'targets' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Target & KPI Assignments
@@ -289,7 +289,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('badges')}
               className={`px-4 py-2 rounded-xl transition-all ${
-                activeTab === 'badges' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'badges' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Badges & Recognition
@@ -298,7 +298,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('security')}
               className={`px-4 py-2 rounded-xl transition-all ${
-                activeTab === 'security' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'security' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Security & Permissions
@@ -307,7 +307,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <button
               onClick={() => setActiveTab('activity')}
               className={`px-4 py-2 rounded-xl transition-all ${
-                activeTab === 'activity' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md' : 'text-gray-300 hover:bg-white/5'
+                activeTab === 'activity' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md' : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Audit Trail
@@ -332,9 +332,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           {/* TAB: ROLE NAVIGATION MENUS */}
           {activeTab === 'navigation' && (
             <div className="space-y-6">
-              <div className="p-4 rounded-2xl bg-[#0B4228]/50 border border-[#D4AF37]/30 text-white">
-                <h3 className="font-bold text-base text-[#D4AF37] mb-1 flex items-center space-x-2">
-                  <LayoutDashboard className="w-5 h-5 text-[#D4AF37]" />
+              <div className="p-4 rounded-2xl bg-[#6B3F1D]/50 border border-[#C89A2B]/30 text-white">
+                <h3 className="font-bold text-base text-[#C89A2B] mb-1 flex items-center space-x-2">
+                  <LayoutDashboard className="w-5 h-5 text-[#C89A2B]" />
                   <span>System Navigation & Role Menus</span>
                 </h3>
                 <p className="text-xs text-gray-300">
@@ -344,9 +344,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Admin Navigation Card */}
-                <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
+                <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl space-y-3">
                   <div className="flex items-center space-x-2 pb-2 border-b border-white/10">
-                    <Shield className="w-5 h-5 text-[#D4AF37]" />
+                    <Shield className="w-5 h-5 text-[#C89A2B]" />
                     <h4 className="font-bold text-sm text-white">Admin Navigation</h4>
                   </div>
                   <div className="space-y-1">
@@ -373,7 +373,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           }}
                           className="w-full text-left px-3 py-2 rounded-xl text-xs text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-all group font-medium"
                         >
-                          <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                          <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                           <span className="flex-1">{item.label}</span>
                           <ChevronRight className="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
@@ -383,9 +383,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
 
                 {/* Manager Navigation Card */}
-                <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
+                <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl space-y-3">
                   <div className="flex items-center space-x-2 pb-2 border-b border-white/10">
-                    <Briefcase className="w-5 h-5 text-[#D4AF37]" />
+                    <Briefcase className="w-5 h-5 text-[#C89A2B]" />
                     <h4 className="font-bold text-sm text-white">Manager Navigation</h4>
                   </div>
                   <div className="space-y-1">
@@ -409,7 +409,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           }}
                           className="w-full text-left px-3 py-2 rounded-xl text-xs text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-all group font-medium"
                         >
-                          <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                          <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                           <span className="flex-1">{item.label}</span>
                           <ChevronRight className="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
@@ -419,9 +419,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
 
                 {/* Employee Navigation Card */}
-                <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
+                <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl space-y-3">
                   <div className="flex items-center space-x-2 pb-2 border-b border-white/10">
-                    <UserIcon className="w-5 h-5 text-[#D4AF37]" />
+                    <UserIcon className="w-5 h-5 text-[#C89A2B]" />
                     <h4 className="font-bold text-sm text-white">Employee Navigation</h4>
                   </div>
                   <div className="space-y-1">
@@ -445,7 +445,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           }}
                           className="w-full text-left px-3 py-2 rounded-xl text-xs text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-all group font-medium"
                         >
-                          <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                          <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                           <span className="flex-1">{item.label}</span>
                           <ChevronRight className="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
@@ -494,7 +494,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
 
@@ -504,7 +504,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     type="text"
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
 
@@ -514,7 +514,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     type="text"
                     value={emergencyContact}
                     onChange={e => setEmergencyContact(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
 
@@ -535,13 +535,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   onClick={() => alert(`Official EPMS Performance Certificate generated for ${getUserFullName(user)}`)}
                   className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 flex items-center space-x-2"
                 >
-                  <Download className="w-4 h-4 text-[#D4AF37]" />
+                  <Download className="w-4 h-4 text-[#C89A2B]" />
                   <span>Download Performance Record PDF</span>
                 </button>
 
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-black text-xs shadow-md hover:bg-[#e0be4d] transition-all"
+                  className="px-6 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-black text-xs shadow-md hover:bg-[#D8B45C] transition-all"
                 >
                   Save Profile Updates
                 </button>
@@ -564,7 +564,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
               {/* Active Assigned Targets View */}
               <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-[#0B4228] border border-[#D4AF37]/30 text-xs flex items-center justify-between">
+                <div className="p-4 rounded-2xl bg-[#6B3F1D] border border-[#C89A2B]/30 text-xs flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-white text-sm">
                       Active Assigned Target Goals ({getUserFullName(user)})
@@ -573,7 +573,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       Target values configured by Branch Management compared against actual achievements
                     </p>
                   </div>
-                  <span className="bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] px-3.5 py-1 rounded-full font-extrabold text-xs">
+                  <span className="bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B] px-3.5 py-1 rounded-full font-extrabold text-xs">
                     {(targets.filter(t => t.employeeId === user.id || t.branchId === user.branchId).length || 8)} KPIs Tracked
                   </span>
                 </div>
@@ -613,13 +613,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     const pct = Math.min(100, Math.round((achieved / targetVal) * 100));
 
                     return (
-                      <div key={t.id} className="p-4 rounded-2xl bg-black/30 border border-white/10 hover:border-[#D4AF37]/40 transition-all space-y-2 text-xs">
+                      <div key={t.id} className="p-4 rounded-2xl bg-black/30 border border-white/10 hover:border-[#C89A2B]/40 transition-all space-y-2 text-xs">
                         <div className="flex items-center justify-between font-bold text-white">
                           <span className="flex items-center space-x-2">
-                            <span className="w-2 h-2 rounded-full bg-[#D4AF37]" />
+                            <span className="w-2 h-2 rounded-full bg-[#C89A2B]" />
                             <span>{t.kpiName}</span>
                           </span>
-                          <span className="text-[#D4AF37] font-extrabold">
+                          <span className="text-[#C89A2B] font-extrabold">
                             {isCurrency ? `ETB ${t.targetValue.toLocaleString()}` : t.targetValue.toLocaleString()}
                           </span>
                         </div>
@@ -628,11 +628,11 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         <div className="space-y-1">
                           <div className="flex justify-between text-[11px] text-gray-300">
                             <span>Achieved: <strong className="text-emerald-400">{isCurrency ? `ETB ${achieved.toLocaleString()}` : achieved.toLocaleString()}</strong></span>
-                            <span className="font-bold text-[#D4AF37]">{pct}%</span>
+                            <span className="font-bold text-[#C89A2B]">{pct}%</span>
                           </div>
                           <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
                             <div
-                              className="bg-gradient-to-r from-emerald-500 to-[#D4AF37] h-full rounded-full transition-all duration-500"
+                              className="bg-gradient-to-r from-emerald-500 to-[#C89A2B] h-full rounded-full transition-all duration-500"
                               style={{ width: `${pct}%` }}
                             />
                           </div>
@@ -653,17 +653,17 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           {/* TAB 3: BADGES */}
           {activeTab === 'badges' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#0B4228] to-[#08321E] border border-[#D4AF37]/30 text-xs">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#6B3F1D] to-[#4A2C17] border border-[#C89A2B]/30 text-xs">
                 <h4 className="font-bold text-white text-sm flex items-center gap-2">
-                  <Star className="w-4 h-4 text-[#D4AF37]" />
+                  <Star className="w-4 h-4 text-[#C89A2B]" />
                   EPMS Gamified Achievement Wall
                 </h4>
                 <p className="text-gray-300 mt-0.5">Badges unlocked through continuous target fulfillment in Bunna Bank S.C.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-center space-y-2">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37]">
+                <div className="p-4 rounded-2xl bg-white/5 border border-[#C89A2B]/30 text-center space-y-2">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-[#C89A2B]/20 border border-[#C89A2B] flex items-center justify-center text-[#C89A2B]">
                     <Award className="w-6 h-6" />
                   </div>
                   <h5 className="font-bold text-xs text-white">100% Target Club</h5>
@@ -694,7 +694,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <div className="space-y-5">
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-3">
                 <h4 className="font-bold text-white text-sm flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-[#D4AF37]" />
+                  <Lock className="w-4 h-4 text-[#C89A2B]" />
                   Security Privileges for Role: {user.role}
                 </h4>
 
@@ -723,9 +723,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               </div>
 
               {/* Password Change Credential Section */}
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-black/40 to-[#0B4228] border border-[#D4AF37]/30 text-xs space-y-4">
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-black/40 to-[#6B3F1D] border border-[#C89A2B]/30 text-xs space-y-4">
                 <div className="flex items-center space-x-2">
-                  <KeyRound className="w-5 h-5 text-[#D4AF37]" />
+                  <KeyRound className="w-5 h-5 text-[#C89A2B]" />
                   <div>
                     <h4 className="font-bold text-white text-sm">Update Staff Credentials & Security Password</h4>
                     <p className="text-gray-400 text-[11px]">Enforce strong authentication rules for Bunna Bank EPMS portal access.</p>
@@ -756,7 +756,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                         placeholder="Enter current password"
-                        className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                       />
                       <button
                         type="button"
@@ -778,7 +778,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
                           placeholder="New password"
-                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                         />
                         <button
                           type="button"
@@ -808,7 +808,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           value={confirmNewPassword}
                           onChange={(e) => setConfirmNewPassword(e.target.value)}
                           placeholder="Confirm new password"
-                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full pl-3.5 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                         />
                         <button
                           type="button"
@@ -845,7 +845,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <button
                     type="submit"
                     disabled={pwdLoading}
-                    className="px-5 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-black text-xs shadow-md hover:bg-[#e0be4d] transition-all disabled:opacity-50"
+                    className="px-5 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-black text-xs shadow-md hover:bg-[#D8B45C] transition-all disabled:opacity-50"
                   >
                     {pwdLoading ? 'Updating Credentials...' : 'Change Security Password'}
                   </button>
@@ -862,7 +862,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="space-y-2">
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Activity className="w-4 h-4 text-[#D4AF37]" />
+                    <Activity className="w-4 h-4 text-[#C89A2B]" />
                     <span>Successful Portal Authentication</span>
                   </div>
                   <span className="text-[10px] text-gray-400">Today, 09:15 AM</span>

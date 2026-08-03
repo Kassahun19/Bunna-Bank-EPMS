@@ -34,12 +34,12 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
   };
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Sparkles className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">AI Strategic Advisor</span>
           </div>
@@ -52,7 +52,7 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
-            className="bg-[#051F13] border border-white/15 text-white text-xs font-bold rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="bg-[#6B3F1D] border border-white/15 text-white text-xs font-bold rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           >
             {rankings.map(r => (
               <option key={r.id} value={r.areaName}>{r.areaName} ({r.districtName})</option>
@@ -64,7 +64,7 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
       {/* Preset Prompt Chips */}
       <div className="space-y-2">
         <label className="text-xs text-gray-300 font-semibold flex items-center space-x-2">
-          <Lightbulb className="w-4 h-4 text-[#D4AF37]" />
+          <Lightbulb className="w-4 h-4 text-[#C89A2B]" />
           <span>Select Strategic Consulting Topic:</span>
         </label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -75,10 +75,10 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
                 setCustomPrompt(pq);
                 handleConsultAi(pq);
               }}
-              className="text-left bg-[#051F13] hover:bg-[#082A1A] border border-white/10 hover:border-[#D4AF37]/50 p-3 rounded-xl text-xs text-gray-200 transition-all flex items-center justify-between group"
+              className="text-left bg-[#4A2C17]/60 hover:bg-[#6B3F1D] border border-white/10 hover:border-[#C89A2B]/50 p-3 rounded-xl text-xs text-gray-200 transition-all flex items-center justify-between group"
             >
               <span>{pq}</span>
-              <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#D4AF37] group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#C89A2B] group-hover:translate-x-1 transition-all" />
             </button>
           ))}
         </div>
@@ -96,12 +96,12 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
             value={customPrompt}
             onChange={(e) => setCustomPrompt(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleConsultAi()}
-            className="flex-1 bg-[#051F13] border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="flex-1 bg-[#4A2C17]/60 border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           />
           <button
             onClick={() => handleConsultAi()}
             disabled={loading}
-            className="bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold px-5 py-3 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
+            className="bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold px-5 py-3 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
           >
             {loading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Bot className="w-4 h-4" />}
             <span>{loading ? 'Consulting AI...' : 'Analyze Strategy'}</span>
@@ -110,9 +110,9 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
       </div>
 
       {/* AI Consulting Output Box */}
-      <div className="bg-[#051F13] border border-white/10 rounded-2xl p-6 space-y-5">
+      <div className="bg-[#2E1B0E] border border-white/10 rounded-2xl p-6 space-y-5">
         <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Bot className="w-5 h-5" />
             <h4 className="text-base font-bold text-white">Bunna AI Strategy Intelligence Response</h4>
           </div>
@@ -121,34 +121,34 @@ export const AiInsightsPanel: React.FC<AiInsightsPanelProps> = ({ rankings, onAs
 
         {loading ? (
           <div className="py-12 text-center space-y-3">
-            <RefreshCw className="w-8 h-8 text-[#D4AF37] animate-spin mx-auto" />
+            <RefreshCw className="w-8 h-8 text-[#C89A2B] animate-spin mx-auto" />
             <p className="text-xs text-gray-300 font-medium">Analyzing competitor deposit data, branch networks, and BPI weights via Gemini AI...</p>
           </div>
         ) : aiResult ? (
           <div className="space-y-4">
-            <div className="prose prose-invert max-w-none text-xs text-gray-200 leading-relaxed whitespace-pre-line bg-[#0A2E1D] p-4 rounded-xl border border-white/10 font-sans">
+            <div className="prose prose-invert max-w-none text-xs text-gray-200 leading-relaxed whitespace-pre-line bg-[#6B3F1D]/40 p-4 rounded-xl border border-white/10 font-sans">
               {aiResult.aiResponseText}
             </div>
 
             {aiResult.insight?.recommendations && (
               <div className="space-y-3 pt-2">
-                <h5 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider flex items-center space-x-1">
+                <h5 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider flex items-center space-x-1">
                   <Zap className="w-4 h-4" />
                   <span>Prioritized Executive Action Items:</span>
                 </h5>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {aiResult.insight.recommendations.map((rec, idx) => (
-                    <div key={idx} className="bg-[#0A2E1D] border border-white/10 rounded-xl p-4 space-y-2">
+                    <div key={idx} className="bg-[#6B3F1D]/40 border border-white/10 rounded-xl p-4 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold text-[#D4AF37] uppercase">{rec.category}</span>
+                        <span className="text-[10px] font-bold text-[#C89A2B] uppercase">{rec.category}</span>
                         <span className="bg-emerald-950 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full font-semibold border border-emerald-500/30">
                           {rec.expectedRankImprovement}
                         </span>
                       </div>
                       <h6 className="text-xs font-bold text-white">{rec.title}</h6>
                       <p className="text-[11px] text-gray-300">{rec.actionItem}</p>
-                      <div className="pt-2 border-t border-white/5 text-[10px] text-[#D4AF37] font-semibold">
+                      <div className="pt-2 border-t border-white/5 text-[10px] text-[#C89A2B] font-semibold">
                         Expected Deposit Increase: + ETB {(rec.estimatedDepositIncreaseETB / 1e6).toFixed(1)}M
                       </div>
                     </div>

@@ -71,9 +71,9 @@ export function downloadReportExcel(reports: DailyPerformanceReport[], employeeN
       <![endif]-->
       <style>
         body { font-family: Calibri, sans-serif; }
-        .header { background-color: #0B4228; color: #D4AF37; font-weight: bold; font-size: 16px; text-align: center; }
-        .sub { background-color: #08321E; color: #ffffff; font-size: 11px; text-align: center; }
-        th { background-color: #0B4228; color: #D4AF37; font-weight: bold; border: 1px solid #cccccc; padding: 6px; }
+        .header { background-color: #6B3F1D; color: #C89A2B; font-weight: bold; font-size: 16px; text-align: center; }
+        .sub { background-color: #4A2C17; color: #ffffff; font-size: 11px; text-align: center; }
+        th { background-color: #6B3F1D; color: #C89A2B; font-weight: bold; border: 1px solid #cccccc; padding: 6px; }
         td { border: 1px solid #dddddd; padding: 6px; text-align: left; }
         .num { text-align: right; }
         .total { background-color: #f3f4f6; font-weight: bold; }
@@ -151,12 +151,12 @@ export function downloadReportWord(reports: DailyPerformanceReport[], employeeNa
       <title>Bunna Bank EPMS Performance Report</title>
       <style>
         body { font-family: 'Arial', sans-serif; color: #333333; line-height: 1.5; margin: 20px; }
-        .logo-head { background: #0B4228; color: #D4AF37; padding: 15px; text-align: center; border-radius: 8px; }
+        .logo-head { background: #6B3F1D; color: #C89A2B; padding: 15px; text-align: center; border-radius: 8px; }
         h1 { margin: 0; font-size: 20px; }
         p.sub { margin: 5px 0 0 0; color: #ffffff; font-size: 12px; }
-        .summary-box { background: #f9f9f9; border: 1px solid #D4AF37; padding: 12px; margin: 15px 0; border-radius: 6px; }
+        .summary-box { background: #f9f9f9; border: 1px solid #C89A2B; padding: 12px; margin: 15px 0; border-radius: 6px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 11px; }
-        th { background-color: #0B4228; color: #ffffff; border: 1px solid #0B4228; padding: 8px; text-align: left; }
+        th { background-color: #6B3F1D; color: #ffffff; border: 1px solid #6B3F1D; padding: 8px; text-align: left; }
         td { border: 1px solid #dddddd; padding: 8px; }
         .footer-sign { margin-top: 40px; display: flex; justify-content: space-between; font-size: 12px; }
       </style>
@@ -240,12 +240,12 @@ export function printOrDownloadPDF(reports: DailyPerformanceReport[], employeeNa
       <title>Bunna Bank EPMS Performance Report - ${employeeName}</title>
       <style>
         body { font-family: system-ui, -apple-system, sans-serif; padding: 30px; color: #111; }
-        .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #0B4228; padding-bottom: 15px; margin-bottom: 20px; }
-        .logo { font-size: 24px; font-weight: 900; color: #0B4228; }
-        .tagline { font-size: 12px; color: #D4AF37; font-weight: 700; }
+        .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #6B3F1D; padding-bottom: 15px; margin-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: 900; color: #6B3F1D; }
+        .tagline { font-size: 12px; color: #C89A2B; font-weight: 700; }
         .meta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: #f4f6f5; padding: 15px; border-radius: 12px; border: 1px solid #e0e0e0; font-size: 13px; }
         table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 12px; }
-        th { background: #0B4228; color: #ffffff; text-align: left; padding: 10px; }
+        th { background: #6B3F1D; color: #ffffff; text-align: left; padding: 10px; }
         td { border-bottom: 1px solid #e0e0e0; padding: 9px; }
         .total-row { background: #eef5f1; font-weight: bold; }
         @media print {
@@ -274,7 +274,7 @@ export function printOrDownloadPDF(reports: DailyPerformanceReport[], employeeNa
         <div><strong>Status:</strong> Active Verified Employee</div>
       </div>
 
-      <h3 style="margin-top: 25px; color: #0B4228;">Daily Performance Activity Log</h3>
+      <h3 style="margin-top: 25px; color: #6B3F1D;">Daily Performance Activity Log</h3>
       <table>
         <thead>
           <tr>
@@ -293,7 +293,7 @@ export function printOrDownloadPDF(reports: DailyPerformanceReport[], employeeNa
             <tr>
               <td><strong>${r.reportDate}</strong></td>
               <td>${r.dayOfWeek}</td>
-              <td style="color: #0B4228; font-weight: bold;">ETB ${(r.depositsETB || 0).toLocaleString()}</td>
+              <td style="color: #6B3F1D; font-weight: bold;">ETB ${(r.depositsETB || 0).toLocaleString()}</td>
               <td>ETB ${(r.foreignCurrencyETB || 0).toLocaleString()}</td>
               <td>${r.accountOpenings || 0}</td>
               <td>${r.mobileBankingActivations || 0}</td>
@@ -370,9 +370,9 @@ export function downloadBranchesExcel(branches: Branch[]) {
       <meta charset="utf-8" />
       <style>
         body { font-family: Calibri, sans-serif; }
-        .header { background-color: #0B4228; color: #D4AF37; font-weight: bold; font-size: 16px; text-align: center; }
-        .sub { background-color: #08321E; color: #ffffff; font-size: 11px; text-align: center; }
-        th { background-color: #0B4228; color: #D4AF37; font-weight: bold; border: 1px solid #cccccc; padding: 6px; }
+        .header { background-color: #6B3F1D; color: #C89A2B; font-weight: bold; font-size: 16px; text-align: center; }
+        .sub { background-color: #4A2C17; color: #ffffff; font-size: 11px; text-align: center; }
+        th { background-color: #6B3F1D; color: #C89A2B; font-weight: bold; border: 1px solid #cccccc; padding: 6px; }
         td { border: 1px solid #dddddd; padding: 6px; text-align: left; }
       </style>
     </head>
@@ -435,11 +435,11 @@ export function printOrDownloadBranchesPDF(branches: Branch[]) {
       <title>Bunna Bank S.C. - Branch & Area Office Directory</title>
       <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; color: #1f2937; }
-        .header { text-align: center; border-bottom: 3px solid #D4AF37; padding-bottom: 12px; margin-bottom: 20px; }
-        .header h1 { margin: 0; color: #0B4228; font-size: 22px; }
+        .header { text-align: center; border-bottom: 3px solid #C89A2B; padding-bottom: 12px; margin-bottom: 20px; }
+        .header h1 { margin: 0; color: #6B3F1D; font-size: 22px; }
         .header p { margin: 4px 0 0; color: #4b5563; font-size: 13px; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
-        th { background-color: #0B4228; color: #D4AF37; padding: 8px; text-align: left; font-weight: bold; border: 1px solid #0B4228; }
+        th { background-color: #6B3F1D; color: #C89A2B; padding: 8px; text-align: left; font-weight: bold; border: 1px solid #6B3F1D; }
         td { border: 1px solid #e5e7eb; padding: 6px; }
         tr:nth-child(even) { background-color: #f9fafb; }
       </style>

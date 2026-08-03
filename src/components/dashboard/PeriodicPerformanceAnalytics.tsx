@@ -153,19 +153,19 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
   };
 
   return (
-    <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-2xl text-white space-y-6">
+    <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-2xl text-white space-y-6">
       
       {/* Header & Period Selector */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-5 border-b border-white/10">
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <span className="bg-[#D4AF37] text-[#0B4228] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="bg-[#C89A2B] text-[#6B3F1D] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
               Calculated Out of 100%
             </span>
             <span className="text-xs text-gray-300 font-medium">Auto-Evaluated EPMS Engine</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
-            <Award className="w-6 h-6 text-[#D4AF37]" />
+            <Award className="w-6 h-6 text-[#C89A2B]" />
             {title}
           </h3>
           <p className="text-xs text-gray-300 mt-0.5">
@@ -174,11 +174,11 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
         </div>
 
         {/* Period Selector Tabs */}
-        <div className="flex items-center bg-[#0B4228] p-1.5 rounded-2xl border border-[#D4AF37]/30 text-xs font-bold">
+        <div className="flex items-center bg-[#6B3F1D] p-1.5 rounded-2xl border border-[#C89A2B]/30 text-xs font-bold">
           <button
             onClick={() => setSelectedPeriod('monthly')}
             className={`px-3.5 py-2 rounded-xl transition-all ${
-              selectedPeriod === 'monthly' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md scale-105' : 'text-gray-300 hover:text-white'
+              selectedPeriod === 'monthly' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md scale-105' : 'text-gray-300 hover:text-white'
             }`}
           >
             Monthly
@@ -186,7 +186,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
           <button
             onClick={() => setSelectedPeriod('quarterly')}
             className={`px-3.5 py-2 rounded-xl transition-all ${
-              selectedPeriod === 'quarterly' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md scale-105' : 'text-gray-300 hover:text-white'
+              selectedPeriod === 'quarterly' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md scale-105' : 'text-gray-300 hover:text-white'
             }`}
           >
             Quarterly
@@ -194,7 +194,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
           <button
             onClick={() => setSelectedPeriod('semiannually')}
             className={`px-3.5 py-2 rounded-xl transition-all ${
-              selectedPeriod === 'semiannually' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md scale-105' : 'text-gray-300 hover:text-white'
+              selectedPeriod === 'semiannually' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md scale-105' : 'text-gray-300 hover:text-white'
             }`}
           >
             Semi-Annually
@@ -202,7 +202,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
           <button
             onClick={() => setSelectedPeriod('annually')}
             className={`px-3.5 py-2 rounded-xl transition-all ${
-              selectedPeriod === 'annually' ? 'bg-[#D4AF37] text-[#0B4228] shadow-md scale-105' : 'text-gray-300 hover:text-white'
+              selectedPeriod === 'annually' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md scale-105' : 'text-gray-300 hover:text-white'
             }`}
           >
             Annually
@@ -214,8 +214,8 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         {/* Overall 100% Score Gauge Card */}
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#0B4228] to-[#062616] border border-[#D4AF37]/40 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#D4AF37]/10 blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#6B3F1D] to-[#362011] border border-[#C89A2B]/40 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#C89A2B]/10 blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
           
           <p className="text-xs uppercase font-bold text-gray-300 mb-2 tracking-wider">
             {selectedPeriod.toUpperCase()} COMPOSITE PERFORMANCE
@@ -232,7 +232,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
               />
               <path
-                className="text-[#D4AF37] transition-all duration-1000 ease-out"
+                className="text-[#C89A2B] transition-all duration-1000 ease-out"
                 strokeDasharray={`${overallCompositeScore}, 100`}
                 strokeWidth="3.5"
                 strokeLinecap="round"
@@ -242,7 +242,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
               />
             </svg>
             <div className="absolute flex flex-col items-center justify-center">
-              <span className="text-3xl font-black text-[#D4AF37] tracking-tight">
+              <span className="text-3xl font-black text-[#C89A2B] tracking-tight">
                 {overallCompositeScore}%
               </span>
               <span className="text-[10px] font-bold text-gray-300">Out of 100%</span>
@@ -258,7 +258,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
         <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-3">
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-between">
             <p className="text-[10px] text-gray-400 font-bold uppercase">Timeframe Period</p>
-            <p className="text-base font-extrabold text-[#D4AF37] capitalize mt-1">{selectedPeriod}</p>
+            <p className="text-base font-extrabold text-[#C89A2B] capitalize mt-1">{selectedPeriod}</p>
             <p className="text-[10px] text-gray-400 mt-1">Window: Last {periodDays} Days</p>
           </div>
 
@@ -274,9 +274,9 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
             <p className="text-[10px] text-gray-400 mt-1">Weighted equally 12.5% each</p>
           </div>
 
-          <div className="col-span-2 sm:col-span-3 p-4 rounded-2xl bg-[#0B4228]/60 border border-[#D4AF37]/20 flex items-center justify-between">
+          <div className="col-span-2 sm:col-span-3 p-4 rounded-2xl bg-[#6B3F1D]/60 border border-[#C89A2B]/20 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+              <Sparkles className="w-5 h-5 text-[#C89A2B]" />
               <div>
                 <p className="text-xs font-bold text-white">EPMS Performance Formula</p>
                 <p className="text-[11px] text-gray-300">
@@ -291,7 +291,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
       {/* Product-by-Product Scorecard Grid */}
       <div>
         <h4 className="text-sm font-bold text-gray-200 mb-3 flex items-center gap-2">
-          <Layers className="w-4 h-4 text-[#D4AF37]" />
+          <Layers className="w-4 h-4 text-[#C89A2B]" />
           Product-by-Product Evaluation for {selectedPeriod.toUpperCase()} Period
         </h4>
 
@@ -304,18 +304,18 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
             return (
               <div
                 key={prod.key}
-                className={`p-4 rounded-2xl bg-[#0B4228]/80 border ${prod.border} shadow-lg hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(212,175,55,0.18)] transition-all duration-300 transform-gpu relative group overflow-hidden`}
+                className={`p-4 rounded-2xl bg-[#6B3F1D]/80 border ${prod.border} shadow-lg hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(200,154,43,0.18)] transition-all duration-300 transform-gpu relative group overflow-hidden`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className={`p-2 rounded-xl bg-white/5 ${prod.textColor}`}>
                     <Icon className="w-4 h-4" />
                   </div>
-                  <div className="px-2.5 py-1 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 text-xs font-black">
+                  <div className="px-2.5 py-1 rounded-full bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/40 text-xs font-black">
                     {prod.scoreOutOf100}% / 100%
                   </div>
                 </div>
 
-                <h5 className="text-xs font-bold text-white group-hover:text-[#D4AF37] transition-colors line-clamp-1">{prod.name}</h5>
+                <h5 className="text-xs font-bold text-white group-hover:text-[#C89A2B] transition-colors line-clamp-1">{prod.name}</h5>
                 <p className="text-[10px] text-gray-400">{prod.unit}</p>
 
                 {/* Score & Variance */}
@@ -355,7 +355,7 @@ export const PeriodicPerformanceAnalytics: React.FC<PeriodicPerformanceProps> = 
                     <div
                       style={{ width: `${Math.min(100, prod.scoreOutOf100)}%` }}
                       className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-700 ${
-                        prod.scoreOutOf100 >= 100 ? 'bg-emerald-500' : prod.scoreOutOf100 >= 75 ? 'bg-[#D4AF37]' : 'bg-rose-500'
+                        prod.scoreOutOf100 >= 100 ? 'bg-emerald-500' : prod.scoreOutOf100 >= 75 ? 'bg-[#C89A2B]' : 'bg-rose-500'
                       }`}
                     />
                   </div>

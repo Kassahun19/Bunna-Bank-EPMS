@@ -56,11 +56,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({
     <div className="space-y-12 py-4 text-white">
       
       {/* Hero Banner Section */}
-      <div className="relative rounded-3xl bg-gradient-to-br from-[#0B4228] via-[#08321E] to-[#051F13] border border-[#D4AF37]/40 p-8 sm:p-12 overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative rounded-3xl bg-gradient-to-br from-[#6B3F1D] via-[#4A2C17] to-[#2E1B0E] border border-[#C89A2B]/40 p-8 sm:p-12 overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#C89A2B]/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 max-w-3xl space-y-4">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B] text-xs font-bold uppercase tracking-wider">
             <BunnaBankLogo className="w-4 h-4" variant="gold" />
             <span>Bunna Bank S.C. — Bank of the Visionaries</span>
           </div>
@@ -77,7 +77,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             {onGetStarted && (
               <button
                 onClick={onGetStarted}
-                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-sm shadow-xl hover:opacity-95 transition-all flex items-center space-x-2"
+                className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold text-sm shadow-xl hover:opacity-95 transition-all flex items-center space-x-2"
               >
                 <span>Access EPMS Portal</span>
                 <ArrowRight className="w-4 h-4" />
@@ -98,8 +98,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
       {/* Core Institutional Pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-[#6B3F1D]/40 border border-[#C89A2B]/30 shadow-xl space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-[#C89A2B]/20 text-[#C89A2B] flex items-center justify-center font-bold">
             <Target className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">Objective Performance Tracking</h3>
@@ -108,8 +108,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </p>
         </div>
 
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-[#6B3F1D]/40 border border-[#C89A2B]/30 shadow-xl space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-[#C89A2B]/20 text-[#C89A2B] flex items-center justify-center font-bold">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">Multi-Tier Approval Governance</h3>
@@ -118,8 +118,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
           </p>
         </div>
 
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold">
+        <div className="p-6 rounded-3xl bg-[#6B3F1D]/40 border border-[#C89A2B]/30 shadow-xl space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-[#C89A2B]/20 text-[#C89A2B] flex items-center justify-center font-bold">
             <Sparkles className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-bold text-white">AI-Powered Performance Insights</h3>
@@ -130,33 +130,33 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       </div>
 
       {/* Institutional Statistics */}
-      <div className="p-8 rounded-3xl bg-gradient-to-r from-[#0B4228] to-[#08321E] border border-[#D4AF37]/30 shadow-xl">
-        <h3 className="text-xl font-bold text-[#D4AF37] text-center mb-8 uppercase tracking-wider">
+      <div className="p-8 rounded-3xl bg-gradient-to-r from-[#6B3F1D] to-[#4A2C17] border border-[#C89A2B]/30 shadow-xl">
+        <h3 className="text-xl font-bold text-[#C89A2B] text-center mb-8 uppercase tracking-wider">
           Bunna Bank EPMS at a Glance
         </h3>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div className="space-y-1">
             <p className="text-3xl font-black text-white">{districtsCount > 0 ? `${districtsCount}` : 'Districts'}</p>
-            <p className="text-xs text-[#D4AF37] font-semibold">Districts & Area Offices</p>
+            <p className="text-xs text-[#C89A2B] font-semibold">Districts & Area Offices</p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl font-black text-white">{branchesCount > 0 ? `${branchesCount}` : 'Branches'}</p>
-            <p className="text-xs text-[#D4AF37] font-semibold">Branches Nationwide</p>
+            <p className="text-xs text-[#C89A2B] font-semibold">Branches Nationwide</p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl font-black text-white">{employeesCount > 0 ? `${employeesCount}` : 'Staff'}</p>
-            <p className="text-xs text-[#D4AF37] font-semibold">Active Employees</p>
+            <p className="text-xs text-[#C89A2B] font-semibold">Active Employees</p>
           </div>
           <div className="space-y-1">
             <p className="text-3xl font-black text-white">100%</p>
-            <p className="text-xs text-[#D4AF37] font-semibold">Audited Data Accuracy</p>
+            <p className="text-xs text-[#C89A2B] font-semibold">Audited Data Accuracy</p>
           </div>
         </div>
       </div>
 
       {/* Product Scope Overview Section */}
-      <div className="bg-[#08321E] border border-[#D4AF37]/30 rounded-3xl p-8 shadow-xl space-y-6">
+      <div className="bg-[#6B3F1D]/40 border border-[#C89A2B]/30 rounded-3xl p-8 shadow-xl space-y-6">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <h3 className="text-2xl font-bold text-white">Monitored Banking Products & KPIs</h3>
           <p className="text-xs text-gray-300">
@@ -178,7 +178,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             const Icon = item.icon;
             return (
               <div key={idx} className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-                <div className="w-8 h-8 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-xl bg-[#C89A2B]/20 text-[#C89A2B] flex items-center justify-center font-bold">
                   <Icon className="w-4 h-4" />
                 </div>
                 <h4 className="font-bold text-sm text-white">{item.title}</h4>

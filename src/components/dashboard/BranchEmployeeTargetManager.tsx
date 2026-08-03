@@ -114,12 +114,12 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
   };
 
   return (
-    <div className="bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-2xl text-white space-y-6">
+    <div className="bg-[#4A2C17] border border-[#C89A2B]/40 rounded-3xl p-6 shadow-2xl text-white space-y-6">
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B] uppercase tracking-wider">
               Branch Manager Control Center
             </span>
             <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
@@ -127,7 +127,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
             </span>
           </div>
           <h3 className="text-xl font-extrabold text-white mt-1 flex items-center gap-2">
-            <Target className="w-5 h-5 text-[#D4AF37]" />
+            <Target className="w-5 h-5 text-[#C89A2B]" />
             Employee Target & KPI Assignments Manager
           </h3>
           <p className="text-xs text-gray-300">
@@ -144,7 +144,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
               onClick={() => setTargetPeriod(p)}
               className={`px-3 py-1.5 rounded-xl transition-all ${
                 targetPeriod === p
-                  ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
+                  ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
@@ -157,17 +157,17 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
       {/* Employee Selection & Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Employee Dropdown */}
-        <div className="md:col-span-2 bg-[#0B4228]/80 border border-[#D4AF37]/30 rounded-2xl p-4 space-y-2">
-          <label className="block text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+        <div className="md:col-span-2 bg-[#6B3F1D]/80 border border-[#C89A2B]/30 rounded-2xl p-4 space-y-2">
+          <label className="block text-xs font-bold text-[#C89A2B] flex items-center gap-1.5">
             <Users className="w-4 h-4" /> Select Branch Employee to Feed Targets:
           </label>
           <select
             value={selectedEmployeeId}
             onChange={e => setSelectedEmployeeId(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/20 text-xs text-white font-bold focus:outline-none focus:border-[#D4AF37] cursor-pointer"
+            className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/20 text-xs text-white font-bold focus:outline-none focus:border-[#C89A2B] cursor-pointer"
           >
             {branchEmployees.map(emp => (
-              <option key={emp.id} value={emp.id} className="bg-[#051F13] text-white">
+              <option key={emp.id} value={emp.id} className="bg-[#362011] text-white">
                 {getUserFullName(emp)} — {emp.jobTitle || 'Banking Officer'} ({emp.branchName || 'Branch Staff'})
               </option>
             ))}
@@ -177,7 +177,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
               <div className="flex items-center space-x-3">
                 <span>Staff ID: <strong className="text-white">{selectedEmployee.id}</strong></span>
                 <span>•</span>
-                <span>Branch: <strong className="text-[#D4AF37]">{selectedEmployee.branchName || currentUser.branchName}</strong></span>
+                <span>Branch: <strong className="text-[#C89A2B]">{selectedEmployee.branchName || currentUser.branchName}</strong></span>
                 <span>•</span>
                 <span>Role: <strong className="text-emerald-400">{selectedEmployee.role}</strong></span>
               </div>
@@ -188,7 +188,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
                     onOpenAiSummary(selectedEmployee);
                   }
                 }}
-                className="px-3 py-1 rounded-lg bg-[#D4AF37] hover:bg-[#e0be4d] text-[#0B4228] font-bold text-[11px] flex items-center space-x-1 shadow transition-all cursor-pointer"
+                className="px-3 py-1 rounded-lg bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold text-[11px] flex items-center space-x-1 shadow transition-all cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>AI Performance Summary</span>
@@ -198,11 +198,11 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
         </div>
 
         {/* Manager Badge Info */}
-        <div className="bg-[#0B4228]/80 border border-[#D4AF37]/30 rounded-2xl p-4 flex flex-col justify-between">
+        <div className="bg-[#6B3F1D]/80 border border-[#C89A2B]/30 rounded-2xl p-4 flex flex-col justify-between">
           <div>
             <span className="text-[10px] uppercase text-gray-400 font-bold block">Manager Authority</span>
             <span className="text-sm font-black text-white flex items-center gap-1 mt-0.5">
-              <Building2 className="w-4 h-4 text-[#D4AF37]" /> {currentUser.branchName || 'Headquarters'}
+              <Building2 className="w-4 h-4 text-[#C89A2B]" /> {currentUser.branchName || 'Headquarters'}
             </span>
           </div>
           <div className="text-[11px] text-emerald-300 font-medium flex items-center gap-1 mt-2">
@@ -231,7 +231,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
       {/* KPI Target Input Grid */}
       <div className="space-y-3">
         <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
-          <Layers className="w-4 h-4 text-[#D4AF37]" /> Set Target Values for Bunna Bank Core KPIs ({targetPeriod} - {targetYear})
+          <Layers className="w-4 h-4 text-[#C89A2B]" /> Set Target Values for Bunna Bank Core KPIs ({targetPeriod} - {targetYear})
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -240,11 +240,11 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
             return (
               <div
                 key={kpi.kpiId}
-                className="p-3.5 rounded-2xl bg-[#0B4228]/60 border border-white/10 hover:border-[#D4AF37]/40 transition-all space-y-2"
+                className="p-3.5 rounded-2xl bg-[#6B3F1D]/60 border border-white/10 hover:border-[#C89A2B]/40 transition-all space-y-2"
               >
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-white flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#D4AF37]" />
+                    <span className="w-2 h-2 rounded-full bg-[#C89A2B]" />
                     {kpi.kpiName}
                   </span>
                   <span className="text-[10px] text-gray-400 bg-black/40 px-2 py-0.5 rounded-full border border-white/10">
@@ -254,7 +254,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
 
                 <div className="relative">
                   {kpi.isCurrency && (
-                    <span className="absolute left-3 top-2.5 text-xs font-bold text-[#D4AF37]">
+                    <span className="absolute left-3 top-2.5 text-xs font-bold text-[#C89A2B]">
                       ETB
                     </span>
                   )}
@@ -264,7 +264,7 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
                     step={kpi.isCurrency ? "10000" : "1"}
                     value={val}
                     onChange={e => handleInputChange(kpi.kpiId, e.target.value)}
-                    className={`w-full py-2 rounded-xl bg-black/40 border border-white/20 text-xs text-white font-extrabold focus:outline-none focus:border-[#D4AF37] ${
+                    className={`w-full py-2 rounded-xl bg-black/40 border border-white/20 text-xs text-white font-extrabold focus:outline-none focus:border-[#C89A2B] ${
                       kpi.isCurrency ? 'pl-12 pr-3' : 'px-3'
                     }`}
                   />
@@ -283,20 +283,20 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
       {/* Action Footer */}
       <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="text-[11px] text-gray-400 flex items-center gap-1">
-          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <Sparkles className="w-3.5 h-3.5 text-[#C89A2B]" />
           Feeding targets updates the employee's personal speedometer, progress chart, & certificates.
         </p>
 
         <button
           onClick={handleSaveAndFeedTargets}
           disabled={isSaving}
-          className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#D4AF37] text-[#0B4228] font-black text-xs shadow-xl hover:bg-[#e0be4d] active:scale-95 transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
+          className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#C89A2B] text-[#6B3F1D] font-black text-xs shadow-xl hover:bg-[#D8B45C] active:scale-95 transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
         >
           {isSaving ? (
             <span>Saving & Syncing Target Feed...</span>
           ) : (
             <>
-              <Save className="w-4 h-4 text-[#0B4228]" />
+              <Save className="w-4 h-4 text-[#6B3F1D]" />
               <span>Save & Feed Employee Targets</span>
             </>
           )}

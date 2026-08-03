@@ -20,7 +20,7 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-md flex items-start justify-center pt-6 sm:pt-12 md:pt-16 pb-8 px-4">
-      <div className="w-full max-w-lg bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
+      <div className="w-full max-w-lg bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
         
         <button
           onClick={onClose}
@@ -30,22 +30,22 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({
         </button>
 
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4AF37] via-[#B38F24] to-[#0B4228] p-0.5 shadow-xl flex items-center justify-center mx-auto mb-3">
-            <div className="w-full h-full bg-[#0B4228] rounded-[14px] p-2 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C89A2B] via-[#D8B45C] to-[#4A2C17] p-0.5 shadow-xl flex items-center justify-center mx-auto mb-3">
+            <div className="w-full h-full bg-[#4A2C17] rounded-[14px] p-2 flex items-center justify-center">
               <BunnaBankLogo className="w-10 h-10" variant="gold" />
             </div>
           </div>
           <h3 className="text-2xl font-bold text-white">Choose Login Role</h3>
-          <p className="text-xs text-[#D4AF37] mt-1">Select your access portal for Bunna Bank S.C. EPMS</p>
+          <p className="text-xs text-[#C89A2B] mt-1">Select your access portal for Bunna Bank S.C. EPMS</p>
         </div>
 
         <div className="space-y-4">
           {/* Administrator Role Option */}
           <button
             onClick={() => onSelectRole('ADMINISTRATOR')}
-            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#0B4228] to-[#0d5030] hover:to-[#10623b] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all flex items-center space-x-4 text-left group"
+            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#4A2C17] to-[#3B2312] hover:to-[#2E1B0E] border border-[#C89A2B]/30 hover:border-[#C89A2B] transition-all flex items-center space-x-4 text-left group"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 group-hover:bg-[#D4AF37] text-[#D4AF37] group-hover:text-[#0B4228] flex items-center justify-center transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#C89A2B]/20 group-hover:bg-[#C89A2B] text-[#C89A2B] group-hover:text-[#6B3F1D] flex items-center justify-center transition-colors">
               <Shield className="w-6 h-6" />
             </div>
             <div>
@@ -57,9 +57,9 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({
           {/* Manager Role Option */}
           <button
             onClick={() => onSelectRole('MANAGER')}
-            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#0B4228] to-[#0d5030] hover:to-[#10623b] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all flex items-center space-x-4 text-left group"
+            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#4A2C17] to-[#3B2312] hover:to-[#2E1B0E] border border-[#C89A2B]/30 hover:border-[#C89A2B] transition-all flex items-center space-x-4 text-left group"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 group-hover:bg-[#D4AF37] text-[#D4AF37] group-hover:text-[#0B4228] flex items-center justify-center transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#C89A2B]/20 group-hover:bg-[#C89A2B] text-[#C89A2B] group-hover:text-[#6B3F1D] flex items-center justify-center transition-colors">
               <Briefcase className="w-6 h-6" />
             </div>
             <div>
@@ -71,9 +71,9 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({
           {/* Employee Role Option */}
           <button
             onClick={() => onSelectRole('EMPLOYEE')}
-            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#0B4228] to-[#0d5030] hover:to-[#10623b] border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all flex items-center space-x-4 text-left group"
+            className="w-full p-4 rounded-2xl bg-gradient-to-r from-[#4A2C17] to-[#3B2312] hover:to-[#2E1B0E] border border-[#C89A2B]/30 hover:border-[#C89A2B] transition-all flex items-center space-x-4 text-left group"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 group-hover:bg-[#D4AF37] text-[#D4AF37] group-hover:text-[#0B4228] flex items-center justify-center transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#C89A2B]/20 group-hover:bg-[#C89A2B] text-[#C89A2B] group-hover:text-[#6B3F1D] flex items-center justify-center transition-colors">
               <UserCheck className="w-6 h-6" />
             </div>
             <div>
@@ -91,7 +91,7 @@ export const GetStartedModal: React.FC<GetStartedModalProps> = ({
                 onClose();
                 onOpenRegister();
               }}
-              className="font-bold text-[#D4AF37] hover:underline"
+              className="font-bold text-[#C89A2B] hover:underline"
             >
               Create Account Now
             </button>

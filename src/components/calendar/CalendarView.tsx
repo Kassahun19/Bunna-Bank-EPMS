@@ -34,7 +34,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 relative">
+      <div className="w-full max-w-2xl bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 relative">
         
         <button
           onClick={onClose}
@@ -44,17 +44,17 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         </button>
 
         <div className="flex items-center space-x-3 mb-6">
-          <CalendarIcon className="w-6 h-6 text-[#D4AF37]" />
+          <CalendarIcon className="w-6 h-6 text-[#C89A2B]" />
           <div>
             <h3 className="font-extrabold text-xl text-white">July 2026 EPMS Working Days Calendar</h3>
-            <p className="text-xs text-[#D4AF37]">Official Bunna Bank Working Days, Sundays & Bank Holidays</p>
+            <p className="text-xs text-[#C89A2B]">Official Bunna Bank Working Days, Sundays & Bank Holidays</p>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-4 p-3 rounded-xl bg-[#0B4228] border border-white/10 text-xs mb-6">
+        <div className="flex flex-wrap items-center gap-4 p-3 rounded-xl bg-black/30 border border-white/10 text-xs mb-6">
           <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded bg-[#0B4228] border border-emerald-400" />
+            <span className="w-3 h-3 rounded bg-emerald-600/40 border border-emerald-400" />
             <span>Working Day (Submissions Open)</span>
           </div>
           <div className="flex items-center space-x-2">
@@ -62,13 +62,13 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
             <span>Sunday (Submissions Blocked)</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded bg-[#D4AF37] text-[#0B4228]" />
+            <span className="w-3 h-3 rounded bg-[#C89A2B] text-[#6B3F1D]" />
             <span>Bank Holiday (Submissions Blocked)</span>
           </div>
         </div>
 
         {/* Month Grid */}
-        <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold mb-2 text-[#D4AF37]">
+        <div className="grid grid-cols-7 gap-2 text-center text-xs font-bold mb-2 text-[#C89A2B]">
           <span>Sun</span>
           <span>Mon</span>
           <span>Tue</span>
@@ -89,10 +89,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
               key={item.day}
               className={`p-3 rounded-xl border text-center transition-all min-h-[60px] flex flex-col justify-between ${
                 item.holiday
-                  ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] font-black shadow-lg'
+                  ? 'bg-[#C89A2B] text-[#6B3F1D] border-[#C89A2B] font-black shadow-lg'
                   : item.isSunday
                   ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-                  : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]'
+                  : 'bg-white/5 text-white border-white/10 hover:border-[#C89A2B]'
               }`}
             >
               <span className="font-bold text-sm">{item.day}</span>

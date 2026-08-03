@@ -173,16 +173,16 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
     <div className="space-y-6 text-gray-100 font-sans">
       
       {/* Top Banner & Header */}
-      <div className="bg-gradient-to-r from-[#051F13] via-[#0A2E1D] to-[#082A1A] border border-[#D4AF37]/30 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#2E1B0E] border border-[#C89A2B]/30 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#C89A2B]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex items-center space-x-3">
-              <span className="bg-[#D4AF37] text-[#0A2E1D] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest shadow">
+              <span className="bg-[#C89A2B] text-[#6B3F1D] text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest shadow">
                 NEW MODULE
               </span>
-              <span className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wider flex items-center space-x-1">
+              <span className="text-xs font-semibold text-[#C89A2B] uppercase tracking-wider flex items-center space-x-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Executive Decision Support</span>
               </span>
@@ -199,13 +199,13 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           {/* Perspective & Export Controls */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {/* Perspective View Selector */}
-            <div className="bg-[#051F13] border border-white/15 rounded-2xl p-1.5 flex items-center space-x-1 text-xs">
+            <div className="bg-black/30 border border-white/15 rounded-2xl p-1.5 flex items-center space-x-1 text-xs">
               <span className="text-[10px] text-gray-400 font-bold px-2 uppercase">Role View:</span>
               <button
                 onClick={() => setPerspective('EXECUTIVE')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
                   perspective === 'EXECUTIVE'
-                    ? 'bg-[#D4AF37] text-[#0A2E1D] shadow'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow'
                     : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -215,7 +215,7 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
                 onClick={() => setPerspective('REGIONAL')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
                   perspective === 'REGIONAL'
-                    ? 'bg-[#D4AF37] text-[#0A2E1D] shadow'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow'
                     : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -225,7 +225,7 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
                 onClick={() => setPerspective('DISTRICT')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
                   perspective === 'DISTRICT'
-                    ? 'bg-[#D4AF37] text-[#0A2E1D] shadow'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow'
                     : 'text-gray-300 hover:text-white'
                 }`}
               >
@@ -236,7 +236,7 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
             {/* Export Dropdown */}
             <button
               onClick={() => handleExportReport('CSV')}
-              className="bg-[#0B4228] hover:bg-[#0F5433] text-[#D4AF37] border border-[#D4AF37]/40 font-bold px-4 py-2.5 rounded-2xl text-xs flex items-center justify-center space-x-2 transition-all shadow-md"
+              className="bg-[#6B3F1D] hover:bg-[#4A2C17] text-[#C89A2B] border border-[#C89A2B]/40 font-bold px-4 py-2.5 rounded-2xl text-xs flex items-center justify-center space-x-2 transition-all shadow-md"
             >
               <Download className="w-4 h-4" />
               <span>Export Report (CSV)</span>
@@ -247,7 +247,7 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
         {/* Quick KPI Stat Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 mt-6 pt-6 border-t border-white/10">
           
-          <div className="bg-[#051F13]/90 border border-white/10 p-4 rounded-2xl">
+          <div className="bg-black/30 border border-white/10 p-4 rounded-2xl">
             <span className="text-gray-400 text-[10px] uppercase font-bold block">Operating Banks</span>
             <div className="flex items-baseline space-x-1 mt-1">
               <span className="text-2xl font-black text-white">{totalCommercialBanks}</span>
@@ -255,23 +255,23 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
             </div>
           </div>
 
-          <div className="bg-[#051F13]/90 border border-white/10 p-4 rounded-2xl">
+          <div className="bg-black/30 border border-white/10 p-4 rounded-2xl">
             <span className="text-gray-400 text-[10px] uppercase font-bold block">Tracked Competitor Branches</span>
             <div className="flex items-baseline space-x-1 mt-1">
-              <span className="text-2xl font-black text-[#D4AF37]">{totalCompetitorBranches}</span>
+              <span className="text-2xl font-black text-[#C89A2B]">{totalCompetitorBranches}</span>
               <span className="text-[10px] text-gray-400 font-semibold">Sol IDs Mapped</span>
             </div>
           </div>
 
-          <div className="bg-[#051F13]/90 border border-white/10 p-4 rounded-2xl">
+          <div className="bg-black/30 border border-white/10 p-4 rounded-2xl">
             <span className="text-gray-400 text-[10px] uppercase font-bold block">Bunna Industry Rank</span>
             <div className="flex items-baseline space-x-1 mt-1">
-              <span className="text-2xl font-black text-[#D4AF37]">#4</span>
+              <span className="text-2xl font-black text-[#C89A2B]">#4</span>
               <span className="text-[10px] text-emerald-400 font-bold">In Target Hubs</span>
             </div>
           </div>
 
-          <div className="bg-[#051F13]/90 border border-white/10 p-4 rounded-2xl">
+          <div className="bg-black/30 border border-white/10 p-4 rounded-2xl">
             <span className="text-gray-400 text-[10px] uppercase font-bold block">Bunna Average BPI</span>
             <div className="flex items-baseline space-x-1 mt-1">
               <span className="text-2xl font-black text-emerald-400">79.2</span>
@@ -279,7 +279,7 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
             </div>
           </div>
 
-          <div className="bg-[#051F13]/90 border border-white/10 p-4 rounded-2xl col-span-2 lg:col-span-1">
+          <div className="bg-black/30 border border-white/10 p-4 rounded-2xl col-span-2 lg:col-span-1">
             <span className="text-gray-400 text-[10px] uppercase font-bold block">Market Alerts</span>
             <div className="flex items-baseline space-x-2 mt-1">
               <span className="text-2xl font-black text-amber-400">{unreadAlertsCount}</span>
@@ -297,8 +297,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('OVERVIEW')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'OVERVIEW'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <BarChart3 className="w-4 h-4" />
@@ -309,8 +309,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('MAP')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'MAP'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Map className="w-4 h-4" />
@@ -321,8 +321,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('RANKINGS')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'RANKINGS'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Award className="w-4 h-4" />
@@ -333,8 +333,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('GAP')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'GAP'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Target className="w-4 h-4" />
@@ -345,8 +345,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('AI')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'AI'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Sparkles className="w-4 h-4" />
@@ -357,8 +357,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('BANKS')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'BANKS'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Building2 className="w-4 h-4" />
@@ -369,8 +369,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('BRANCHES')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'BRANCHES'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <GitBranch className="w-4 h-4" />
@@ -381,8 +381,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
           onClick={() => setActiveTab('KPI_CONFIG')}
           className={`px-4 py-3 rounded-2xl flex items-center space-x-2 whitespace-nowrap transition-all ${
             activeTab === 'KPI_CONFIG'
-              ? 'bg-[#D4AF37] text-[#0A2E1D] shadow-md'
-              : 'bg-[#0A2E1D] text-gray-300 hover:text-white border border-white/10'
+              ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+              : 'bg-[#6B3F1D]/50 text-gray-300 hover:text-white border border-white/10'
           }`}
         >
           <Sliders className="w-4 h-4" />
@@ -393,8 +393,8 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
 
       {/* Main Tab Content Display */}
       {loading ? (
-        <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-12 text-center space-y-3">
-          <RefreshCw className="w-8 h-8 text-[#D4AF37] animate-spin mx-auto" />
+        <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-12 text-center space-y-3">
+          <RefreshCw className="w-8 h-8 text-[#C89A2B] animate-spin mx-auto" />
           <p className="text-xs text-gray-300 font-medium">Loading Banking Competitor Intelligence database...</p>
         </div>
       ) : (
@@ -410,15 +410,15 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
               />
 
               {/* Top Areas Rankings Table */}
-              <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 space-y-4">
+              <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 space-y-4">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <h3 className="text-lg font-bold text-white flex items-center space-x-2">
-                    <Award className="w-5 h-5 text-[#D4AF37]" />
+                    <Award className="w-5 h-5 text-[#C89A2B]" />
                     <span>Regional Commercial Hub Leaderboards Summary</span>
                   </h3>
                   <button
                     onClick={() => setActiveTab('RANKINGS')}
-                    className="text-xs text-[#D4AF37] font-bold hover:underline"
+                    className="text-xs text-[#C89A2B] font-bold hover:underline"
                   >
                     View All Area Leaderboards →
                   </button>
@@ -426,15 +426,15 @@ export const CompetitorIntelligenceModule: React.FC<CompetitorIntelligenceModule
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {rankings.slice(0, 3).map((r) => (
-                    <div key={r.id} className="bg-[#051F13] border border-white/10 rounded-xl p-4 space-y-3">
+                    <div key={r.id} className="bg-black/30 border border-white/10 rounded-xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <div>
                           <h4 className="text-base font-bold text-white">{r.areaName}</h4>
                           <span className="text-[10px] text-gray-400">{r.districtName}</span>
                         </div>
-                        <div className="bg-[#0A2E1D] border border-[#D4AF37]/30 px-3 py-1 rounded-lg text-center">
+                        <div className="bg-[#6B3F1D] border border-[#C89A2B]/30 px-3 py-1 rounded-lg text-center">
                           <span className="text-[9px] text-gray-300 block uppercase">Bunna Rank</span>
-                          <span className="text-base font-black text-[#D4AF37]">#{r.bunnaRank}</span>
+                          <span className="text-base font-black text-[#C89A2B]">#{r.bunnaRank}</span>
                         </div>
                       </div>
 

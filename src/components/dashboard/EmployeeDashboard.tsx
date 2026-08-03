@@ -91,10 +91,10 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
     <div className="space-y-8">
       
       {/* Top Banner */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0B4228] via-[#08321E] to-[#051F13] border border-[#D4AF37]/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-white">
+      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#362011] border border-[#C89A2B]/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-white">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="bg-[#D4AF37] text-[#0B4228] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
+            <span className="bg-[#C89A2B] text-[#6B3F1D] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
               Employee Self-Service
             </span>
             <span className="text-xs text-gray-300">{user.jobTitle} • {user.branchName}</span>
@@ -113,17 +113,17 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
           <div className="relative">
             <button
               onClick={() => setShowExportMenu(!showExportMenu)}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-[#0B4228] border border-[#D4AF37]/50 text-white font-extrabold text-xs shadow-lg hover:brightness-110 flex items-center space-x-2 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#6B3F1D] to-[#4A2C17] border border-[#C89A2B]/50 text-white font-extrabold text-xs shadow-lg hover:brightness-110 flex items-center space-x-2 transition-all"
             >
-              <Download className="w-4 h-4 text-[#D4AF37]" />
+              <Download className="w-4 h-4 text-[#C89A2B]" />
               <span>{t.downloadMyReport || 'Download My Report'}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#C89A2B]" />
             </button>
 
             {showExportMenu && (
-              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-[#08321E] border border-[#D4AF37]/40 shadow-2xl z-30 p-2 space-y-1">
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/40 shadow-2xl z-30 p-2 space-y-1">
                 <div className="px-3 py-1.5 border-b border-white/10">
-                  <p className="text-[10px] font-bold text-[#D4AF37] uppercase">Export Personal Data</p>
+                  <p className="text-[10px] font-bold text-[#C89A2B] uppercase">Export Personal Data</p>
                 </div>
                 
                 <button
@@ -176,18 +176,18 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
           {onOpenProfile && (
             <button
               onClick={onOpenProfile}
-              className="px-4 py-2.5 rounded-xl bg-[#08321E] hover:bg-white/10 border border-[#D4AF37]/40 text-xs font-bold flex items-center space-x-2 text-[#D4AF37]"
+              className="px-4 py-2.5 rounded-xl bg-[#4A2C17] hover:bg-white/10 border border-[#C89A2B]/40 text-xs font-bold flex items-center space-x-2 text-[#C89A2B]"
             >
-              <UserCheck className="w-4 h-4 text-[#D4AF37]" />
+              <UserCheck className="w-4 h-4 text-[#C89A2B]" />
               <span>{t.myRoleProfile || 'My Role Profile'}</span>
             </button>
           )}
 
           <button
             onClick={onOpenAiAssistant}
-            className="px-5 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs shadow-lg hover:bg-[#e0be4d] flex items-center space-x-2"
+            className="px-5 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs shadow-lg hover:bg-[#D8B45C] flex items-center space-x-2"
           >
-            <Sparkles className="w-4 h-4 text-[#0B4228]" />
+            <Sparkles className="w-4 h-4 text-[#6B3F1D]" />
             <span>{t.askAiCoach || 'Ask AI Performance Coach'}</span>
           </button>
         </div>
@@ -220,16 +220,16 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         {/* Deposit Target Progress Card */}
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4 relative overflow-hidden">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4 relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs text-gray-400 font-semibold">Deposits Target Progress</p>
               <h3 className="text-xl font-extrabold text-white mt-0.5">
                 ETB {actualDeposits.toLocaleString()}
               </h3>
-              <p className="text-[11px] text-[#D4AF37] font-medium">Target: ETB {depositTarget.toLocaleString()}</p>
+              <p className="text-[11px] text-[#C89A2B] font-medium">Target: ETB {depositTarget.toLocaleString()}</p>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/20 text-[#D4AF37] flex items-center justify-center font-bold text-sm">
+            <div className="w-12 h-12 rounded-2xl bg-[#C89A2B]/20 text-[#C89A2B] flex items-center justify-center font-bold text-sm">
               {depositCompletionPct}%
             </div>
           </div>
@@ -238,7 +238,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
           <div className="space-y-1">
             <div className="w-full bg-white/10 h-3 rounded-full overflow-hidden">
               <div
-                className="bg-gradient-to-r from-[#D4AF37] to-[#10B981] h-full transition-all duration-500"
+                className="bg-gradient-to-r from-[#C89A2B] to-[#2E7D32] h-full transition-all duration-500"
                 style={{ width: `${depositCompletionPct}%` }}
               />
             </div>
@@ -250,7 +250,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
         </div>
 
         {/* Mobile Banking Target Gauge Card */}
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs text-gray-400 font-semibold">Bunna Mobile Activations</p>
@@ -278,15 +278,15 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
         </div>
 
         {/* Achievement Badges Card */}
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-3">
-          <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider flex items-center space-x-1.5">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-3">
+          <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider flex items-center space-x-1.5">
             <Medal className="w-4 h-4" />
             <span>Achievement Badges & Tier</span>
           </h4>
 
           <div className="space-y-2">
-            <div className="p-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37]/20 to-amber-500/10 border border-[#D4AF37]/40 flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg bg-[#D4AF37] text-[#0B4228] font-bold flex items-center justify-center text-xs">
+            <div className="p-2.5 rounded-xl bg-gradient-to-r from-[#C89A2B]/20 to-amber-500/10 border border-[#C89A2B]/40 flex items-center space-x-3">
+              <div className="w-8 h-8 rounded-lg bg-[#C89A2B] text-[#6B3F1D] font-bold flex items-center justify-center text-xs">
                 🥇
               </div>
               <div>
@@ -319,7 +319,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
       />
 
       {/* MY HISTORICAL REPORTS TABLE */}
-      <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white">
+      <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
             <h3 className="font-extrabold text-lg text-white">{t.mySubmittedReports || 'My Submitted Reports Log'}</h3>
@@ -328,15 +328,15 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
 
           <button
             onClick={() => downloadReportExcel(employeePerformanceReports, getUserFullName(user), user)}
-            className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs flex items-center space-x-1.5 shadow-md hover:bg-[#e0be4d] transition-all"
+            className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs flex items-center space-x-1.5 shadow-md hover:bg-[#D8B45C] transition-all"
           >
-            <Download className="w-3.5 h-3.5 text-[#0B4228]" />
+            <Download className="w-3.5 h-3.5 text-[#6B3F1D]" />
             <span>{t.export || 'Export Report'}</span>
           </button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-gray-300">
-            <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase">
+            <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase">
               <tr>
                 <th className="p-3">Report Date</th>
                 <th className="p-3">Day</th>
@@ -351,7 +351,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
             <tbody className="divide-y divide-white/10">
               {reports.filter(r => r.employeeId === user.id || r.employeeName.toLowerCase().includes(user.firstName.toLowerCase())).map(r => (
                 <tr key={r.id} className="hover:bg-white/5">
-                  <td className="p-3 font-bold text-[#D4AF37]">{r.reportDate}</td>
+                  <td className="p-3 font-bold text-[#C89A2B]">{r.reportDate}</td>
                   <td className="p-3">{r.dayOfWeek}</td>
                   <td className="p-3 font-bold text-emerald-400">ETB {r.depositsETB?.toLocaleString()}</td>
                   <td className="p-3 font-semibold">ETB {r.foreignCurrencyETB?.toLocaleString()}</td>
@@ -396,10 +396,10 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
       {/* VIEW REPORT MODAL */}
       {viewingReport && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-lg text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-lg text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <div>
-                <h3 className="font-bold text-lg text-[#D4AF37]">Daily Performance Entry Details</h3>
+                <h3 className="font-bold text-lg text-[#C89A2B]">Daily Performance Entry Details</h3>
                 <p className="text-xs text-gray-300">{viewingReport.reportDate} ({viewingReport.dayOfWeek})</p>
               </div>
               <button onClick={() => setViewingReport(null)} className="text-gray-400 hover:text-white">
@@ -417,7 +417,7 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
               </div>
               <div className="p-3 bg-white/5 rounded-xl">
                 <span className="text-gray-400 block text-[10px]">Digital Financial Services</span>
-                <strong className="text-[#D4AF37] text-sm font-bold">ETB {viewingReport.digitalFinancialServicesETB?.toLocaleString()}</strong>
+                <strong className="text-[#C89A2B] text-sm font-bold">ETB {viewingReport.digitalFinancialServicesETB?.toLocaleString()}</strong>
               </div>
               <div className="p-3 bg-white/5 rounded-xl">
                 <span className="text-gray-400 block text-[10px]">Accounts Opened</span>
@@ -433,13 +433,13 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
               </div>
             </div>
             {viewingReport.managerComment && (
-              <div className="p-3 bg-[#08321E] border border-[#D4AF37]/30 rounded-xl text-xs">
-                <span className="text-[#D4AF37] font-bold block mb-0.5">Manager Feedback & Notes:</span>
+              <div className="p-3 bg-[#4A2C17] border border-[#C89A2B]/30 rounded-xl text-xs">
+                <span className="text-[#C89A2B] font-bold block mb-0.5">Manager Feedback & Notes:</span>
                 <p className="text-gray-200">{viewingReport.managerComment}</p>
               </div>
             )}
             <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingReport(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+              <button onClick={() => setViewingReport(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
                 Close
               </button>
             </div>

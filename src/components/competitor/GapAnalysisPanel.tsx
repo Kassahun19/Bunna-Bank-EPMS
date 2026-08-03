@@ -12,12 +12,12 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
   const currentArea = rankings.find(r => r.areaName.toLowerCase().includes(selectedArea.toLowerCase())) || rankings[0];
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Target className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">Benchmarking & Gap Intelligence</span>
           </div>
@@ -30,7 +30,7 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
-            className="bg-[#051F13] border border-white/15 text-white text-xs font-bold rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="bg-[#6B3F1D] border border-white/15 text-white text-xs font-bold rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           >
             {rankings.map(r => (
               <option key={r.id} value={r.areaName}>{r.areaName} ({r.districtName})</option>
@@ -41,17 +41,17 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
 
       {/* Area Summary Banner */}
       {currentArea && (
-        <div className="bg-[#051F13] border border-white/10 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+        <div className="bg-black/30 border border-white/10 rounded-2xl p-5 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
           <div className="border-r border-white/10 pr-4">
             <span className="text-[10px] text-gray-400 block uppercase font-bold">Targeted Commercial Hub</span>
             <h4 className="text-xl font-extrabold text-white">{currentArea.areaName}</h4>
-            <span className="text-xs text-[#D4AF37]">{currentArea.districtName}</span>
+            <span className="text-xs text-[#C89A2B]">{currentArea.districtName}</span>
           </div>
 
           <div className="border-r border-white/10 pr-4">
             <span className="text-[10px] text-gray-400 block uppercase font-bold">Bunna Bank Rank</span>
             <div className="flex items-baseline space-x-2 mt-1">
-              <span className="text-2xl font-black text-[#D4AF37]">#{currentArea.bunnaRank}</span>
+              <span className="text-2xl font-black text-[#C89A2B]">#{currentArea.bunnaRank}</span>
               <span className="text-xs text-gray-300">out of {currentArea.totalBanks} Banks</span>
             </div>
           </div>
@@ -72,13 +72,13 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
       {/* Gap Table */}
       {currentArea && (
         <div className="space-y-4">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+          <h4 className="text-sm font-bold text-white uppercase tracking-wider text-[#C89A2B]">
             KPI Gap Breakdown vs #1 Rank ({currentArea.rankings[0]?.bankName})
           </h4>
 
           <div className="overflow-x-auto rounded-xl border border-white/10">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#051F13] text-[#D4AF37] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
+              <thead className="bg-[#4A2C17] text-[#C89A2B] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
                 <tr>
                   <th className="py-3.5 px-4">KPI Metric</th>
                   <th className="py-3.5 px-4 text-right">Bunna Bank Value</th>
@@ -95,7 +95,7 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
                     <tr key={idx} className="hover:bg-white/5 transition-colors">
                       <td className="py-3.5 px-4 font-bold text-white">
                         <div className="flex items-center space-x-2">
-                          <BarChart3 className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          <BarChart3 className="w-3.5 h-3.5 text-[#C89A2B]" />
                           <span>{gap.kpiName}</span>
                         </div>
                       </td>
@@ -113,7 +113,7 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
                           <span>{isBehind ? `-${gap.gapPercentage}%` : `+${Math.abs(gap.gapPercentage)}%`}</span>
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-right font-mono text-[#D4AF37] font-bold">
+                      <td className="py-3.5 px-4 text-right font-mono text-[#C89A2B] font-bold">
                         {gap.unit === 'ETB' ? `+ ETB ${gap.targetToRankOne.toLocaleString()}` : `+ ${gap.targetToRankOne.toLocaleString()}`}
                       </td>
                       <td className="py-3.5 px-4 text-center">
@@ -135,13 +135,13 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
       {/* Leaderboard Table for Area */}
       {currentArea && (
         <div className="space-y-3 pt-4 border-t border-white/10">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+          <h4 className="text-sm font-bold text-white uppercase tracking-wider text-[#C89A2B]">
             Full Area Bank Rankings Leaderboard ({currentArea.areaName})
           </h4>
 
           <div className="overflow-x-auto rounded-xl border border-white/10">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#051F13] text-[#D4AF37] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
+              <thead className="bg-[#4A2C17] text-[#C89A2B] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
                 <tr>
                   <th className="py-3 px-4">Rank</th>
                   <th className="py-3 px-4">Bank</th>
@@ -158,14 +158,14 @@ export const GapAnalysisPanel: React.FC<GapAnalysisPanelProps> = ({ rankings }) 
                   return (
                     <tr
                       key={r.rank}
-                      className={`${isBunna ? 'bg-[#0B4228] font-bold text-white' : 'hover:bg-white/5 text-gray-200'}`}
+                      className={`${isBunna ? 'bg-[#6B3F1D] font-bold text-white' : 'hover:bg-white/5 text-gray-200'}`}
                     >
-                      <td className="py-3 px-4 font-mono font-black text-[#D4AF37]">#{r.rank}</td>
+                      <td className="py-3 px-4 font-mono font-black text-[#C89A2B]">#{r.rank}</td>
                       <td className="py-3 px-4">
                         <div className="flex items-center space-x-2">
                           <span className="font-bold">{r.bankName}</span>
                           {isBunna && (
-                            <span className="bg-[#D4AF37] text-[#0A2E1D] text-[9px] font-extrabold px-1.5 py-0.5 rounded">
+                            <span className="bg-[#C89A2B] text-[#6B3F1D] text-[9px] font-extrabold px-1.5 py-0.5 rounded">
                               BUNNA
                             </span>
                           )}

@@ -220,17 +220,17 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
     <div className="space-y-6">
       
       {/* Title & Section Banner */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#08321E] via-[#0B4228] to-[#08321E] border border-[#D4AF37]/30 shadow-xl">
+      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#362011] border border-[#C89A2B]/30 shadow-xl">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2 mb-1">
-              <span className="bg-[#D4AF37] text-[#0B4228] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
+              <span className="bg-[#C89A2B] text-[#6B3F1D] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
                 Bunna Bank EPMS Metrics
               </span>
               <span className="text-xs text-gray-300">All 8 Core Products</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-              <BarChart3 className="w-6 h-6 text-[#D4AF37]" />
+              <BarChart3 className="w-6 h-6 text-[#C89A2B]" />
               {title}
             </h3>
             <p className="text-xs text-gray-300 mt-0.5">{subtitle}</p>
@@ -239,7 +239,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
           <div className="flex items-center space-x-3 bg-black/20 p-2.5 rounded-2xl border border-white/10 text-xs">
             <div className="text-right">
               <p className="text-[10px] text-gray-400 uppercase font-bold">Total Reports Submitted</p>
-              <p className="text-base font-extrabold text-[#D4AF37]">{reports.length}</p>
+              <p className="text-base font-extrabold text-[#C89A2B]">{reports.length}</p>
             </div>
             <div className="h-8 w-px bg-white/10" />
             <div className="text-right">
@@ -270,8 +270,8 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
             <div
               key={prod.key}
               onClick={() => setSelectedProductKey(prod.key)}
-              className={`p-5 rounded-2xl bg-[#08321E]/95 border ${prod.border} shadow-xl hover:-translate-y-2.5 hover:shadow-[0_25px_50px_rgba(212,175,55,0.22)] hover:border-[#D4AF37] transition-all duration-300 transform-gpu cursor-pointer relative overflow-hidden group ${
-                selectedProductKey === prod.key ? 'ring-2 ring-[#D4AF37] scale-[1.02]' : ''
+              className={`p-5 rounded-2xl bg-[#4A2C17]/95 border ${prod.border} shadow-xl hover:-translate-y-2.5 hover:shadow-[0_25px_50px_rgba(200,154,43,0.22)] hover:border-[#C89A2B] transition-all duration-300 transform-gpu cursor-pointer relative overflow-hidden group ${
+                selectedProductKey === prod.key ? 'ring-2 ring-[#C89A2B] scale-[1.02]' : ''
               }`}
             >
               <div className={`absolute top-0 right-0 w-24 h-24 rounded-full bg-gradient-to-br ${prod.gradient} blur-xl opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none`} />
@@ -293,7 +293,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
                 </div>
               </div>
 
-              <h4 className="text-sm font-bold text-white group-hover:text-[#D4AF37] transition-colors">{prod.name}</h4>
+              <h4 className="text-sm font-bold text-white group-hover:text-[#C89A2B] transition-colors">{prod.name}</h4>
               <p className="text-[10px] text-gray-400 uppercase font-semibold">{prod.category}</p>
 
               {/* Numbers Overview with strict +, -, or none for remaining variance */}
@@ -347,13 +347,13 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
       </div>
 
       {/* Product Reports Table Section */}
-      <div className="bg-[#08321E] border border-[#D4AF37]/30 rounded-3xl p-6 shadow-xl space-y-4">
+      <div className="bg-[#4A2C17] border border-[#C89A2B]/30 rounded-3xl p-6 shadow-xl space-y-4">
         
         {/* Table Controls Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <h4 className="text-base font-bold text-white flex items-center gap-2">
-              <FileSpreadsheet className="w-5 h-5 text-[#D4AF37]" />
+              <FileSpreadsheet className="w-5 h-5 text-[#C89A2B]" />
               Product Performance Reports Database
             </h4>
             <p className="text-xs text-gray-300">
@@ -368,11 +368,11 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
             <select
               value={selectedProductKey}
               onChange={(e) => setSelectedProductKey(e.target.value)}
-              className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:border-[#D4AF37] focus:outline-none font-semibold"
+              className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:border-[#C89A2B] focus:outline-none font-semibold"
             >
-              <option value="all" className="bg-[#08321E]">All 8 Products</option>
+              <option value="all" className="bg-[#6B3F1D]">All 8 Products</option>
               {products.map(p => (
-                <option key={p.key} value={p.key} className="bg-[#08321E]">{p.name}</option>
+                <option key={p.key} value={p.key} className="bg-[#6B3F1D]">{p.name}</option>
               ))}
             </select>
 
@@ -380,12 +380,12 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:border-[#D4AF37] focus:outline-none font-semibold"
+              className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:border-[#C89A2B] focus:outline-none font-semibold"
             >
-              <option value="ALL" className="bg-[#08321E]">All Statuses</option>
-              <option value="Approved" className="bg-[#08321E]">Approved Only</option>
-              <option value="Pending" className="bg-[#08321E]">Pending Review</option>
-              <option value="Rejected" className="bg-[#08321E]">Rejected</option>
+              <option value="ALL" className="bg-[#6B3F1D]">All Statuses</option>
+              <option value="Approved" className="bg-[#6B3F1D]">Approved Only</option>
+              <option value="Pending" className="bg-[#6B3F1D]">Pending Review</option>
+              <option value="Rejected" className="bg-[#6B3F1D]">Rejected</option>
             </select>
 
             {/* Search Input */}
@@ -396,7 +396,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search staff, branch..."
-                className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-400 focus:border-[#D4AF37] focus:outline-none"
+                className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-400 focus:border-[#C89A2B] focus:outline-none"
               />
             </div>
           </div>
@@ -405,7 +405,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
         {/* Reports Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-gray-200">
-            <thead className="bg-white/5 border-b border-white/10 text-[11px] uppercase tracking-wider text-[#D4AF37] font-bold">
+            <thead className="bg-white/5 border-b border-white/10 text-[11px] uppercase tracking-wider text-[#C89A2B] font-bold">
               <tr>
                 <th className="py-3 px-4">Date & ID</th>
                 <th className="py-3 px-4">Staff & Branch</th>
@@ -437,7 +437,7 @@ export const AllProductsOverview: React.FC<AllProductsOverviewProps> = ({
 
                     <td className="py-3.5 px-4">
                       <p className="font-bold text-white">{report.employeeName}</p>
-                      <p className="text-[10px] text-[#D4AF37]">{report.branchName}</p>
+                      <p className="text-[10px] text-[#C89A2B]">{report.branchName}</p>
                     </td>
 
                     <td className="py-3.5 px-4 font-semibold text-amber-300">

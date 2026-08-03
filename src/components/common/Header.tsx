@@ -123,7 +123,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0B4228]/95 backdrop-blur-md border-b border-[#D4AF37]/30 text-white shadow-lg">
+    <header className="sticky top-0 z-40 bg-[#6B3F1D]/95 backdrop-blur-md border-b border-[#C89A2B]/30 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
@@ -133,32 +133,32 @@ export const Header: React.FC<HeaderProps> = (props) => {
               onClick={() => onNavigate && onNavigate('home')}
               className="flex items-center space-x-3 text-left focus:outline-none group"
             >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#B38F24] to-[#0B4228] p-0.5 shadow-md flex items-center justify-center group-hover:scale-105 transition-transform">
-                <div className="w-full h-full bg-[#0B4228] rounded-[10px] p-1.5 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C89A2B] via-[#D8B45C] to-[#6B3F1D] p-0.5 shadow-md flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="w-full h-full bg-[#6B3F1D] rounded-[10px] p-1.5 flex items-center justify-center">
                   <BunnaBankLogo className="w-8 h-8" variant="gold" />
                 </div>
               </div>
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="font-bold text-xl tracking-tight text-white">{t.bankName}</span>
-                  <span className="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <span className="bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/40 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
                     EPMS
                   </span>
                 </div>
-                <p className="text-xs text-[#D4AF37]/90 font-medium hidden sm:block">
+                <p className="text-xs text-[#C89A2B]/90 font-medium hidden sm:block">
                   {t.tagline}
                 </p>
               </div>
             </button>
 
             {/* Navigation Bar Link Names: Home, About, & Contact on Left Side */}
-            <nav className="hidden lg:flex items-center space-x-1.5 bg-[#08321E] p-1.5 rounded-2xl border border-[#D4AF37]/20">
+            <nav className="hidden lg:flex items-center space-x-1.5 bg-[#4A2C17] p-1.5 rounded-2xl border border-[#C89A2B]/20">
               <button
                 onClick={() => onNavigate && onNavigate('home')}
                 className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   currentNavView === 'home'
-                    ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+                    : 'text-gray-200 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {t.home || 'Home'}
@@ -168,8 +168,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
                 onClick={() => onNavigate && onNavigate('about')}
                 className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   currentNavView === 'about'
-                    ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+                    : 'text-gray-200 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {t.about || 'About'}
@@ -179,8 +179,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
                 onClick={() => onNavigate && onNavigate('contact')}
                 className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   currentNavView === 'contact'
-                    ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
+                    : 'text-gray-200 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {t.contact || 'Contact'}
@@ -188,10 +188,10 @@ export const Header: React.FC<HeaderProps> = (props) => {
             </nav>
           </div>
 
-          {/* Center Space / Active User Role Indicator (Role Switcher Removed After Login as Requested) */}
+          {/* Center Space / Active User Role Indicator */}
           {activeUser && (
-            <div className="hidden lg:flex items-center space-x-2 px-3 py-1 rounded-full bg-[#08321E] border border-[#D4AF37]/30 text-xs text-[#D4AF37] font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1" />
+            <div className="hidden lg:flex items-center space-x-2 px-3 py-1 rounded-full bg-[#4A2C17] border border-[#C89A2B]/30 text-xs text-[#C89A2B] font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#C89A2B] animate-ping mr-1" />
               <span>
                 {activeUser.role === 'ADMINISTRATOR' ? 'HQ Admin Workspace' : activeUser.role === 'MANAGER' ? `${activeUser.branchName || 'Branch'} Manager Portal` : `${activeUser.branchName || 'Branch'} Staff Portal`}
               </span>
@@ -203,19 +203,19 @@ export const Header: React.FC<HeaderProps> = (props) => {
             {/* Global Search Button */}
             <button
               onClick={onOpenSearch}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-200 transition-colors"
+              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-gray-200 transition-colors"
               title="Global Search"
             >
-              <Search className="w-4 h-4 text-[#D4AF37]" />
+              <Search className="w-4 h-4 text-[#C89A2B]" />
             </button>
 
             {/* AI Assistant Button */}
             {onOpenAiAssistant && (
               <button
                 onClick={onOpenAiAssistant}
-                className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-xs shadow-md hover:opacity-95 transition-all transform active:scale-95"
+                className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold text-xs shadow-md hover:opacity-95 transition-all transform active:scale-95"
               >
-                <Sparkles className="w-4 h-4 animate-spin text-[#0B4228]" style={{ animationDuration: '6s' }} />
+                <Sparkles className="w-4 h-4 animate-spin text-[#6B3F1D]" style={{ animationDuration: '6s' }} />
                 <span>{t.askAi}</span>
               </button>
             )}
@@ -223,21 +223,21 @@ export const Header: React.FC<HeaderProps> = (props) => {
             {/* API Docs & Schema */}
             <button
               onClick={onOpenApiDocs}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-200 transition-colors"
+              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-gray-200 transition-colors"
               title="Developer API & MySQL Schema"
             >
-              <FileCode2 className="w-4 h-4 text-[#D4AF37]" />
+              <FileCode2 className="w-4 h-4 text-[#C89A2B]" />
             </button>
 
             {/* Notifications */}
             {activeUser && (
               <button
                 onClick={onOpenNotifications}
-                className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-200 transition-colors"
+                className="relative p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-gray-200 transition-colors"
               >
-                <Bell className="w-4 h-4 text-[#D4AF37]" />
+                <Bell className="w-4 h-4 text-[#C89A2B]" />
                 {notificationsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-1 -right-1 bg-[#C89A2B] text-[#6B3F1D] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
                     {notificationsCount}
                   </span>
                 )}
@@ -245,11 +245,11 @@ export const Header: React.FC<HeaderProps> = (props) => {
             )}
 
             {/* Language Switcher */}
-            <div className="flex items-center bg-[#08321E] rounded-xl p-1 border border-[#D4AF37]/30 text-xs font-semibold">
+            <div className="flex items-center bg-[#4A2C17] rounded-xl p-1 border border-[#C89A2B]/30 text-xs font-semibold">
               <button
                 onClick={() => onLanguageChange('en')}
                 className={`px-2.5 py-1 rounded-lg transition-colors ${
-                  language === 'en' || language === ('EN' as any) ? 'bg-[#D4AF37] text-[#0B4228]' : 'text-gray-300 hover:text-white'
+                  language === 'en' || language === ('EN' as any) ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 EN
@@ -257,7 +257,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               <button
                 onClick={() => onLanguageChange('am')}
                 className={`px-2.5 py-1 rounded-lg transition-colors ${
-                  language === 'am' || language === ('AM' as any) ? 'bg-[#D4AF37] text-[#0B4228]' : 'text-gray-300 hover:text-white'
+                  language === 'am' || language === ('AM' as any) ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 አማ
@@ -275,29 +275,29 @@ export const Header: React.FC<HeaderProps> = (props) => {
                       setSelectedNavRole(activeUser.role);
                     }
                   }}
-                  className="flex items-center space-x-2 pl-3 pr-2 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium"
+                  className="flex items-center space-x-2 pl-3 pr-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-medium"
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#D4AF37] text-[#0B4228] font-bold flex items-center justify-center text-xs">
+                  <div className="w-7 h-7 rounded-full bg-[#C89A2B] text-[#6B3F1D] font-bold flex items-center justify-center text-xs">
                     {activeUser.firstName[0]}
                   </div>
                   <div className="text-left">
                     <p className="font-semibold text-white leading-none">{getUserFullName(activeUser)}</p>
-                    <p className="text-[10px] text-[#D4AF37]">{activeUser.jobTitle}</p>
+                    <p className="text-[10px] text-[#C89A2B]">{activeUser.jobTitle}</p>
                   </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-gray-400 ml-1" />
+                  <ChevronDown className="w-3.5 h-3.5 text-gray-300 ml-1" />
                 </button>
 
                 {roleMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-72 bg-[#08321E] border border-[#D4AF37]/40 rounded-2xl shadow-2xl z-50 text-xs overflow-hidden max-h-[82vh] flex flex-col">
+                  <div className="absolute right-0 mt-2 w-72 bg-[#4A2C17] border border-[#C89A2B]/40 rounded-2xl shadow-2xl z-50 text-xs overflow-hidden max-h-[82vh] flex flex-col">
                     {/* Header / User Profile summary */}
-                    <div className="px-4 py-3 bg-[#051F13] border-b border-white/10 shrink-0">
+                    <div className="px-4 py-3 bg-[#6B3F1D] border-b border-white/10 shrink-0">
                       <div className="flex items-center space-x-3">
-                        <div className="w-9 h-9 rounded-full bg-[#D4AF37] text-[#0B4228] font-black flex items-center justify-center text-sm shadow">
+                        <div className="w-9 h-9 rounded-full bg-[#C89A2B] text-[#6B3F1D] font-black flex items-center justify-center text-sm shadow">
                           {activeUser.firstName[0]}
                         </div>
                         <div className="truncate">
                           <p className="font-bold text-white text-sm truncate">{getUserFullName(activeUser)}</p>
-                          <p className="text-[#D4AF37] text-xs font-medium truncate">{activeUser.email}</p>
+                          <p className="text-[#C89A2B] text-xs font-medium truncate">{activeUser.email}</p>
                           <p className="text-gray-400 text-[10px] truncate">{activeUser.branchName || 'Bunna Bank S.C.'}</p>
                         </div>
                       </div>
@@ -307,7 +307,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                         <button
                           onClick={() => setSelectedNavRole('ADMINISTRATOR')}
                           className={`py-1 rounded-lg transition-all ${
-                            selectedNavRole === 'ADMINISTRATOR' ? 'bg-[#D4AF37] text-[#0B4228] shadow' : 'text-gray-300 hover:text-white'
+                            selectedNavRole === 'ADMINISTRATOR' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow' : 'text-gray-300 hover:text-white'
                           }`}
                         >
                           Admin
@@ -315,7 +315,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                         <button
                           onClick={() => setSelectedNavRole('MANAGER')}
                           className={`py-1 rounded-lg transition-all ${
-                            selectedNavRole === 'MANAGER' ? 'bg-[#D4AF37] text-[#0B4228] shadow' : 'text-gray-300 hover:text-white'
+                            selectedNavRole === 'MANAGER' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow' : 'text-gray-300 hover:text-white'
                           }`}
                         >
                           Manager
@@ -323,7 +323,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                         <button
                           onClick={() => setSelectedNavRole('EMPLOYEE')}
                           className={`py-1 rounded-lg transition-all ${
-                            selectedNavRole === 'EMPLOYEE' ? 'bg-[#D4AF37] text-[#0B4228] shadow' : 'text-gray-300 hover:text-white'
+                            selectedNavRole === 'EMPLOYEE' ? 'bg-[#C89A2B] text-[#6B3F1D] shadow' : 'text-gray-300 hover:text-white'
                           }`}
                         >
                           Employee
@@ -337,7 +337,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                       {/* 1. ADMIN NAVIGATION */}
                       {selectedNavRole === 'ADMINISTRATOR' && (
                         <div className="px-2 space-y-0.5">
-                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#D4AF37] flex items-center space-x-1.5">
+                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#C89A2B] flex items-center space-x-1.5">
                             <Shield className="w-3.5 h-3.5" />
                             <span>Admin Navigation</span>
                           </div>
@@ -362,7 +362,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                                 onClick={() => handleMenuItemClick(item.id, 'ADMINISTRATOR')}
                                 className="w-full text-left px-3 py-2 rounded-xl text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-colors font-medium group"
                               >
-                                <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                                <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                                 <span className="flex-1">{item.label}</span>
                                 <ChevronRight className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                               </button>
@@ -374,7 +374,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                       {/* 2. MANAGER NAVIGATION */}
                       {selectedNavRole === 'MANAGER' && (
                         <div className="px-2 space-y-0.5">
-                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#D4AF37] flex items-center space-x-1.5">
+                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#C89A2B] flex items-center space-x-1.5">
                             <Briefcase className="w-3.5 h-3.5" />
                             <span>Manager Navigation</span>
                           </div>
@@ -395,7 +395,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                                 onClick={() => handleMenuItemClick(item.id, 'MANAGER')}
                                 className="w-full text-left px-3 py-2 rounded-xl text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-colors font-medium group"
                               >
-                                <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                                <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                                 <span className="flex-1">{item.label}</span>
                                 <ChevronRight className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                               </button>
@@ -407,7 +407,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                       {/* 3. EMPLOYEE NAVIGATION */}
                       {selectedNavRole === 'EMPLOYEE' && (
                         <div className="px-2 space-y-0.5">
-                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#D4AF37] flex items-center space-x-1.5">
+                          <div className="px-3 py-1 text-[10px] uppercase tracking-wider font-extrabold text-[#C89A2B] flex items-center space-x-1.5">
                             <UserIcon className="w-3.5 h-3.5" />
                             <span>Employee Navigation</span>
                           </div>
@@ -428,7 +428,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
                                 onClick={() => handleMenuItemClick(item.id, 'EMPLOYEE')}
                                 className="w-full text-left px-3 py-2 rounded-xl text-gray-200 hover:text-white hover:bg-white/10 flex items-center space-x-2.5 transition-colors font-medium group"
                               >
-                                <IconComp className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                                <IconComp className="w-4 h-4 text-[#C89A2B] group-hover:scale-110 transition-transform" />
                                 <span className="flex-1">{item.label}</span>
                                 <ChevronRight className="w-3 h-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                               </button>
@@ -440,13 +440,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
                     </div>
 
                     {/* Logout footer button */}
-                    <div className="p-2 border-t border-white/10 bg-[#051F13] shrink-0">
+                    <div className="p-2 border-t border-white/10 bg-[#6B3F1D] shrink-0">
                       <button
                         onClick={() => {
                           setRoleMenuOpen(false);
                           onLogout();
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-red-400 hover:bg-rose-500/20 hover:text-rose-300 flex items-center space-x-2 font-bold transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-rose-300 hover:bg-rose-500/20 hover:text-rose-200 flex items-center space-x-2 font-bold transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         <span>{t.logout}</span>
@@ -458,7 +458,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
             ) : (
               <button
                 onClick={onOpenLogin}
-                className="px-5 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs shadow-md hover:bg-[#e0be4d] transition-all transform active:scale-95"
+                className="px-5 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs shadow-md hover:bg-[#D8B45C] transition-all transform active:scale-95"
               >
                 {t.login}
               </button>
@@ -469,7 +469,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           <div className="flex md:hidden items-center space-x-2">
             <button
               onClick={() => onLanguageChange(language === 'en' ? 'am' : 'en')}
-              className="px-2.5 py-1 rounded-lg bg-[#D4AF37] text-[#0B4228] text-xs font-bold"
+              className="px-2.5 py-1 rounded-lg bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold"
             >
               {language === 'en' ? 'አማርኛ' : 'English'}
             </button>
@@ -485,25 +485,25 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#08321E] border-b border-[#D4AF37]/30 px-4 py-4 space-y-3">
+        <div className="md:hidden bg-[#4A2C17] border-b border-[#C89A2B]/30 px-4 py-4 space-y-3">
           
           {/* Main Navigation Links */}
           <div className="grid grid-cols-3 gap-2 pb-2 border-b border-white/10">
             <button
               onClick={() => { onNavigate && onNavigate('home'); setMobileMenuOpen(false); }}
-              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'home' ? 'bg-[#D4AF37] text-[#0B4228]' : 'bg-white/5 text-gray-200'}`}
+              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'home' ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'bg-white/5 text-gray-200'}`}
             >
               {t.home || 'Home'}
             </button>
             <button
               onClick={() => { onNavigate && onNavigate('about'); setMobileMenuOpen(false); }}
-              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'about' ? 'bg-[#D4AF37] text-[#0B4228]' : 'bg-white/5 text-gray-200'}`}
+              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'about' ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'bg-white/5 text-gray-200'}`}
             >
               {t.about || 'About'}
             </button>
             <button
               onClick={() => { onNavigate && onNavigate('contact'); setMobileMenuOpen(false); }}
-              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'contact' ? 'bg-[#D4AF37] text-[#0B4228]' : 'bg-white/5 text-gray-200'}`}
+              className={`py-2 rounded-lg text-xs font-bold text-center ${currentNavView === 'contact' ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'bg-white/5 text-gray-200'}`}
             >
               {t.contact || 'Contact'}
             </button>
@@ -511,7 +511,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
           {/* Active User Badge in Mobile Menu */}
           {activeUser && (
-            <div className="p-2.5 rounded-xl bg-white/5 border border-[#D4AF37]/20 text-xs text-center text-[#D4AF37] font-bold">
+            <div className="p-2.5 rounded-xl bg-white/5 border border-[#C89A2B]/20 text-xs text-center text-[#C89A2B] font-bold">
               <span>
                 Logged in as: {getUserFullName(activeUser)} ({activeUser.role})
               </span>
@@ -522,7 +522,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
             {onOpenAiAssistant && (
               <button
                 onClick={() => { onOpenAiAssistant(); setMobileMenuOpen(false); }}
-                className="w-full py-2.5 bg-[#D4AF37] text-[#0B4228] font-bold rounded-xl text-xs flex items-center justify-center space-x-2"
+                className="w-full py-2.5 bg-[#C89A2B] text-[#6B3F1D] font-bold rounded-xl text-xs flex items-center justify-center space-x-2"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>{t.askAi}</span>
@@ -539,7 +539,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
             ) : (
               <button
                 onClick={() => { onOpenLogin(); setMobileMenuOpen(false); }}
-                className="w-full py-2.5 bg-[#D4AF37] text-[#0B4228] font-bold rounded-xl text-xs"
+                className="w-full py-2.5 bg-[#C89A2B] text-[#6B3F1D] font-bold rounded-xl text-xs"
               >
                 {t.login}
               </button>

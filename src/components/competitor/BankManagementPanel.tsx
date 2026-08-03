@@ -159,12 +159,12 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
   );
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Building2 className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">Bank Registry Directory</span>
           </div>
@@ -175,15 +175,15 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setImportModalOpen(true)}
-            className="bg-[#051F13] hover:bg-[#082A1A] text-gray-200 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all"
+            className="bg-[#6B3F1D] hover:bg-[#4A2C17] text-gray-200 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all"
           >
-            <Upload className="w-4 h-4 text-[#D4AF37]" />
+            <Upload className="w-4 h-4 text-[#C89A2B]" />
             <span>Import CSV/Excel</span>
           </button>
 
           <button
             onClick={openCreateModal}
-            className="bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
+            className="bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
           >
             <Plus className="w-4 h-4" />
             <span>Register New Bank</span>
@@ -210,19 +210,19 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
             placeholder="Search bank by name, code (e.g. CBE, Dashen, Awash)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#051F13] border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl pl-9 pr-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] outline-none"
+            className="w-full bg-[#6B3F1D] border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl pl-9 pr-4 py-2.5 focus:ring-2 focus:ring-[#C89A2B] outline-none"
           />
         </div>
 
         <span className="text-xs text-gray-300">
-          Total Registered: <strong className="text-[#D4AF37]">{banks.length} Banks</strong>
+          Total Registered: <strong className="text-[#C89A2B]">{banks.length} Banks</strong>
         </span>
       </div>
 
       {/* Banks Table */}
       <div className="overflow-x-auto rounded-xl border border-white/10">
         <table className="w-full text-left text-xs text-gray-300">
-          <thead className="bg-[#051F13] text-[#D4AF37] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
+          <thead className="bg-[#4A2C17] text-[#C89A2B] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
             <tr>
               <th className="py-3 px-4">Bank</th>
               <th className="py-3 px-4">Bank Code</th>
@@ -240,7 +240,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                   <div className="flex items-center space-x-3">
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xs shadow-inner"
-                      style={{ backgroundColor: bank.color || '#003399' }}
+                      style={{ backgroundColor: bank.color || '#6B3F1D' }}
                     >
                       {bank.code.substring(0, 3)}
                     </div>
@@ -250,7 +250,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     </div>
                   </div>
                 </td>
-                <td className="py-3 px-4 font-mono font-bold text-[#D4AF37]">{bank.code}</td>
+                <td className="py-3 px-4 font-mono font-bold text-[#C89A2B]">{bank.code}</td>
                 <td className="py-3 px-4">{bank.establishedYear}</td>
                 <td className="py-3 px-4 font-mono text-gray-400">{bank.swiftCode || 'N/A'}</td>
                 <td className="py-3 px-4 text-center font-bold text-white">{bank.totalBranchesNationwide.toLocaleString()}</td>
@@ -290,7 +290,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
       {/* Create / Edit Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0A2E1D] border border-white/15 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-[#6B3F1D] border border-white/15 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <h4 className="text-xl font-bold text-white border-b border-white/10 pb-3">
               {editingBank ? `Edit Bank: ${editingBank.name}` : 'Register New Commercial Bank'}
             </h4>
@@ -305,7 +305,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     placeholder="e.g. CBE, DASHEN"
                     value={formState.code}
                     onChange={(e) => setFormState({ ...formState, code: e.target.value.toUpperCase() })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -314,7 +314,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     type="number"
                     value={formState.establishedYear}
                     onChange={(e) => setFormState({ ...formState, establishedYear: parseInt(e.target.value) || 2010 })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
               </div>
@@ -327,7 +327,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                   placeholder="e.g. Commercial Bank of Ethiopia"
                   value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                  className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                 />
               </div>
 
@@ -339,7 +339,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     placeholder="e.g. CBE"
                     value={formState.shortName}
                     onChange={(e) => setFormState({ ...formState, shortName: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -349,7 +349,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     placeholder="e.g. CBETETAA"
                     value={formState.swiftCode}
                     onChange={(e) => setFormState({ ...formState, swiftCode: e.target.value.toUpperCase() })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
               </div>
@@ -361,7 +361,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     type="number"
                     value={formState.totalBranchesNationwide}
                     onChange={(e) => setFormState({ ...formState, totalBranchesNationwide: parseInt(e.target.value) || 10 })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -370,7 +370,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                     type="color"
                     value={formState.color}
                     onChange={(e) => setFormState({ ...formState, color: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 h-9 rounded-xl px-1 py-1 cursor-pointer"
+                    className="w-full bg-[#4A2C17] border border-white/15 h-9 rounded-xl px-1 py-1 cursor-pointer"
                   />
                 </div>
               </div>
@@ -386,7 +386,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-5 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold"
+                  className="px-5 py-2 rounded-xl bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold"
                 >
                   {loading ? 'Saving...' : 'Save Bank Record'}
                 </button>
@@ -399,9 +399,9 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
       {/* Import Modal */}
       {importModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0A2E1D] border border-white/15 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-[#6B3F1D] border border-white/15 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <div className="flex items-center space-x-2 text-[#D4AF37]">
+              <div className="flex items-center space-x-2 text-[#C89A2B]">
                 <FileSpreadsheet className="w-5 h-5" />
                 <h4 className="text-xl font-bold text-white">Import Commercial Banks (CSV/Excel)</h4>
               </div>
@@ -409,7 +409,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
 
             <p className="text-xs text-gray-300">
               Paste comma or tab-separated bank records below. Expected format:<br />
-              <code className="text-[#D4AF37] bg-[#051F13] px-2 py-1 rounded block mt-1">CODE, BANK NAME, SHORT NAME, BRANCH COUNT</code>
+              <code className="text-[#C89A2B] bg-[#4A2C17] px-2 py-1 rounded block mt-1">CODE, BANK NAME, SHORT NAME, BRANCH COUNT</code>
             </p>
 
             <textarea
@@ -417,7 +417,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
               placeholder={`ZEMEN, Zemen Bank S.C., Zemen, 120\nOromia, Oromia Bank S.C., Oromia, 450\nHIKMA, ZamZam Bank S.C., ZamZam, 80`}
-              className="w-full bg-[#051F13] border border-white/15 text-white font-mono text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              className="w-full bg-[#4A2C17] border border-white/15 text-white font-mono text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#C89A2B]"
             />
 
             <div className="flex items-center justify-end space-x-3 pt-3 border-t border-white/10">
@@ -432,7 +432,7 @@ export const BankManagementPanel: React.FC<BankManagementPanelProps> = ({
                 type="button"
                 onClick={handleProcessImport}
                 disabled={loading || !importText.trim()}
-                className="px-5 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold"
+                className="px-5 py-2 rounded-xl bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold"
               >
                 {loading ? 'Processing Import...' : 'Import Bank Batch'}
               </button>

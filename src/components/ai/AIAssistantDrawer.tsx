@@ -232,23 +232,23 @@ Ask me anything about:
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: '100%', opacity: 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-        className="w-full max-w-lg bg-gradient-to-b from-[#0B4228] via-[#08321E] to-[#051F13] border-l-2 border-[#D4AF37]/60 text-white h-full shadow-[0_0_50px_rgba(212,175,55,0.25)] flex flex-col relative overflow-hidden"
+        className="w-full max-w-lg bg-gradient-to-b from-[#6B3F1D] via-[#4A2C17] to-[#3A2212] border-l-2 border-[#C89A2B]/60 text-white h-full shadow-[0_0_50px_rgba(200,154,43,0.25)] flex flex-col relative overflow-hidden"
       >
         {/* Top Hanging Mount Cables (Visual Accent) */}
-        <div className="absolute top-0 left-10 w-0.5 h-6 bg-[#D4AF37]/40 z-20 pointer-events-none" />
-        <div className="absolute top-0 right-16 w-0.5 h-6 bg-[#D4AF37]/40 z-20 pointer-events-none" />
+        <div className="absolute top-0 left-10 w-0.5 h-6 bg-[#C89A2B]/40 z-20 pointer-events-none" />
+        <div className="absolute top-0 right-16 w-0.5 h-6 bg-[#C89A2B]/40 z-20 pointer-events-none" />
 
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-[#D4AF37]/30 flex items-center justify-between bg-[#0B4228]/95 backdrop-blur-xl relative z-10 shadow-lg">
+        <div className="p-4 sm:p-5 border-b border-[#C89A2B]/30 flex items-center justify-between bg-[#6B3F1D]/95 backdrop-blur-xl relative z-10 shadow-lg">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#D4AF37] via-[#B38F24] to-[#0B4228] p-0.5 shadow-md flex items-center justify-center">
-                <div className="w-full h-full bg-[#0B4228] rounded-[14px] p-1.5 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#C89A2B] via-[#D8B45C] to-[#6B3F1D] p-0.5 shadow-md flex items-center justify-center">
+                <div className="w-full h-full bg-[#6B3F1D] rounded-[14px] p-1.5 flex items-center justify-center">
                   <BunnaBankLogo className="w-7 h-7" variant="gold" />
                 </div>
               </div>
               {/* Online Green Pulsing Indicator */}
-              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0B4228] animate-pulse shadow-[0_0_10px_#34d399]" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#6B3F1D] animate-pulse shadow-[0_0_10px_#34d399]" />
             </div>
 
             <div>
@@ -259,7 +259,7 @@ Ask me anything about:
                   <span>Online</span>
                 </span>
               </div>
-              <p className="text-[11px] text-[#D4AF37] font-semibold mt-0.5">EPMS RAG Performance Coach & Advisor</p>
+              <p className="text-[11px] text-[#C89A2B] font-semibold mt-0.5">EPMS RAG Performance Coach & Advisor</p>
             </div>
           </div>
 
@@ -268,7 +268,7 @@ Ask me anything about:
             <button
               onClick={exportChatHistory}
               title="Export Conversation History"
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-[#D4AF37] transition-colors"
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-[#C89A2B] transition-colors"
             >
               <Download className="w-4 h-4" />
             </button>
@@ -315,14 +315,14 @@ Ask me anything about:
 
         {/* Active Employee Context Banner */}
         {targetEmployee && (
-          <div className="p-3 bg-gradient-to-r from-[#051F13] via-[#0B4228] to-[#051F13] border-b border-[#D4AF37]/40 flex items-center justify-between shadow-md">
+          <div className="p-3 bg-gradient-to-r from-[#3A2212] via-[#6B3F1D] to-[#3A2212] border-b border-[#C89A2B]/40 flex items-center justify-between shadow-md">
             <div className="flex items-center space-x-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-xl bg-[#D4AF37] text-[#0B4228] flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-[#C89A2B] text-[#6B3F1D] flex items-center justify-center font-black text-xs shrink-0 shadow-sm">
                 <Award className="w-4 h-4" />
               </div>
               <div className="truncate">
                 <p className="text-xs font-bold text-white truncate">
-                  Target Profile: <span className="text-[#D4AF37]">{getUserFullName(targetEmployee)}</span>
+                  Target Profile: <span className="text-[#C89A2B]">{getUserFullName(targetEmployee)}</span>
                 </p>
                 <p className="text-[10px] text-gray-300 truncate">
                   {targetEmployee.jobTitle || 'Banking Staff'} • {targetEmployee.branchName}
@@ -335,7 +335,7 @@ Ask me anything about:
                 onClick={() => fetchEmployeeSummary(targetEmployee)}
                 disabled={loading}
                 title="Refresh AI Performance Evaluation"
-                className="px-2.5 py-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#e0be4d] text-[#0B4228] text-xs font-extrabold flex items-center space-x-1 transition-colors shadow-sm"
+                className="px-2.5 py-1.5 rounded-xl bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] text-xs font-extrabold flex items-center space-x-1 transition-colors shadow-sm"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                 <span>Evaluate</span>
@@ -354,10 +354,10 @@ Ask me anything about:
         )}
 
         {/* Auto Typing Recommendation Chips Bar */}
-        <div className="p-3 bg-[#051F13]/90 border-b border-white/10">
+        <div className="p-3 bg-[#3A2212]/90 border-b border-white/10">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider flex items-center space-x-1">
-              <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+            <span className="text-[10px] font-bold text-[#C89A2B] uppercase tracking-wider flex items-center space-x-1">
+              <Sparkles className="w-3 h-3 text-[#C89A2B]" />
               <span>Recommended Quick Questions:</span>
             </span>
           </div>
@@ -367,7 +367,7 @@ Ask me anything about:
                 key={idx}
                 onClick={() => handleSend(item.prompt)}
                 disabled={loading}
-                className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#D4AF37] hover:text-[#0B4228] border border-[#D4AF37]/30 text-gray-200 hover:font-bold shrink-0 transition-all duration-200 shadow-sm flex items-center space-x-1"
+                className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#C89A2B] hover:text-[#6B3F1D] border border-[#C89A2B]/30 text-gray-200 hover:font-bold shrink-0 transition-all duration-200 shadow-sm flex items-center space-x-1"
               >
                 <span>{item.label}</span>
               </button>
@@ -377,12 +377,12 @@ Ask me anything about:
 
         {/* Voice Dictation Active Wave Bar */}
         {isListening && (
-          <div className="p-3 bg-gradient-to-r from-emerald-900/90 to-emerald-800/90 border-b border-emerald-400/40 text-emerald-200 text-xs flex items-center justify-between animate-pulse">
+          <div className="p-3 bg-gradient-to-r from-amber-900/90 to-amber-800/90 border-b border-[#C89A2B]/40 text-amber-200 text-xs flex items-center justify-between animate-pulse">
             <div className="flex items-center space-x-2">
-              <Mic className="w-4 h-4 text-emerald-400 animate-bounce" />
+              <Mic className="w-4 h-4 text-[#C89A2B] animate-bounce" />
               <span className="font-bold">Bunna Voice Listening... Speak your performance query.</span>
             </div>
-            <span className="text-[10px] bg-emerald-400/20 px-2 py-0.5 rounded-full font-mono text-emerald-300">
+            <span className="text-[10px] bg-[#C89A2B]/20 px-2 py-0.5 rounded-full font-mono text-[#D8B45C]">
               [Auto-Detecting]
             </span>
           </div>
@@ -406,8 +406,8 @@ Ask me anything about:
                   <div
                     className={`w-9 h-9 rounded-2xl text-xs shrink-0 flex items-center justify-center font-bold shadow-md ${
                       isUser
-                        ? 'bg-gradient-to-br from-[#D4AF37] to-[#B38F24] text-[#0B4228]'
-                        : 'bg-gradient-to-br from-[#0B4228] to-[#051F13] text-[#D4AF37] border border-[#D4AF37]/40'
+                        ? 'bg-gradient-to-br from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D]'
+                        : 'bg-gradient-to-br from-[#6B3F1D] to-[#3A2212] text-[#C89A2B] border border-[#C89A2B]/40'
                     }`}
                   >
                     {isUser ? <UserIcon className="w-4 h-4" /> : <Bot className="w-5 h-5" />}
@@ -417,8 +417,8 @@ Ask me anything about:
                   <div
                     className={`group relative p-4 rounded-3xl text-xs leading-relaxed max-w-[88%] shadow-lg border transition-all ${
                       isUser
-                        ? 'bg-gradient-to-r from-[#D4AF37] to-[#C59F2A] text-[#0B4228] font-bold border-transparent rounded-tr-sm'
-                        : 'bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border-[#D4AF37]/30 text-gray-100 rounded-tl-sm hover:border-[#D4AF37]/60'
+                        ? 'bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold border-transparent rounded-tr-sm'
+                        : 'bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border-[#C89A2B]/30 text-gray-100 rounded-tl-sm hover:border-[#C89A2B]/60'
                     }`}
                   >
                     {/* Formatted Content */}
@@ -426,7 +426,7 @@ Ask me anything about:
                       {m.text.split('\n').map((line: string, i: number) => {
                         if (line.startsWith('### ')) {
                           return (
-                            <h4 key={i} className="font-extrabold text-[#D4AF37] mt-2 mb-1 text-xs tracking-wide">
+                            <h4 key={i} className="font-extrabold text-[#C89A2B] mt-2 mb-1 text-xs tracking-wide">
                               {line.replace('### ', '')}
                             </h4>
                           );
@@ -442,7 +442,7 @@ Ask me anything about:
                           <p key={i} className={line.trim() === '' ? 'h-1.5' : ''}>
                             {line.split('**').map((part: string, idx: number) =>
                               idx % 2 === 1 ? (
-                                <strong key={idx} className={isUser ? 'text-[#0B4228] font-extrabold' : 'text-white font-bold'}>
+                                <strong key={idx} className={isUser ? 'text-[#6B3F1D] font-extrabold' : 'text-white font-bold'}>
                                   {part}
                                 </strong>
                               ) : (
@@ -495,7 +495,7 @@ Ask me anything about:
                           </div>
                         </div>
 
-                        <span className="text-[9px] text-[#D4AF37]/80 font-medium">Bunna Bank AI</span>
+                        <span className="text-[9px] text-[#C89A2B]/80 font-medium">Bunna Bank AI</span>
                       </div>
                     )}
 
@@ -508,7 +508,7 @@ Ask me anything about:
                             <button
                               key={fidx}
                               onClick={() => handleSend(fu)}
-                              className="px-2.5 py-1 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37] hover:text-[#0B4228] border border-[#D4AF37]/30 text-[10px] text-[#D4AF37] font-semibold transition-all flex items-center space-x-1"
+                              className="px-2.5 py-1 rounded-xl bg-[#C89A2B]/15 hover:bg-[#C89A2B] hover:text-[#6B3F1D] border border-[#C89A2B]/30 text-[10px] text-[#C89A2B] font-semibold transition-all flex items-center space-x-1"
                             >
                               <span>{fu}</span>
                               <ArrowRight className="w-2.5 h-2.5" />
@@ -528,11 +528,11 @@ Ask me anything about:
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center space-x-3 text-xs text-[#D4AF37] p-3.5 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl border border-[#D4AF37]/40 backdrop-blur-md shadow-lg"
+              className="flex items-center space-x-3 text-xs text-[#C89A2B] p-3.5 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl border border-[#C89A2B]/40 backdrop-blur-md shadow-lg"
             >
               <div className="relative">
-                <Sparkles className="w-5 h-5 animate-spin text-[#D4AF37]" />
-                <span className="absolute inset-0 rounded-full bg-[#D4AF37]/30 animate-ping pointer-events-none" />
+                <Sparkles className="w-5 h-5 animate-spin text-[#C89A2B]" />
+                <span className="absolute inset-0 rounded-full bg-[#C89A2B]/30 animate-ping pointer-events-none" />
               </div>
               <div>
                 <p className="font-extrabold text-white">Bunna Bank AI is thinking...</p>
@@ -545,7 +545,7 @@ Ask me anything about:
         </div>
 
         {/* Input Controls Bar */}
-        <div className="p-4 border-t border-[#D4AF37]/30 bg-[#0B4228]/95 backdrop-blur-xl relative z-10 space-y-2">
+        <div className="p-4 border-t border-[#C89A2B]/30 bg-[#6B3F1D]/95 backdrop-blur-xl relative z-10 space-y-2">
           
           <div className="flex items-center space-x-2">
             {/* Voice Dictation Button */}
@@ -555,7 +555,7 @@ Ask me anything about:
               className={`p-3 rounded-2xl border transition-all ${
                 isListening
                   ? 'bg-red-500 text-white border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse'
-                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-[#D4AF37] hover:text-white'
+                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-[#C89A2B] hover:text-white'
               }`}
             >
               {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -572,14 +572,14 @@ Ask me anything about:
                   ? `Ask about ${getUserFullName(targetEmployee)}'s performance...`
                   : 'Ask Bunna Bank AI anything...'
               }
-              className="flex-1 px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all shadow-inner"
+              className="flex-1 px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#C89A2B] focus:ring-1 focus:ring-[#C89A2B] transition-all shadow-inner"
             />
 
             {/* Send Button */}
             <button
               onClick={() => handleSend()}
               disabled={loading || !input.trim()}
-              className="p-3 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-black hover:opacity-95 transition-all disabled:opacity-40 shadow-lg flex items-center justify-center"
+              className="p-3 rounded-2xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-black hover:opacity-95 transition-all disabled:opacity-40 shadow-lg flex items-center justify-center"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -587,7 +587,7 @@ Ask me anything about:
 
           <div className="flex items-center justify-between text-[9px] text-gray-400 px-1">
             <span>Powered by Bunna Bank S.C. RAG AI Architecture</span>
-            <span className="text-[#D4AF37] font-semibold">Press Enter to Send</span>
+            <span className="text-[#C89A2B] font-semibold">Press Enter to Send</span>
           </div>
         </div>
 

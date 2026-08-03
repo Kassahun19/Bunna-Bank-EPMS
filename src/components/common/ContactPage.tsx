@@ -74,9 +74,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
     <div className="space-y-10 py-4 text-white">
       
       {/* Header Banner */}
-      <div className="p-8 rounded-3xl bg-gradient-to-r from-[#0B4228] via-[#08321E] to-[#051F13] border border-[#D4AF37]/40 shadow-2xl">
+      <div className="p-8 rounded-3xl bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#2E1B0E] border border-[#C89A2B]/40 shadow-2xl">
         <div className="flex items-center space-x-2 mb-2">
-          <span className="px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase">
+          <span className="px-3 py-1 rounded-full bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B] text-xs font-bold uppercase">
             Official Contact Directory
           </span>
           <span className="text-xs text-gray-300">Bunna Bank S.C. Head Office</span>
@@ -94,7 +94,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
         {/* Contact Information Column */}
         <div className="space-y-6 lg:col-span-1">
           
-          <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl space-y-5">
+          <div className="p-6 rounded-3xl bg-[#6B3F1D]/40 border border-[#C89A2B]/30 shadow-xl space-y-5">
             <h3 className="text-lg font-bold text-white border-b border-white/10 pb-3 flex items-center gap-2">
               <BunnaBankLogo className="w-5 h-5" variant="gold" />
               Headquarters Location
@@ -102,7 +102,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
 
             <div className="space-y-4 text-xs">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#C89A2B] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-white">Bunna Bank Building</p>
                   <p className="text-gray-300">Arat Kilo / Churchill Avenue</p>
@@ -111,25 +111,25 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Phone className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                <Phone className="w-5 h-5 text-[#C89A2B] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-white">Customer Contact Center</p>
-                  <p className="text-[#D4AF37] font-bold text-sm">8501 (Toll-Free in Ethiopia)</p>
+                  <p className="text-[#C89A2B] font-bold text-sm">8501 (Toll-Free in Ethiopia)</p>
                   <p className="text-gray-300">+251 11 126 4100 / +251 11 126 4101</p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-3">
-                <Mail className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                <Mail className="w-5 h-5 text-[#C89A2B] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-white">Official Email Channels</p>
                   <p className="text-gray-300">info@bunnabanksc.com</p>
-                  <p className="text-[#D4AF37] font-mono">epms-support@bunnabanksc.com</p>
+                  <p className="text-[#C89A2B] font-mono">epms-support@bunnabanksc.com</p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-3">
-                <Globe className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                <Globe className="w-5 h-5 text-[#C89A2B] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-white">SWIFT & Web Portal</p>
                   <p className="text-gray-300 font-mono">SWIFT Code: BUNNETAA</p>
@@ -138,7 +138,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Clock className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-[#C89A2B] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-white">EPMS Support Hours</p>
                   <p className="text-gray-300">Monday – Friday: 8:00 AM – 5:00 PM</p>
@@ -149,8 +149,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
           </div>
 
           {/* Quick Support Guidelines Card */}
-          <div className="p-6 rounded-3xl bg-gradient-to-br from-[#0B4228] to-[#08321E] border border-[#D4AF37]/20 shadow-xl space-y-3">
-            <h4 className="font-bold text-sm text-[#D4AF37] flex items-center gap-2">
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-[#6B3F1D] to-[#4A2C17] border border-[#C89A2B]/20 shadow-xl space-y-3">
+            <h4 className="font-bold text-sm text-[#C89A2B] flex items-center gap-2">
               <HelpCircle className="w-4 h-4" />
               Need Assistance with Submissions?
             </h4>
@@ -163,11 +163,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
 
         {/* Interactive Direct Message Form Column */}
         <div className="lg:col-span-2">
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-2xl space-y-6">
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#6B3F1D]/40 border border-[#C89A2B]/30 shadow-2xl space-y-6">
             
             <div className="border-b border-white/10 pb-4">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-[#D4AF37]" />
+                <MessageSquare className="w-5 h-5 text-[#C89A2B]" />
                 Send Direct Message to EPMS Administration
               </h3>
               <p className="text-xs text-gray-300 mt-0.5">
@@ -200,7 +200,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#D4AF37] focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#C89A2B] focus:outline-none"
                   />
                 </div>
 
@@ -212,7 +212,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                     value={emailOrPhone}
                     onChange={(e) => setEmailOrPhone(e.target.value)}
                     placeholder="e.g. staff@bunnabanksc.com or +251..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#D4AF37] focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#C89A2B] focus:outline-none"
                   />
                 </div>
               </div>
@@ -225,7 +225,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                     value={branchOrDistrict}
                     onChange={(e) => setBranchOrDistrict(e.target.value)}
                     placeholder="e.g. Main HQ Branch / Addis Ababa North"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#D4AF37] focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#C89A2B] focus:outline-none"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     placeholder="e.g. KPI Target Revision, Login Issue, Report Return"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#D4AF37] focus:outline-none"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#C89A2B] focus:outline-none"
                   />
                 </div>
               </div>
@@ -250,14 +250,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({ language }) => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Describe your inquiry or request in detail..."
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#D4AF37] focus:outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-gray-500 focus:border-[#C89A2B] focus:outline-none resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-xs shadow-xl hover:opacity-95 transition-all flex items-center justify-center space-x-2"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold text-xs shadow-xl hover:opacity-95 transition-all flex items-center justify-center space-x-2"
               >
                 <Send className="w-4 h-4" />
                 <span>{loading ? 'Dispatching Message...' : 'Submit Inquiry to EPMS Support'}</span>

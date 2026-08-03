@@ -128,24 +128,24 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-start justify-center pt-6 sm:pt-12 md:pt-16 pb-8 px-4">
-      <div className="w-full max-w-md bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
+      <div className="w-full max-w-md bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
         
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300"
+          className="absolute top-5 right-5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Brand Header */}
         <div className="text-center mb-6">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#D4AF37] via-[#B38F24] to-[#0B4228] p-0.5 shadow-xl flex items-center justify-center mx-auto mb-3">
-            <div className="w-full h-full bg-[#0B4228] rounded-[14px] p-2 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C89A2B] via-[#D8B45C] to-[#6B3F1D] p-0.5 shadow-xl flex items-center justify-center mx-auto mb-3">
+            <div className="w-full h-full bg-[#6B3F1D] rounded-[14px] p-2 flex items-center justify-center">
               <BunnaBankLogo className="w-10 h-10" variant="gold" />
             </div>
           </div>
           <h3 className="text-2xl font-bold text-white">Bunna Bank S.C.</h3>
-          <p className="text-xs text-[#D4AF37] mt-0.5">EPMS Staff Portal Authentication</p>
+          <p className="text-xs text-[#C89A2B] mt-0.5 font-semibold">EPMS Staff Portal Authentication</p>
         </div>
 
         {/* Lockout Warning Banner */}
@@ -170,10 +170,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
-            <label className="block text-xs font-semibold text-gray-300 mb-1">User ID / Staff ID</label>
+            <label className="block text-xs font-semibold text-gray-200 mb-1">User ID / Staff ID</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                <UserIcon className="w-4 h-4 text-[#D4AF37]" />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-300">
+                <UserIcon className="w-4 h-4 text-[#C89A2B]" />
               </div>
               <input
                 type="text"
@@ -182,23 +182,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 placeholder="Enter Staff ID Number"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-[#D4AF37] focus:outline-none text-sm text-white placeholder-gray-500 font-medium disabled:opacity-50"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/10 border border-white/20 focus:border-[#C89A2B] focus:outline-none text-sm text-white placeholder-gray-300 font-medium disabled:opacity-50"
               />
             </div>
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="block text-xs font-semibold text-gray-300">Password</label>
+              <label className="block text-xs font-semibold text-gray-200">Password</label>
               {capsLockOn && (
-                <span className="text-[10px] font-bold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 flex items-center gap-1">
+                <span className="text-[10px] font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 flex items-center gap-1">
                   🔒 Caps Lock ON
                 </span>
               )}
             </div>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                <Lock className="w-4 h-4 text-[#D4AF37]" />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-300">
+                <Lock className="w-4 h-4 text-[#C89A2B]" />
               </div>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -208,12 +208,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 onKeyDown={handleKeyDown}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-[#D4AF37] focus:outline-none text-sm text-white placeholder-gray-500 font-medium disabled:opacity-50"
+                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/10 border border-white/20 focus:border-[#C89A2B] focus:outline-none text-sm text-white placeholder-gray-300 font-medium disabled:opacity-50"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-300 hover:text-white"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -221,12 +221,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           </div>
 
           <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center space-x-2 text-gray-300 cursor-pointer">
+            <label className="flex items-center space-x-2 text-gray-200 cursor-pointer">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-white/20 bg-white/5 text-[#D4AF37] focus:ring-0"
+                className="rounded border-white/20 bg-white/10 text-[#C89A2B] focus:ring-0"
               />
               <span>Remember Me</span>
             </label>
@@ -234,7 +234,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             <button
               type="button"
               onClick={() => setForgotModalOpen(true)}
-              className="text-[#D4AF37] font-semibold hover:underline"
+              className="text-[#C89A2B] font-semibold hover:underline"
             >
               Forgot Password?
             </button>
@@ -243,21 +243,21 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           <button
             type="submit"
             disabled={loading || lockoutTimer > 0}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-sm shadow-xl hover:opacity-95 transition-all transform active:scale-95 mt-2 disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-extrabold text-sm shadow-xl hover:opacity-95 transition-all transform active:scale-95 mt-2 disabled:opacity-50"
           >
             {loading ? 'Authenticating Credentials...' : lockoutTimer > 0 ? `Locked (${lockoutTimer}s)` : 'Sign In to EPMS'}
           </button>
         </form>
 
         <div className="mt-5 text-center">
-          <p className="text-xs text-gray-300">
+          <p className="text-xs text-gray-200">
             Need a new Bunna Bank staff account?{' '}
             <button
               onClick={() => {
                 onClose();
                 onOpenRegister();
               }}
-              className="font-bold text-[#D4AF37] hover:underline"
+              className="font-bold text-[#C89A2B] hover:underline"
             >
               Create Account
             </button>
@@ -269,16 +269,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       {/* Forgot Password Reset Modal */}
       {forgotModalOpen && (
         <div className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4">
-          <div className="w-full max-w-sm bg-[#0B4228] border border-[#D4AF37]/50 rounded-2xl p-6 relative text-white">
+          <div className="w-full max-w-sm bg-[#6B3F1D] border border-[#C89A2B]/50 rounded-2xl p-6 relative text-white">
             <button
               onClick={() => { setForgotModalOpen(false); setForgotSuccessMsg(''); }}
-              className="absolute top-4 right-4 p-1 rounded-lg bg-white/10 text-gray-300"
+              className="absolute top-4 right-4 p-1 rounded-lg bg-white/10 text-gray-200"
             >
               <X className="w-4 h-4" />
             </button>
 
             <h4 className="font-bold text-lg text-white mb-2">Reset Password</h4>
-            <p className="text-xs text-gray-300 mb-4">
+            <p className="text-xs text-gray-200 mb-4">
               Enter your registered Bunna Bank email address. We will dispatch an email verification reset link.
             </p>
 
@@ -295,11 +295,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
                   placeholder="e.g. employee.kebede@bunnabanksc.com"
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 focus:border-[#D4AF37] text-xs text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 focus:border-[#C89A2B] text-xs text-white"
                 />
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs"
+                  className="w-full py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs"
                 >
                   Send Reset Verification Email
                 </button>

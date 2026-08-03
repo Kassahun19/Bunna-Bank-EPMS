@@ -169,12 +169,12 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
   });
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <GitBranch className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">Competitor Branch Directory</span>
           </div>
@@ -185,15 +185,15 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setImportModalOpen(true)}
-            className="bg-[#051F13] hover:bg-[#082A1A] text-gray-200 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all"
+            className="bg-[#6B3F1D] hover:bg-[#4A2C17] text-gray-200 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all"
           >
-            <Upload className="w-4 h-4 text-[#D4AF37]" />
+            <Upload className="w-4 h-4 text-[#C89A2B]" />
             <span>Import Branches CSV</span>
           </button>
 
           <button
             onClick={openCreateModal}
-            className="bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
+            className="bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold px-4 py-2.5 rounded-xl text-xs flex items-center space-x-2 transition-all shadow-md"
           >
             <Plus className="w-4 h-4" />
             <span>Add Competitor Branch</span>
@@ -219,7 +219,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
             placeholder="Search branch name, Sol ID, bank, city..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#051F13] border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl pl-9 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full bg-[#6B3F1D] border border-white/15 text-white placeholder-gray-400 text-xs rounded-xl pl-9 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           />
         </div>
 
@@ -227,7 +227,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
           <select
             value={filterBankId}
             onChange={(e) => setFilterBankId(e.target.value)}
-            className="w-full bg-[#051F13] border border-white/15 text-white text-xs rounded-xl px-3 py-2.5 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full bg-[#6B3F1D] border border-white/15 text-white text-xs rounded-xl px-3 py-2.5 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           >
             <option value="ALL">All Commercial Banks</option>
             {banks.map(b => (
@@ -240,7 +240,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
           <select
             value={filterCity}
             onChange={(e) => setFilterCity(e.target.value)}
-            className="w-full bg-[#051F13] border border-white/15 text-white text-xs rounded-xl px-3 py-2.5 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full bg-[#6B3F1D] border border-white/15 text-white text-xs rounded-xl px-3 py-2.5 outline-none focus:ring-2 focus:ring-[#C89A2B]"
           >
             <option value="ALL">All Hub Cities</option>
             {citiesList.map(c => (
@@ -253,7 +253,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
       {/* Branch Table */}
       <div className="overflow-x-auto rounded-xl border border-white/10">
         <table className="w-full text-left text-xs text-gray-300">
-          <thead className="bg-[#051F13] text-[#D4AF37] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
+          <thead className="bg-[#4A2C17] text-[#C89A2B] uppercase text-[10px] tracking-wider font-semibold border-b border-white/10">
             <tr>
               <th className="py-3 px-4">Branch Name</th>
               <th className="py-3 px-4">Bank</th>
@@ -276,16 +276,16 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                 <tr key={br.id} className="hover:bg-white/5 transition-colors">
                   <td className="py-3 px-4 font-bold text-white">
                     <div className="flex items-center space-x-2">
-                      <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <MapPin className="w-3.5 h-3.5 text-[#C89A2B]" />
                       <span>{br.branchName}</span>
                     </div>
                   </td>
                   <td className="py-3 px-4">
-                    <span className="bg-[#051F13] border border-white/10 px-2 py-1 rounded text-white font-semibold text-[11px]">
+                    <span className="bg-[#6B3F1D] border border-white/10 px-2 py-1 rounded text-white font-semibold text-[11px]">
                       {br.bankName}
                     </span>
                   </td>
-                  <td className="py-3 px-4 font-mono text-[#D4AF37] font-bold">{br.solId || 'N/A'}</td>
+                  <td className="py-3 px-4 font-mono text-[#C89A2B] font-bold">{br.solId || 'N/A'}</td>
                   <td className="py-3 px-4">{br.city}, {br.region}</td>
                   <td className="py-3 px-4 text-gray-300">{br.districtName}</td>
                   <td className="py-3 px-4">
@@ -323,7 +323,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
       {/* Create / Edit Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0A2E1D] border border-white/15 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-[#6B3F1D] border border-white/15 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
             <h4 className="text-xl font-bold text-white border-b border-white/10 pb-3">
               {editingBranch ? `Edit Branch: ${editingBranch.branchName}` : 'Register Competitor Branch'}
             </h4>
@@ -335,7 +335,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                   required
                   value={formState.bankId}
                   onChange={(e) => setFormState({ ...formState, bankId: e.target.value })}
-                  className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                  className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                 >
                   {banks.map(b => (
                     <option key={b.id} value={b.id}>{b.name} ({b.code})</option>
@@ -352,7 +352,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     placeholder="e.g. Bole Medhanealem"
                     value={formState.branchName}
                     onChange={(e) => setFormState({ ...formState, branchName: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -362,7 +362,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     placeholder="e.g. SOL-104"
                     value={formState.solId}
                     onChange={(e) => setFormState({ ...formState, solId: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
               </div>
@@ -376,7 +376,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     placeholder="e.g. Bahir Dar, Hawassa"
                     value={formState.city}
                     onChange={(e) => setFormState({ ...formState, city: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -386,7 +386,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     placeholder="e.g. East A.A District"
                     value={formState.districtName}
                     onChange={(e) => setFormState({ ...formState, districtName: e.target.value })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
               </div>
@@ -399,7 +399,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     step="0.0001"
                     value={formState.latitude}
                     onChange={(e) => setFormState({ ...formState, latitude: parseFloat(e.target.value) || 9.0100 })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
                 <div>
@@ -409,7 +409,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                     step="0.0001"
                     value={formState.longitude}
                     onChange={(e) => setFormState({ ...formState, longitude: parseFloat(e.target.value) || 38.7600 })}
-                    className="w-full bg-[#051F13] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#4A2C17] border border-white/15 text-white rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-[#C89A2B]"
                   />
                 </div>
               </div>
@@ -425,7 +425,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-5 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold"
+                  className="px-5 py-2 rounded-xl bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold"
                 >
                   {loading ? 'Saving...' : 'Save Branch Record'}
                 </button>
@@ -438,15 +438,15 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
       {/* Import Modal */}
       {importModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0A2E1D] border border-white/15 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
-            <div className="flex items-center space-x-2 text-[#D4AF37] border-b border-white/10 pb-3">
+          <div className="bg-[#6B3F1D] border border-white/15 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center space-x-2 text-[#C89A2B] border-b border-white/10 pb-3">
               <FileSpreadsheet className="w-5 h-5" />
               <h4 className="text-xl font-bold text-white">Import Competitor Branches Batch</h4>
             </div>
 
             <p className="text-xs text-gray-300">
               Paste comma or tab-separated lines below:<br />
-              <code className="text-[#D4AF37] bg-[#051F13] px-2 py-1 rounded block mt-1">
+              <code className="text-[#C89A2B] bg-[#4A2C17] px-2 py-1 rounded block mt-1">
                 BANK_CODE, BRANCH_NAME, CITY, SOL_ID, DISTRICT_NAME
               </code>
             </p>
@@ -456,7 +456,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
               placeholder={`CBE, Main Branch, Addis Ababa, SOL-101, Central A.A District\nDASHEN, Bole Branch, Addis Ababa, SOL-204, East A.A District\nAWASH, Lake Shore Branch, Bahir Dar, SOL-309, Bahir Dar District`}
-              className="w-full bg-[#051F13] border border-white/15 text-white font-mono text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+              className="w-full bg-[#4A2C17] border border-white/15 text-white font-mono text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-[#C89A2B]"
             />
 
             <div className="flex items-center justify-end space-x-3 pt-3 border-t border-white/10">
@@ -471,7 +471,7 @@ export const BranchManagementPanel: React.FC<BranchManagementPanelProps> = ({
                 type="button"
                 onClick={handleProcessImport}
                 disabled={loading || !importText.trim()}
-                className="px-5 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D] font-bold"
+                className="px-5 py-2 rounded-xl bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold"
               >
                 {loading ? 'Processing Import...' : 'Import Branch Batch'}
               </button>

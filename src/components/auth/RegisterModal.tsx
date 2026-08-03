@@ -132,7 +132,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     if (pwdCriteria.hasSpecial) score++;
 
     if (score <= 2) return { score: 30, label: 'Weak', color: 'bg-rose-500' };
-    if (score <= 4) return { score: 70, label: 'Fair / Good', color: 'bg-[#D4AF37]' };
+    if (score <= 4) return { score: 70, label: 'Fair / Good', color: 'bg-[#C89A2B]' };
     return { score: 100, label: 'Strong (Compliant)', color: 'bg-emerald-500' };
   };
 
@@ -204,18 +204,18 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-start justify-center pt-6 sm:pt-12 md:pt-16 pb-8 px-4">
-      <div className="w-full max-w-xl bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
+      <div className="w-full max-w-xl bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
         
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300"
+          className="absolute top-5 right-5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Wizard Progress Indicator */}
         <div className="mb-6">
-          <div className="flex items-center justify-between text-xs font-bold text-[#D4AF37] mb-2">
+          <div className="flex items-center justify-between text-xs font-bold text-[#C89A2B] mb-2">
             <span>Step {step} of 5</span>
             <span>
               {step === 1 && 'District Selection'}
@@ -227,7 +227,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           </div>
           <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden flex">
             <div
-              className="bg-gradient-to-r from-[#D4AF37] to-[#e0be4d] h-full transition-all duration-300"
+              className="bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] h-full transition-all duration-300"
               style={{ width: `${(step / 5) * 100}%` }}
             />
           </div>
@@ -246,21 +246,21 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           {step === 1 && (
             <div className="space-y-4">
               <div className="flex items-center space-x-3 mb-2">
-                <MapPin className="w-6 h-6 text-[#D4AF37]" />
+                <MapPin className="w-6 h-6 text-[#C89A2B]" />
                 <h3 className="text-lg font-bold text-white">Step 1: Select District</h3>
               </div>
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-gray-200">
                 Choose your assigned District Office across Ethiopia.
               </p>
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">District Office</label>
+                <label className="block text-xs font-semibold text-gray-200 mb-1">District Office</label>
                 <select
                   value={selectedDistrictId}
                   onChange={(e) => {
                     setSelectedDistrictId(e.target.value);
                     setSelectedBranchId('');
                   }}
-                  className="w-full px-4 py-3 rounded-xl bg-[#0B4228] border border-white/20 focus:border-[#D4AF37] text-sm text-white focus:outline-none"
+                  className="w-full px-4 py-3 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-sm text-white focus:outline-none"
                 >
                   <option value="">-- Choose District Office --</option>
                   {districts.map(d => (
@@ -272,8 +272,8 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               </div>
 
               {selectedDistrictId && (
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200">
-                  <div className="font-bold text-[#D4AF37] mb-1">Selected Location:</div>
+                <div className="p-3.5 rounded-2xl bg-white/10 border border-[#C89A2B]/30 text-xs text-gray-200">
+                  <div className="font-bold text-[#C89A2B] mb-1">Selected Location:</div>
                   {(() => {
                     const sel = districts.find(d => d.id === selectedDistrictId);
                     if (!sel) return null;
@@ -292,18 +292,18 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           {step === 2 && (
             <div className="space-y-4">
               <div className="flex items-center space-x-3 mb-2">
-                <Building className="w-6 h-6 text-[#D4AF37]" />
+                <Building className="w-6 h-6 text-[#C89A2B]" />
                 <h3 className="text-lg font-bold text-white">Step 2: Select Branch</h3>
               </div>
-              <p className="text-xs text-gray-300">
-                Select your specific branch under <span className="text-[#D4AF37] font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'Selected District'}</span>.
+              <p className="text-xs text-gray-200">
+                Select your specific branch under <span className="text-[#C89A2B] font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'Selected District'}</span>.
               </p>
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">Branch Name</label>
+                <label className="block text-xs font-semibold text-gray-200 mb-1">Branch Name</label>
                 <select
                   value={selectedBranchId}
                   onChange={(e) => setSelectedBranchId(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#0B4228] border border-white/20 focus:border-[#D4AF37] text-sm text-white focus:outline-none"
+                  className="w-full px-4 py-3 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-sm text-white focus:outline-none"
                 >
                   <option value="">-- Choose Branch --</option>
                   {(selectedDistrictId
@@ -318,20 +318,20 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               </div>
 
               {selectedBranchId && (
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200">
+                <div className="p-3.5 rounded-2xl bg-white/10 border border-[#C89A2B]/30 text-xs text-gray-200">
                   {(() => {
                     const b = branches.find(br => br.id === selectedBranchId);
                     if (!b) return null;
                     return (
                       <div className="space-y-1">
-                        <div className="font-bold text-[#D4AF37] flex items-center space-x-2">
+                        <div className="font-bold text-[#C89A2B] flex items-center space-x-2">
                           <Building className="w-4 h-4" />
                           <span>{b.name}</span>
                         </div>
-                        <div className="text-gray-300">
+                        <div className="text-gray-200">
                           Branch Code: <span className="font-mono text-white">{b.code}</span> • Type: <span className="text-white">{b.type}</span>
                         </div>
-                        <div className="text-gray-300">
+                        <div className="text-gray-200">
                           Location: <span className="text-white">{b.location}</span> • Branch Manager: <span className="text-white">{b.managerName}</span>
                         </div>
                       </div>
@@ -346,90 +346,90 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           {step === 3 && (
             <div className="space-y-3">
               <div className="flex items-center space-x-3 mb-2">
-                <UserIcon className="w-6 h-6 text-[#D4AF37]" />
+                <UserIcon className="w-6 h-6 text-[#C89A2B]" />
                 <h3 className="text-lg font-bold text-white">Step 3: Personal Information</h3>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">First Name</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">First Name</label>
                   <input
                     type="text"
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="e.g. Abebe"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Middle Name</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Middle Name</label>
                   <input
                     type="text"
                     value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}
                     placeholder="e.g. Kebede"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Last Name</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Last Name</label>
                   <input
                     type="text"
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="e.g. Teso"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Gender</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Gender</label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white"
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Age</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Age</label>
                   <input
                     type="number"
                     required
                     value={age}
                     onChange={(e) => setAge(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Phone Number</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Phone Number</label>
                   <input
                     type="tel"
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+251..."
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Email Address</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Email Address</label>
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="staff@bunnabanksc.com"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white"
                   />
                 </div>
               </div>
@@ -440,22 +440,22 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           {step === 4 && (
             <div className="space-y-4">
               <div className="flex items-center space-x-3 mb-2">
-                <Shield className="w-6 h-6 text-[#D4AF37]" />
+                <Shield className="w-6 h-6 text-[#C89A2B]" />
                 <h3 className="text-lg font-bold text-white">Step 4: Select Employment Category & Role Access</h3>
               </div>
 
-              <p className="text-xs text-gray-300">
+              <p className="text-xs text-gray-200">
                 Please select your employment role type at Bunna Bank S.C. Selecting Managerial grants you full Managerial Role access (Manager Dashboard, Team Approvals, Reports, Employee Tracking). Selecting Non-Managerial grants you Employee Role access (Employee Dashboard, My Performance, MY KPIs, My Reports).
               </p>
 
               {/* District & Branch Confirmation Badge */}
-              <div className="p-3.5 rounded-2xl bg-white/5 border border-[#D4AF37]/30 text-xs text-gray-200 flex flex-wrap items-center justify-between gap-2">
+              <div className="p-3.5 rounded-2xl bg-white/10 border border-[#C89A2B]/30 text-xs text-gray-200 flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <span className="text-gray-400">Assigned Location:</span>{" "}
+                  <span className="text-gray-300">Assigned Location:</span>{" "}
                   <strong className="text-white">{districts.find(d => d.id === selectedDistrictId)?.name || 'District'}</strong>{" "}
-                  • <strong className="text-[#D4AF37]">{branches.find(b => b.id === selectedBranchId)?.name || 'Branch'}</strong>
+                  • <strong className="text-[#C89A2B]">{branches.find(b => b.id === selectedBranchId)?.name || 'Branch'}</strong>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37]">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B]">
                   Automatic Role Routing
                 </span>
               </div>
@@ -466,14 +466,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   onClick={() => setRoleType('Managerial')}
                   className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden ${
                     roleType === 'Managerial'
-                      ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] shadow-xl ring-2 ring-[#D4AF37]/50'
-                      : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]/50 hover:bg-white/10'
+                      ? 'bg-[#C89A2B] text-[#6B3F1D] border-[#C89A2B] shadow-xl ring-2 ring-[#C89A2B]/50'
+                      : 'bg-white/10 text-white border-white/20 hover:border-[#C89A2B]/50 hover:bg-white/15'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-bold text-base">Managerial Track</h4>
                     <span className={`text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md ${
-                      roleType === 'Managerial' ? 'bg-[#0B4228] text-[#D4AF37]' : 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                      roleType === 'Managerial' ? 'bg-[#6B3F1D] text-[#C89A2B]' : 'bg-[#C89A2B]/20 text-[#C89A2B]'
                     }`}>
                       Manager Role
                     </span>
@@ -483,7 +483,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                     Designed for Branch Operations Managers & Supervisors. Automatically assigns you as the official Manager of <strong>{branches.find(b => b.id === selectedBranchId)?.name || 'this Branch'}</strong> with full authority over branch staff.
                   </p>
                   {roleType === 'Managerial' && (
-                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
+                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#6B3F1D]">
                       <Check className="w-4 h-4" />
                       <span>Assigned as Official Branch Manager</span>
                     </div>
@@ -495,14 +495,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   onClick={() => setRoleType('Non-Managerial')}
                   className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden ${
                     roleType === 'Non-Managerial'
-                      ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] shadow-xl ring-2 ring-[#D4AF37]/50'
-                      : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]/50 hover:bg-white/10'
+                      ? 'bg-[#C89A2B] text-[#6B3F1D] border-[#C89A2B] shadow-xl ring-2 ring-[#C89A2B]/50'
+                      : 'bg-white/10 text-white border-white/20 hover:border-[#C89A2B]/50 hover:bg-white/15'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-bold text-base">Non-Managerial Track</h4>
                     <span className={`text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md ${
-                      roleType === 'Non-Managerial' ? 'bg-[#0B4228] text-[#D4AF37]' : 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                      roleType === 'Non-Managerial' ? 'bg-[#6B3F1D] text-[#C89A2B]' : 'bg-[#C89A2B]/20 text-[#C89A2B]'
                     }`}>
                       Employee Role
                     </span>
@@ -512,7 +512,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                     Designed for Customer Service Officers & Tellers. Automatically assigns you as an employee under <strong>{branches.find(b => b.id === selectedBranchId)?.name || 'this Branch'}</strong>'s designated manager.
                   </p>
                   {roleType === 'Non-Managerial' && (
-                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#0B4228]">
+                    <div className="mt-3 flex items-center space-x-1.5 text-xs font-extrabold text-[#6B3F1D]">
                       <Check className="w-4 h-4" />
                       <span>Assigned as Branch Employee</span>
                     </div>
@@ -526,13 +526,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           {step === 5 && (
             <div className="space-y-3.5">
               <div className="flex items-center space-x-3 mb-2">
-                <Lock className="w-6 h-6 text-[#D4AF37]" />
+                <Lock className="w-6 h-6 text-[#C89A2B]" />
                 <h3 className="text-lg font-bold text-white">Step 5: Account Credentials & Security</h3>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="block text-[11px] font-semibold text-gray-300">User ID / Staff ID (Numerals Only)</label>
+                  <label className="block text-[11px] font-semibold text-gray-200">User ID / Staff ID (Numerals Only)</label>
                   {userIdStatus.checked && (
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                       userIdStatus.available 
@@ -549,25 +549,25 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                   placeholder="e.g. 4994, 1245, 687"
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-gray-300 mb-1">Password</label>
+                  <label className="block text-[11px] font-semibold text-gray-200 mb-1">Password</label>
                   <input
                     type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
                 <div>
                   <div className="flex justify-between items-center mb-1">
-                    <label className="block text-[11px] font-semibold text-gray-300">Confirm Password</label>
+                    <label className="block text-[11px] font-semibold text-gray-200">Confirm Password</label>
                     {confirmPassword && (
                       <span className={`text-[10px] font-bold ${
                         password === confirmPassword ? 'text-emerald-400' : 'text-rose-400'
@@ -582,28 +582,28 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
               </div>
 
               {/* Password Requirement Checklist */}
               <div className="p-3 rounded-xl bg-black/30 border border-white/10 text-[11px] space-y-2">
-                <p className="font-bold text-gray-300 text-[10px]">Password Complexity Rules:</p>
+                <p className="font-bold text-gray-200 text-[10px]">Password Complexity Rules:</p>
                 <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.minLen ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.minLen ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {pwdCriteria.minLen ? '✓' : '○'} Min 8 Characters
                   </span>
-                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasUpper ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasUpper ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {pwdCriteria.hasUpper ? '✓' : '○'} Uppercase Letter (A-Z)
                   </span>
-                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasLower ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasLower ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {pwdCriteria.hasLower ? '✓' : '○'} Lowercase Letter (a-z)
                   </span>
-                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasNum ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`flex items-center gap-1 font-semibold ${pwdCriteria.hasNum ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {pwdCriteria.hasNum ? '✓' : '○'} Number (0-9)
                   </span>
-                  <span className={`flex items-center gap-1 font-semibold col-span-2 ${pwdCriteria.hasSpecial ? 'text-emerald-400' : 'text-gray-400'}`}>
+                  <span className={`flex items-center gap-1 font-semibold col-span-2 ${pwdCriteria.hasSpecial ? 'text-emerald-400' : 'text-gray-300'}`}>
                     {pwdCriteria.hasSpecial ? '✓' : '○'} Special Symbol (!@#$%^&*)
                   </span>
                 </div>
@@ -612,9 +612,9 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               {/* Password Strength Meter */}
               {password && (
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] text-gray-300">
+                  <div className="flex justify-between text-[10px] text-gray-200">
                     <span>Password Security Level:</span>
-                    <span className="font-bold text-[#D4AF37]">{strength.label}</span>
+                    <span className="font-bold text-[#C89A2B]">{strength.label}</span>
                   </div>
                   <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                     <div className={`${strength.color} h-full transition-all`} style={{ width: `${strength.score}%` }} />
@@ -623,12 +623,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               )}
 
               <div className="pt-2">
-                <label className="flex items-center space-x-2 text-xs text-gray-300 cursor-pointer">
+                <label className="flex items-center space-x-2 text-xs text-gray-200 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={acceptTerms}
                     onChange={(e) => setAcceptTerms(e.target.checked)}
-                    className="rounded border-white/20 bg-white/5 text-[#D4AF37]"
+                    className="rounded border-white/20 bg-white/10 text-[#C89A2B]"
                   />
                   <span>I accept Bunna Bank S.C. EPMS Terms of Service & Security Guidelines.</span>
                 </label>
@@ -650,7 +650,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               <button
                 type="button"
                 onClick={() => { onClose(); onOpenLogin(); }}
-                className="text-xs text-[#D4AF37] font-semibold hover:underline"
+                className="text-xs text-[#C89A2B] font-semibold hover:underline"
               >
                 Already have an account? Login
               </button>
@@ -660,7 +660,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               <button
                 type="button"
                 onClick={handleNext}
-                className="px-6 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs hover:bg-[#e0be4d]"
+                className="px-6 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs hover:bg-[#D8B45C]"
               >
                 Next Step
               </button>
@@ -668,7 +668,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-xs shadow-xl"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold text-xs shadow-xl"
               >
                 {loading ? 'Creating Account...' : 'Submit Registration'}
               </button>

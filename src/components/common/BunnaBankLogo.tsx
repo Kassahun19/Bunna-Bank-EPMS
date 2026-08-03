@@ -12,20 +12,20 @@ export const BunnaBankLogo: React.FC<BunnaBankLogoProps> = ({
   badgeBackground = false
 }) => {
   // Color palette selection
-  // Maroon: #58181A (authentic Bunna Bank brand maroon/burgundy)
-  // Gold: #D4AF37 (EPMS gold)
-  let mainColor = "#58181A";
+  // Coffee Brown: #6B3F1D (official Bunna Bank coffee brown)
+  // Gold Accent: #C89A2B (official Bunna Bank gold)
+  let mainColor = "#6B3F1D";
   let cutoutColor = "#FFFFFF";
 
   if (variant === 'gold') {
-    mainColor = "#D4AF37";
-    cutoutColor = "#0B4228"; // Dark green cutout for header integration
+    mainColor = "#C89A2B";
+    cutoutColor = "#6B3F1D"; // Brown cutout for header integration
   } else if (variant === 'white') {
     mainColor = "#FFFFFF";
-    cutoutColor = "#0B4228";
+    cutoutColor = "#6B3F1D";
   } else if (variant === 'dual') {
-    mainColor = "#58181A";
-    cutoutColor = "#F9F6EE";
+    mainColor = "#6B3F1D";
+    cutoutColor = "#C89A2B";
   }
 
   const svgContent = (
@@ -58,8 +58,8 @@ export const BunnaBankLogo: React.FC<BunnaBankLogoProps> = ({
 
   if (badgeBackground) {
     return (
-      <div className={`rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#B38F24] to-[#0B4228] p-0.5 shadow-md flex items-center justify-center shrink-0 ${className}`}>
-        <div className="w-full h-full bg-[#0B4228] rounded-[10px] p-1 flex items-center justify-center">
+      <div className={`rounded-xl bg-gradient-to-br from-[#C89A2B] via-[#D8B45C] to-[#6B3F1D] p-0.5 shadow-md flex items-center justify-center shrink-0 ${className}`}>
+        <div className="w-full h-full bg-[#6B3F1D] rounded-[10px] p-1 flex items-center justify-center">
           {svgContent}
         </div>
       </div>

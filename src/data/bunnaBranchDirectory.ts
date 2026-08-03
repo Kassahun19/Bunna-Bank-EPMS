@@ -1248,6 +1248,13 @@ export function generateBranchesFrom151To579(): Branch[] {
       bRegion = "Amhara";
       bBranchName = "MERAWI (መራዊ)";
       bLocation = "መራዊ ከተማ አደባባይ";
+    } else if (sol === 311) {
+      bDistrictId = "DIST-BDR";
+      bDistrictName = "Bahir Dar District";
+      bRegion = "Amhara";
+      bBranchName = "SHIMBIT (ሽምቢት)";
+      bLocation = "ባህር ዳር ሽምቢት አደባባይ አካባቢ";
+      mgr = "Ato Worku Kebede";
     } else if (sol === 360) {
       bDistrictId = "DIST-BDR";
       bDistrictName = "Bahir Dar District";

@@ -42,7 +42,7 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-lg bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
+      <div className="w-full max-w-lg bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 sm:p-8 relative">
         
         <button
           onClick={onClose}
@@ -52,10 +52,10 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
         </button>
 
         <div className="flex items-center space-x-3 mb-6">
-          <Download className="w-6 h-6 text-[#D4AF37]" />
+          <Download className="w-6 h-6 text-[#C89A2B]" />
           <div>
             <h3 className="font-extrabold text-xl text-white">Export Performance Reports</h3>
-            <p className="text-xs text-[#D4AF37]">Multi-Format Enterprise Report Generator</p>
+            <p className="text-xs text-[#C89A2B]">Multi-Format Enterprise Report Generator</p>
           </div>
         </div>
 
@@ -76,8 +76,8 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
                 onClick={() => setFormat(fmt.id as any)}
                 className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 ${
                   format === fmt.id
-                    ? 'bg-[#D4AF37] text-[#0B4228] border-[#D4AF37] font-bold shadow-lg'
-                    : 'bg-white/5 text-white border-white/10 hover:border-[#D4AF37]'
+                    ? 'bg-[#C89A2B] text-[#6B3F1D] border-[#C89A2B] font-bold shadow-lg'
+                    : 'bg-white/5 text-white border-white/10 hover:border-[#C89A2B]'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -96,7 +96,7 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white"
+                className="w-full px-3 py-2 rounded-xl bg-black/30 border border-white/20 text-xs text-white"
               />
             </div>
             <div>
@@ -105,7 +105,7 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white"
+                className="w-full px-3 py-2 rounded-xl bg-black/30 border border-white/20 text-xs text-white"
               />
             </div>
           </div>
@@ -115,7 +115,7 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
             <select
               value={districtFilter}
               onChange={(e) => setDistrictFilter(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white"
+              className="w-full px-3 py-2 rounded-xl bg-black/30 border border-white/20 text-xs text-white"
             >
               <option value="ALL">All Districts & Head Office</option>
               <option value="d1">Addis Ababa East District</option>
@@ -135,7 +135,7 @@ export const ReportExportModal: React.FC<ReportExportModalProps> = ({ isOpen, on
         <button
           onClick={handleExport}
           disabled={exporting}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B38F24] text-[#0B4228] font-bold text-xs shadow-xl hover:opacity-95 flex items-center justify-center space-x-2"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-[#C89A2B] to-[#D8B45C] text-[#6B3F1D] font-bold text-xs shadow-xl hover:opacity-95 flex items-center justify-center space-x-2"
         >
           <Download className="w-4 h-4" />
           <span>{exporting ? 'Generating Report File...' : `Download ${format.toUpperCase()} Report`}</span>

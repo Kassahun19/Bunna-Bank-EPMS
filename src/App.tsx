@@ -155,7 +155,7 @@ export const App: React.FC = () => {
   const unreadNotificationCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="min-h-screen bg-[#051F13] text-white flex flex-col font-sans selection:bg-[#D4AF37] selection:text-[#0B4228]">
+    <div className="min-h-screen bg-[#F5F5F5] text-[#222222] flex flex-col font-sans selection:bg-[#C89A2B] selection:text-[#6B3F1D]">
       
       {/* HEADER */}
       <Header

@@ -48,12 +48,12 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
   };
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Sliders className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">BPI Engine Weights</span>
           </div>
@@ -64,7 +64,7 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
         <div className="flex items-center space-x-3">
           <button
             onClick={handleReset}
-            className="bg-[#051F13] hover:bg-[#082A1A] text-gray-300 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2"
+            className="bg-[#6B3F1D] hover:bg-[#4A2C17] text-gray-300 border border-white/15 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2"
           >
             <RotateCcw className="w-4 h-4 text-gray-400" />
             <span>Reset Weights</span>
@@ -75,7 +75,7 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
             disabled={loading || !isValidTotal}
             className={`px-5 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all shadow-md ${
               isValidTotal
-                ? 'bg-[#D4AF37] hover:bg-[#c29f2f] text-[#0A2E1D]'
+                ? 'bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D]'
                 : 'bg-gray-700 text-gray-400 cursor-not-allowed'
             }`}
           >
@@ -96,7 +96,7 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
 
       {/* Weight Gauge Header */}
       <div className={`p-4 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-4 ${
-        isValidTotal ? 'bg-[#0B4228]/80 border-emerald-500/40' : 'bg-amber-950/80 border-amber-500/40'
+        isValidTotal ? 'bg-[#6B3F1D]/80 border-emerald-500/40' : 'bg-amber-950/80 border-amber-500/40'
       }`}>
         <div className="flex items-center space-x-3">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
@@ -127,15 +127,15 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
         {localKpis.map((kpi) => (
           <div
             key={kpi.id}
-            className="bg-[#051F13] border border-white/10 rounded-xl p-4 space-y-3 hover:border-white/20 transition-all"
+            className="bg-[#4A2C17]/60 border border-white/10 rounded-xl p-4 space-y-3 hover:border-white/20 transition-all"
           >
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-[10px] uppercase font-mono text-[#D4AF37]">{kpi.category} • {kpi.unit}</span>
+                <span className="text-[10px] uppercase font-mono text-[#C89A2B]">{kpi.category} • {kpi.unit}</span>
                 <h5 className="text-sm font-bold text-white">{kpi.name}</h5>
               </div>
-              <div className="bg-[#0A2E1D] border border-white/10 px-3 py-1 rounded-lg text-right">
-                <span className="text-sm font-extrabold text-[#D4AF37]">{kpi.bpiWeight}%</span>
+              <div className="bg-[#6B3F1D] border border-white/10 px-3 py-1 rounded-lg text-right">
+                <span className="text-sm font-extrabold text-[#C89A2B]">{kpi.bpiWeight}%</span>
               </div>
             </div>
 
@@ -149,7 +149,7 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
                 step="1"
                 value={kpi.bpiWeight}
                 onChange={(e) => handleWeightChange(kpi.id, parseFloat(e.target.value) || 0)}
-                className="w-full accent-[#D4AF37] bg-gray-800 h-2 rounded-lg cursor-pointer"
+                className="w-full accent-[#C89A2B] bg-gray-800 h-2 rounded-lg cursor-pointer"
               />
               <input
                 type="number"
@@ -157,7 +157,7 @@ export const KpiBpiConfigPanel: React.FC<KpiBpiConfigPanelProps> = ({
                 max="100"
                 value={kpi.bpiWeight}
                 onChange={(e) => handleWeightChange(kpi.id, parseFloat(e.target.value) || 0)}
-                className="w-16 bg-[#0A2E1D] border border-white/15 text-white font-bold text-xs rounded-lg px-2 py-1 text-center outline-none focus:ring-1 focus:ring-[#D4AF37]"
+                className="w-16 bg-[#6B3F1D] border border-white/15 text-white font-bold text-xs rounded-lg px-2 py-1 text-center outline-none focus:ring-1 focus:ring-[#C89A2B]"
               />
             </div>
           </div>

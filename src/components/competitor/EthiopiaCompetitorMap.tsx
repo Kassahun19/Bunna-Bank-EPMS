@@ -37,12 +37,12 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
   });
 
   return (
-    <div className="bg-[#0A2E1D] border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-6 shadow-xl space-y-6">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div className="flex items-center space-x-2 text-[#D4AF37]">
+          <div className="flex items-center space-x-2 text-[#C89A2B]">
             <Navigation className="w-5 h-5" />
             <span className="text-xs font-bold uppercase tracking-widest">GIS Spatial Intelligence</span>
           </div>
@@ -55,7 +55,7 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
           <select
             value={selectedFilterBank}
             onChange={(e) => setSelectedFilterBank(e.target.value)}
-            className="bg-[#051F13] border border-white/15 text-white text-xs rounded-xl px-3 py-2 focus:ring-2 focus:ring-[#D4AF37] outline-none"
+            className="bg-[#6B3F1D] border border-white/15 text-white text-xs rounded-xl px-3 py-2 focus:ring-2 focus:ring-[#C89A2B] outline-none"
           >
             <option value="ALL">All Banks operating</option>
             {banks.map(b => (
@@ -68,15 +68,15 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* SVG MAP CONTAINER */}
-        <div className="lg:col-span-7 bg-[#051F13] border border-white/10 rounded-2xl p-4 relative min-h-[420px] flex flex-col justify-between overflow-hidden">
+        <div className="lg:col-span-7 bg-[#2E1B0E] border border-white/10 rounded-2xl p-4 relative min-h-[420px] flex flex-col justify-between overflow-hidden">
           
-          <div className="absolute top-3 left-3 bg-[#0A2E1D]/90 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 text-[11px] text-gray-300 flex items-center space-x-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-ping" />
+          <div className="absolute top-3 left-3 bg-[#6B3F1D]/90 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 text-[11px] text-gray-300 flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#C89A2B] animate-ping" />
             <span className="font-semibold text-white">Live Hub Pin Selected: {selectedAreaName}</span>
           </div>
 
           <div className="absolute top-3 right-3 flex items-center space-x-2 text-[10px] text-gray-400">
-            <span className="flex items-center space-x-1"><span className="w-3 h-3 rounded-full bg-[#D4AF37] inline-block"/><span>Bunna</span></span>
+            <span className="flex items-center space-x-1"><span className="w-3 h-3 rounded-full bg-[#C89A2B] inline-block"/><span>Bunna</span></span>
             <span className="flex items-center space-x-1"><span className="w-3 h-3 rounded-full bg-purple-500 inline-block"/><span>CBE</span></span>
             <span className="flex items-center space-x-1"><span className="w-3 h-3 rounded-full bg-blue-500 inline-block"/><span>Dashen</span></span>
             <span className="flex items-center space-x-1"><span className="w-3 h-3 rounded-full bg-green-500 inline-block"/><span>Awash</span></span>
@@ -87,8 +87,8 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
             {/* Outline path simulating Horn of Africa / Ethiopia outline */}
             <path
               d="M 180 60 L 320 30 L 480 140 L 520 220 L 460 320 L 380 410 L 260 410 L 160 350 L 120 260 L 140 160 Z"
-              fill="#082A1A"
-              stroke="rgba(212, 175, 55, 0.25)"
+              fill="#4A2C17"
+              stroke="rgba(200, 154, 43, 0.3)"
               strokeWidth="2"
               strokeDasharray="4 2"
             />
@@ -113,7 +113,7 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
                 >
                   {/* Outer pulse circle for selected */}
                   {isSelected && (
-                    <circle cx={area.x} cy={area.y} r="18" fill="none" stroke="#D4AF37" strokeWidth="2" opacity="0.6" className="animate-ping" />
+                    <circle cx={area.x} cy={area.y} r="18" fill="none" stroke="#C89A2B" strokeWidth="2" opacity="0.6" className="animate-ping" />
                   )}
 
                   {/* Marker Circle */}
@@ -121,21 +121,21 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
                     cx={area.x}
                     cy={area.y}
                     r={isSelected ? 10 : 7}
-                    fill={isSelected ? '#D4AF37' : '#0F4D2E'}
-                    stroke={isSelected ? '#FFFFFF' : '#D4AF37'}
+                    fill={isSelected ? '#C89A2B' : '#6B3F1D'}
+                    stroke={isSelected ? '#FFFFFF' : '#C89A2B'}
                     strokeWidth="2.5"
                     className="transition-all duration-300 group-hover:scale-125"
                   />
 
                   {/* Inner Pin Dot */}
-                  <circle cx={area.x} cy={area.y} r="3" fill={isSelected ? '#0B4228' : '#D4AF37'} />
+                  <circle cx={area.x} cy={area.y} r="3" fill={isSelected ? '#4A2C17' : '#C89A2B'} />
 
                   {/* Text Label */}
                   <text
                     x={area.x}
                     y={area.y - 14}
                     textAnchor="middle"
-                    fill={isSelected ? '#D4AF37' : '#FFFFFF'}
+                    fill={isSelected ? '#C89A2B' : '#FFFFFF'}
                     fontSize={isSelected ? "12" : "10"}
                     fontWeight={isSelected ? "bold" : "medium"}
                     className="select-none transition-all"
@@ -149,30 +149,30 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
 
           <div className="text-[11px] text-gray-400 flex items-center justify-between border-t border-white/10 pt-2 px-2">
             <span>Click any hub pin on the map to inspect local competitor branch details.</span>
-            <span className="text-[#D4AF37] font-semibold">Coordinates: 9.0100° N, 38.7600° E</span>
+            <span className="text-[#C89A2B] font-semibold">Coordinates: 9.0100° N, 38.7600° E</span>
           </div>
         </div>
 
         {/* AREA DETAIL PANEL */}
-        <div className="lg:col-span-5 bg-[#051F13] border border-white/10 rounded-2xl p-5 space-y-5">
+        <div className="lg:col-span-5 bg-[#2E1B0E] border border-white/10 rounded-2xl p-5 space-y-5">
           <div className="flex items-center justify-between border-b border-white/10 pb-3">
             <div>
-              <span className="text-[10px] font-extrabold uppercase text-[#D4AF37]">Selected Commercial Hub</span>
+              <span className="text-[10px] font-extrabold uppercase text-[#C89A2B]">Selected Commercial Hub</span>
               <h4 className="text-xl font-bold text-white">{selectedAreaName} Area</h4>
             </div>
-            <div className="bg-[#0A2E1D] border border-[#D4AF37]/30 rounded-xl px-3 py-1.5 text-center">
+            <div className="bg-[#6B3F1D] border border-[#C89A2B]/30 rounded-xl px-3 py-1.5 text-center">
               <span className="text-[10px] text-gray-300 block uppercase">Bunna Rank</span>
-              <span className="text-lg font-extrabold text-[#D4AF37]">#{currentAreaRanking?.bunnaRank || 4}</span>
+              <span className="text-lg font-extrabold text-[#C89A2B]">#{currentAreaRanking?.bunnaRank || 4}</span>
             </div>
           </div>
 
           {/* Area Summary Cards */}
           <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-[#0A2E1D] p-3 rounded-xl border border-white/5">
+            <div className="bg-[#6B3F1D]/50 p-3 rounded-xl border border-white/5">
               <span className="text-gray-400 block text-[10px]">Bunna BPI Score</span>
               <span className="text-base font-bold text-emerald-400">{currentAreaRanking?.bunnaBpiScore || 71.8} / 100</span>
             </div>
-            <div className="bg-[#0A2E1D] p-3 rounded-xl border border-white/5">
+            <div className="bg-[#6B3F1D]/50 p-3 rounded-xl border border-white/5">
               <span className="text-gray-400 block text-[10px]">Competitor Banks</span>
               <span className="text-base font-bold text-white">{currentAreaRanking?.totalBanks || 5} Active</span>
             </div>
@@ -182,7 +182,7 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between text-xs text-gray-300 font-semibold">
               <span>Tracked Branches in {selectedAreaName} ({filteredBranches.length})</span>
-              <span className="text-[10px] text-[#D4AF37]">Sorted by BPI Rank</span>
+              <span className="text-[10px] text-[#C89A2B]">Sorted by BPI Rank</span>
             </div>
 
             <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
@@ -198,19 +198,19 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
                       key={br.id}
                       className={`p-3 rounded-xl border transition-all flex items-center justify-between ${
                         isBunna
-                          ? 'bg-[#0B4228] border-[#D4AF37]/50 text-white'
-                          : 'bg-[#0A2E1D] border-white/10 hover:border-white/20 text-gray-200'
+                          ? 'bg-[#6B3F1D] border-[#C89A2B]/50 text-white'
+                          : 'bg-[#4A2C17]/50 border-white/10 hover:border-white/20 text-gray-200'
                       }`}
                     >
                       <div className="space-y-0.5">
                         <div className="flex items-center space-x-2">
                           <span
                             className="w-2.5 h-2.5 rounded-full inline-block"
-                            style={{ backgroundColor: isBunna ? '#D4AF37' : '#008000' }}
+                            style={{ backgroundColor: isBunna ? '#C89A2B' : '#888888' }}
                           />
                           <span className="text-xs font-bold text-white">{br.branchName}</span>
                           {isBunna && (
-                            <span className="bg-[#D4AF37] text-[#0B4228] text-[9px] font-extrabold px-1.5 py-0.5 rounded">
+                            <span className="bg-[#C89A2B] text-[#6B3F1D] text-[9px] font-extrabold px-1.5 py-0.5 rounded">
                               BUNNA
                             </span>
                           )}
@@ -223,7 +223,7 @@ export const EthiopiaCompetitorMap: React.FC<EthiopiaCompetitorMapProps> = ({
                       </div>
 
                       <div className="text-right">
-                        <span className="text-xs font-bold text-[#D4AF37] block">
+                        <span className="text-xs font-bold text-[#C89A2B] block">
                           {isBunna ? 'Rank #4' : 'Competitor'}
                         </span>
                         <span className="text-[10px] text-gray-400">Kebele: {br.woreda || ' Kebele 04'}</span>

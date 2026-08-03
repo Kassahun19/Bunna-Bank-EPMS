@@ -460,7 +460,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     employees: d.totalEmployees
   }));
 
-  const COLORS = ['#D4AF37', '#0B4228', '#10B981', '#3B82F6', '#F59E0B'];
+  const COLORS = ['#C89A2B', '#6B3F1D', '#10B981', '#3B82F6', '#F59E0B'];
 
   const pendingCount = reports.filter(r => r.status === 'Pending').length;
   const approvedCount = reports.filter(r => r.status === 'Approved').length;
@@ -470,10 +470,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     <div className="space-y-8">
       
       {/* Top Banner / Welcome Header */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0B4228] via-[#08321E] to-[#051F13] border border-[#D4AF37]/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-white">
+      <div className="p-6 rounded-3xl bg-gradient-to-r from-[#6B3F1D] via-[#4A2C17] to-[#362011] border border-[#C89A2B]/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-white">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="bg-[#D4AF37] text-[#0B4228] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
+            <span className="bg-[#C89A2B] text-[#6B3F1D] font-bold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
               Administrator Console
             </span>
             <span className="text-xs text-gray-300">Bunna Bank S.C. HQ</span>
@@ -490,9 +490,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           {onOpenProfile && (
             <button
               onClick={onOpenProfile}
-              className="px-4 py-2.5 rounded-xl bg-[#08321E] hover:bg-white/10 border border-[#D4AF37]/40 text-xs font-bold flex items-center space-x-2 text-[#D4AF37]"
+              className="px-4 py-2.5 rounded-xl bg-[#4A2C17] hover:bg-white/10 border border-[#C89A2B]/40 text-xs font-bold flex items-center space-x-2 text-[#C89A2B]"
             >
-              <UserCheck className="w-4 h-4 text-[#D4AF37]" />
+              <UserCheck className="w-4 h-4 text-[#C89A2B]" />
               <span>My Role Profile</span>
             </button>
           )}
@@ -501,15 +501,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             onClick={onOpenExportModal}
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold flex items-center space-x-2 text-white"
           >
-            <Download className="w-4 h-4 text-[#D4AF37]" />
+            <Download className="w-4 h-4 text-[#C89A2B]" />
             <span>Export Reports</span>
           </button>
 
           <button
             onClick={onOpenAiAssistant}
-            className="px-5 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs shadow-lg hover:bg-[#e0be4d] flex items-center space-x-2"
+            className="px-5 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs shadow-lg hover:bg-[#D8B45C] flex items-center space-x-2"
           >
-            <Sparkles className="w-4 h-4 text-[#0B4228]" />
+            <Sparkles className="w-4 h-4 text-[#6B3F1D]" />
             <span>AI Insights Engine</span>
           </button>
         </div>
@@ -562,8 +562,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             onClick={() => handleTabSelect(tab.id as any)}
             className={`px-4 py-2.5 rounded-xl whitespace-nowrap transition-all ${
               activeTab === tab.id
-                ? 'bg-[#D4AF37] text-[#0B4228] shadow-md font-extrabold'
-                : 'bg-[#08321E] hover:bg-white/5 border border-white/10 text-white'
+                ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md font-extrabold'
+                : 'bg-[#4A2C17] hover:bg-white/5 border border-white/10 text-white'
             }`}
           >
             {tab.label}
@@ -598,33 +598,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           
           {/* Top Metric Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-lg text-white">
+            <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-lg text-white">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs text-gray-400 font-medium">Total Staff Employees</p>
                   <h3 className="text-2xl font-extrabold text-white mt-1">{employees.length.toLocaleString()}</h3>
                 </div>
-                <div className="p-3 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37]">
+                <div className="p-3 rounded-xl bg-[#C89A2B]/20 text-[#C89A2B]">
                   <Users className="w-5 h-5" />
                 </div>
               </div>
               <p className="text-[11px] text-emerald-400 mt-3 font-semibold">+12% growth in 2026</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-lg text-white">
+            <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-lg text-white">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs text-gray-400 font-medium">Active Branches</p>
                   <h3 className="text-2xl font-extrabold text-white mt-1">{branches.length} Branches</h3>
                 </div>
-                <div className="p-3 rounded-xl bg-[#D4AF37]/20 text-[#D4AF37]">
+                <div className="p-3 rounded-xl bg-[#C89A2B]/20 text-[#C89A2B]">
                   <Building2 className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-[11px] text-[#D4AF37] mt-3 font-semibold">Across {districts.length} Districts</p>
+              <p className="text-[11px] text-[#C89A2B] mt-3 font-semibold">Across {districts.length} Districts</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-lg text-white">
+            <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-lg text-white">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs text-gray-400 font-medium">Pending Approvals</p>
@@ -637,7 +637,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <p className="text-[11px] text-gray-400 mt-3 font-medium">Awaiting branch manager review</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#08321E] border border-[#D4AF37]/30 shadow-lg text-white">
+            <div className="p-5 rounded-2xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-lg text-white">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs text-gray-400 font-medium">Approved Reports</p>
@@ -659,13 +659,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             {/* Chart 1: Performance Trends Area Chart */}
-            <div className="lg:col-span-8 p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white">
+            <div className="lg:col-span-8 p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white">
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <h3 className="font-bold text-lg text-white">Financial Mobilization & Digital Activations Trend</h3>
                   <p className="text-xs text-gray-400">Monthly aggregate growth across all Bunna Bank branches</p>
                 </div>
-                <span className="bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-xs font-bold">2026 YTD</span>
+                <span className="bg-[#C89A2B]/20 text-[#C89A2B] px-3 py-1 rounded-full text-xs font-bold">2026 YTD</span>
               </div>
 
               <div className="h-72 w-full">
@@ -673,8 +673,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <AreaChart data={trendData}>
                     <defs>
                       <linearGradient id="colorDeposits" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#D4AF37" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#C89A2B" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#C89A2B" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorDigital" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
@@ -684,8 +684,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" />
                     <XAxis dataKey="month" stroke="#9CA3AF" fontSize={12} />
                     <YAxis stroke="#9CA3AF" fontSize={12} />
-                    <Tooltip contentStyle={{ backgroundColor: '#0B4228', borderColor: '#D4AF37', borderRadius: '12px', fontSize: '12px' }} />
-                    <Area type="monotone" dataKey="deposits" name="Deposits (Million ETB)" stroke="#D4AF37" fillOpacity={1} fill="url(#colorDeposits)" />
+                    <Tooltip contentStyle={{ backgroundColor: '#6B3F1D', borderColor: '#C89A2B', borderRadius: '12px', fontSize: '12px' }} />
+                    <Area type="monotone" dataKey="deposits" name="Deposits (Million ETB)" stroke="#C89A2B" fillOpacity={1} fill="url(#colorDeposits)" />
                     <Area type="monotone" dataKey="digital" name="Digital Banking Activations" stroke="#10B981" fillOpacity={1} fill="url(#colorDigital)" />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -693,7 +693,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
 
             {/* Chart 2: District Distribution Bar Chart */}
-            <div className="lg:col-span-4 p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white flex flex-col justify-between">
+            <div className="lg:col-span-4 p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white flex flex-col justify-between">
               <div>
                 <h3 className="font-bold text-lg text-white mb-1">District Branch Density</h3>
                 <p className="text-xs text-gray-400 mb-4">Branch count distribution per district</p>
@@ -703,15 +703,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" />
                       <XAxis dataKey="name" stroke="#9CA3AF" fontSize={10} />
                       <YAxis stroke="#9CA3AF" fontSize={10} />
-                      <Tooltip contentStyle={{ backgroundColor: '#0B4228', borderColor: '#D4AF37', borderRadius: '12px', fontSize: '12px' }} />
-                      <Bar dataKey="branches" name="Branches" fill="#D4AF37" radius={[6, 6, 0, 0]} />
+                      <Tooltip contentStyle={{ backgroundColor: '#6B3F1D', borderColor: '#C89A2B', borderRadius: '12px', fontSize: '12px' }} />
+                      <Bar dataKey="branches" name="Branches" fill="#C89A2B" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-white/10 text-center">
-                <span className="text-xs text-[#D4AF37] font-semibold">
+                <span className="text-xs text-[#C89A2B] font-semibold">
                   Top Performing District: Addis Ababa East District
                 </span>
               </div>
@@ -723,12 +723,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 2: DISTRICTS & AREA OFFICES */}
       {activeTab === 'districts' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-5">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-5">
           {/* Top Bar */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-white/10">
             <div>
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <MapPin className="w-5 h-5 text-[#D4AF37]" />
+                <MapPin className="w-5 h-5 text-[#C89A2B]" />
                 <span>Districts & Area Office Management</span>
               </h3>
               <p className="text-xs text-gray-300 mt-0.5">
@@ -737,7 +737,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
             <button
               onClick={() => setIsAddDistrictModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#b89628] transition-all shadow-md cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#D8B45C] transition-all shadow-md cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add District / Area Office</span>
@@ -753,16 +753,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="Search district name, code, region..."
                 value={districtSearch}
                 onChange={(e) => { setDistrictSearch(e.target.value); setDistrictPage(1); }}
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AF37]"
+                className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#C89A2B]"
               />
             </div>
 
             <div className="flex items-center space-x-2 w-full sm:w-auto">
-              <Filter className="w-4 h-4 text-[#D4AF37]" />
+              <Filter className="w-4 h-4 text-[#C89A2B]" />
               <select
                 value={districtRegionFilter}
                 onChange={(e) => { setDistrictRegionFilter(e.target.value); setDistrictPage(1); }}
-                className="px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white focus:outline-none"
+                className="px-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white focus:outline-none"
               >
                 <option value="All">All Regions</option>
                 {uniqueRegions.map(r => (
@@ -773,9 +773,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Table */}
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0B4228]/50">
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#6B3F1D]/50">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase tracking-wider border-b border-white/10">
+              <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase tracking-wider border-b border-white/10">
                 <tr>
                   <th className="p-3">SOL ID / Code</th>
                   <th className="p-3">District / Area Office Name</th>
@@ -797,7 +797,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 ) : (
                   paginatedDistricts.map(d => (
                     <tr key={d.id} className="hover:bg-white/5 transition-colors">
-                      <td className="p-3 font-bold text-[#D4AF37] font-mono">
+                      <td className="p-3 font-bold text-[#C89A2B] font-mono">
                         {d.solId || d.code} <span className="text-gray-400 font-normal text-[11px]">({d.code})</span>
                       </td>
                       <td className="p-3 font-semibold text-white">{d.name}</td>
@@ -859,7 +859,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="font-bold text-[#D4AF37]">Page {districtPage} of {totalDistrictPages}</span>
+              <span className="font-bold text-[#C89A2B]">Page {districtPage} of {totalDistrictPages}</span>
               <button
                 disabled={districtPage >= totalDistrictPages}
                 onClick={() => setDistrictPage(prev => Math.min(prev + 1, totalDistrictPages))}
@@ -874,16 +874,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 3: BRANCH MANAGEMENT */}
       {activeTab === 'branches' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-5">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-5">
           {/* Top Bar with Export Options */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-white/10">
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                  <Building className="w-5 h-5 text-[#D4AF37]" />
+                  <Building className="w-5 h-5 text-[#C89A2B]" />
                   <span>Branch Directory & Sol ID Management</span>
                 </h3>
-                <span className="bg-[#D4AF37] text-[#0B4228] text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+                <span className="bg-[#C89A2B] text-[#6B3F1D] text-xs font-extrabold px-2.5 py-0.5 rounded-full">
                   {branches.length} Registered
                 </span>
               </div>
@@ -922,7 +922,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
               <button
                 onClick={() => setIsAddBranchModalOpen(true)}
-                className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#b89628] transition-all shadow-md cursor-pointer ml-1"
+                className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#D8B45C] transition-all shadow-md cursor-pointer ml-1"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add New Branch</span>
@@ -940,7 +940,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 placeholder="Search Sol ID, Branch name, Telephone, Location..."
                 value={branchSearch}
                 onChange={(e) => { setBranchSearch(e.target.value); setBranchPage(1); }}
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#D4AF37]"
+                className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#C89A2B]"
               />
             </div>
 
@@ -948,7 +948,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <select
               value={branchRegionFilter}
               onChange={(e) => { setBranchRegionFilter(e.target.value); setBranchPage(1); }}
-              className="px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white focus:outline-none"
+              className="px-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white focus:outline-none"
             >
               <option value="All">All Regions</option>
               {uniqueRegions.map(r => (
@@ -960,7 +960,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <select
               value={branchDistrictFilter}
               onChange={(e) => { setBranchDistrictFilter(e.target.value); setBranchPage(1); }}
-              className="px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white focus:outline-none"
+              className="px-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white focus:outline-none"
             >
               <option value="All">All Districts / Area Offices</option>
               {districts.map(d => (
@@ -973,7 +973,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <select
                 value={branchStatusFilter}
                 onChange={(e) => { setBranchStatusFilter(e.target.value); setBranchPage(1); }}
-                className="w-full px-3 py-2 rounded-xl bg-[#0B4228] border border-white/20 text-xs text-white focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-xs text-white focus:outline-none"
               >
                 <option value="All">All Statuses</option>
                 <option value="Active">Active</option>
@@ -982,7 +982,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
               <button
                 onClick={() => setBranchSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-                className="p-2 rounded-xl bg-[#0B4228] border border-white/20 text-[#D4AF37] hover:bg-white/10 shrink-0"
+                className="p-2 rounded-xl bg-[#6B3F1D] border border-white/20 text-[#C89A2B] hover:bg-white/10 shrink-0"
                 title={`Sort ${branchSortOrder === 'asc' ? 'Ascending' : 'Descending'}`}
               >
                 <ArrowUpDown className="w-4 h-4" />
@@ -991,9 +991,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           {/* Branch Responsive Data Table */}
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0B4228]/50">
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#6B3F1D]/50">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase tracking-wider border-b border-white/10">
+              <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase tracking-wider border-b border-white/10">
                 <tr>
                   <th className="p-3">
                     <button
@@ -1032,7 +1032,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 ) : (
                   paginatedBranches.map(b => (
                     <tr key={b.id} className="hover:bg-white/5 transition-colors">
-                      <td className="p-3 font-extrabold text-[#D4AF37] font-mono">{b.solId || b.code}</td>
+                      <td className="p-3 font-extrabold text-[#C89A2B] font-mono">{b.solId || b.code}</td>
                       <td className="p-3 font-semibold text-white">{b.name}</td>
                       <td className="p-3 font-mono text-gray-300">
                         <div className="flex items-center space-x-1">
@@ -1044,7 +1044,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <td className="p-3">{b.region || 'Addis Ababa'}</td>
                       <td className="p-3 text-gray-300">{b.location}</td>
                       <td className="p-3">
-                        <span className="bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30 px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap">
+                        <span className="bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/30 px-2 py-0.5 rounded-full text-[10px] font-bold whitespace-nowrap">
                           {b.type || 'Grade I'}
                         </span>
                       </td>
@@ -1099,7 +1099,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <select
                 value={branchRowsPerPage}
                 onChange={(e) => { setBranchRowsPerPage(Number(e.target.value)); setBranchPage(1); }}
-                className="px-2 py-1 rounded bg-[#0B4228] border border-white/20 text-white text-xs focus:outline-none"
+                className="px-2 py-1 rounded bg-[#6B3F1D] border border-white/20 text-white text-xs focus:outline-none"
               >
                 <option value={10}>10</option>
                 <option value={25}>25</option>
@@ -1120,7 +1120,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="font-bold text-[#D4AF37]">
+              <span className="font-bold text-[#C89A2B]">
                 Page {branchPage} of {totalBranchPages}
               </span>
               <button
@@ -1137,15 +1137,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 4: EMPLOYEES */}
       {activeTab === 'employees' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-lg text-white">Employee Staff Roster</h3>
-            <span className="text-xs text-[#D4AF37]">{employees.length} Registered Users</span>
+            <span className="text-xs text-[#C89A2B]">{employees.length} Registered Users</span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase">
+              <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase">
                 <tr>
                   <th className="p-3">Staff ID</th>
                   <th className="p-3">Employee Name</th>
@@ -1160,7 +1160,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/10">
                 {employees.map(e => (
                   <tr key={e.id} className="hover:bg-white/5">
-                    <td className="p-3 font-bold text-[#D4AF37]">{e.userId}</td>
+                    <td className="p-3 font-bold text-[#C89A2B]">{e.userId}</td>
                     <td className="p-3 font-semibold text-white">{getUserFullName(e)}</td>
                     <td className="p-3"><span className="bg-white/10 px-2 py-0.5 rounded text-[10px] font-bold">{e.role}</span></td>
                     <td className="p-3">{e.jobTitle}</td>
@@ -1200,7 +1200,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               onOpenAiSummary(e);
                             }
                           }}
-                          className="px-2.5 py-1 rounded-lg bg-[#D4AF37] hover:bg-[#e0be4d] text-[#0B4228] font-bold text-[11px] inline-flex items-center space-x-1 shadow transition-all cursor-pointer"
+                          className="px-2.5 py-1 rounded-lg bg-[#C89A2B] hover:bg-[#D8B45C] text-[#6B3F1D] font-bold text-[11px] inline-flex items-center space-x-1 shadow transition-all cursor-pointer"
                         >
                           <Sparkles className="w-3 h-3" />
                           <span>AI Summary</span>
@@ -1217,7 +1217,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 5: KPIS */}
       {activeTab === 'kpis' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-lg text-white">Bunna Bank KPI Definitions & Weightings</h3>
             <button
@@ -1233,7 +1233,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 };
                 setEditingKpi(newK);
               }}
-              className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#b89628]"
+              className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#D8B45C]"
             >
               <Plus className="w-4 h-4" />
               <span>Define New KPI</span>
@@ -1242,10 +1242,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {kpis.map(k => (
-              <div key={k.id} className="p-4 rounded-2xl bg-[#0B4228] border border-[#D4AF37]/20 flex justify-between items-start">
+              <div key={k.id} className="p-4 rounded-2xl bg-[#6B3F1D] border border-[#C89A2B]/20 flex justify-between items-start">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-bold text-xs text-[#D4AF37]">{k.code}</span>
+                    <span className="font-bold text-xs text-[#C89A2B]">{k.code}</span>
                     <span className="bg-white/10 text-[10px] px-2 py-0.5 rounded font-medium">{k.category}</span>
                   </div>
                   <h4 className="font-bold text-sm text-white mt-1">{k.name}</h4>
@@ -1253,7 +1253,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
                 <div className="text-right shrink-0 space-y-2 ml-3">
                   <div>
-                    <span className="text-base font-extrabold text-[#D4AF37]">{k.weight}%</span>
+                    <span className="text-base font-extrabold text-[#C89A2B]">{k.weight}%</span>
                     <p className="text-[10px] text-gray-400">Weight</p>
                   </div>
                   <div className="flex items-center justify-end space-x-1">
@@ -1283,11 +1283,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 6: REPORTS */}
       {activeTab === 'reports' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <h3 className="font-bold text-lg text-white">Daily Performance Reports Master Log</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase">
+              <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase">
                 <tr>
                   <th className="p-3">Report Date</th>
                   <th className="p-3">Employee</th>
@@ -1302,7 +1302,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/10">
                 {reports.map(r => (
                   <tr key={r.id} className="hover:bg-white/5">
-                    <td className="p-3 font-bold text-[#D4AF37]">{r.reportDate}</td>
+                    <td className="p-3 font-bold text-[#C89A2B]">{r.reportDate}</td>
                     <td className="p-3 font-semibold text-white">{r.employeeName}</td>
                     <td className="p-3">{r.branchName}</td>
                     <td className="p-3 font-bold text-emerald-400">ETB {r.depositsETB.toLocaleString()}</td>
@@ -1339,7 +1339,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 7: BANK HOLIDAYS */}
       {activeTab === 'holidays' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-lg text-white">Configured Official Bank Holidays</h3>
             <button
@@ -1353,7 +1353,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 };
                 setEditingHoliday(newH);
               }}
-              className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#b89628]"
+              className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs flex items-center space-x-1.5 hover:bg-[#D8B45C]"
             >
               <Plus className="w-4 h-4" />
               <span>Add Bank Holiday</span>
@@ -1362,9 +1362,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {holidays.map(h => (
-              <div key={h.id} className="p-4 rounded-2xl bg-[#0B4228] border border-[#D4AF37]/20 flex justify-between items-start">
+              <div key={h.id} className="p-4 rounded-2xl bg-[#6B3F1D] border border-[#C89A2B]/20 flex justify-between items-start">
                 <div>
-                  <p className="font-bold text-xs text-[#D4AF37]">{h.date}</p>
+                  <p className="font-bold text-xs text-[#C89A2B]">{h.date}</p>
                   <h4 className="font-bold text-sm text-white mt-0.5">{h.name}</h4>
                   <p className="text-xs text-gray-300 mt-1">{h.description}</p>
                 </div>
@@ -1394,11 +1394,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* TAB 8: AUDIT LOGS */}
       {activeTab === 'audit' && (
-        <div className="p-6 rounded-3xl bg-[#08321E] border border-[#D4AF37]/30 shadow-xl text-white space-y-4">
+        <div className="p-6 rounded-3xl bg-[#4A2C17] border border-[#C89A2B]/30 shadow-xl text-white space-y-4">
           <h3 className="font-bold text-lg text-white">System Security & Audit Log History</h3>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-[#0B4228] text-[#D4AF37] font-bold uppercase">
+              <thead className="bg-[#6B3F1D] text-[#C89A2B] font-bold uppercase">
                 <tr>
                   <th className="p-3">Log ID</th>
                   <th className="p-3">User</th>
@@ -1412,7 +1412,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <tbody className="divide-y divide-white/10">
                 {auditLogs.map(l => (
                   <tr key={l.id} className="hover:bg-white/5">
-                    <td className="p-3 font-bold text-[#D4AF37]">{l.id}</td>
+                    <td className="p-3 font-bold text-[#C89A2B]">{l.id}</td>
                     <td className="p-3 font-semibold text-white">{l.userName}</td>
                     <td className="p-3">{l.userRole}</td>
                     <td className="p-3 font-mono text-emerald-400">{l.action}</td>
@@ -1430,10 +1430,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: ADD DISTRICT */}
       {isAddDistrictModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <MapPin className="w-5 h-5 text-[#D4AF37]" />
+                <MapPin className="w-5 h-5 text-[#C89A2B]" />
                 <span>Add New District</span>
               </h3>
               <button
@@ -1450,7 +1450,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <select
                   value={newDistrictType}
                   onChange={(e) => setNewDistrictType(e.target.value as any)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 >
                   <option value="District">Regional City District</option>
                   <option value="Area Office">Zonal City District</option>
@@ -1464,7 +1464,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., Harar, Gondar, Nekemte"
                   value={newDistrictName}
                   onChange={(e) => setNewDistrictName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1476,7 +1476,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., 954, HRD, BDR"
                   value={newDistrictCode}
                   onChange={(e) => setNewDistrictCode(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1488,7 +1488,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., Harari Region, Amhara Region"
                   value={newDistrictRegion}
                   onChange={(e) => setNewDistrictRegion(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1500,7 +1500,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., Ato Solomon Worku"
                   value={newDistrictManager}
                   onChange={(e) => setNewDistrictManager(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
 
@@ -1514,7 +1514,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold hover:bg-[#c2a030] transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold hover:bg-[#D8B45C] transition-colors"
                 >
                   Create District
                 </button>
@@ -1527,10 +1527,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: ADD BRANCH */}
       {isAddBranchModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <Building className="w-5 h-5 text-[#D4AF37]" />
+                <Building className="w-5 h-5 text-[#C89A2B]" />
                 <span>Add New Branch</span>
               </h3>
               <button
@@ -1547,7 +1547,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <select
                   value={newBranchDistrictId}
                   onChange={(e) => setNewBranchDistrictId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 >
                   <option value="">-- Choose Parent Office --</option>
@@ -1564,7 +1564,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., Harar Jugol Branch"
                   value={newBranchName}
                   onChange={(e) => setNewBranchName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1576,7 +1576,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., 360, BDR-01, HRR-01"
                   value={newBranchCode}
                   onChange={(e) => setNewBranchCode(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1587,7 +1587,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <select
                     value={newBranchType}
                     onChange={(e) => setNewBranchType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   >
                     <option value="Grade I">Grade I</option>
                     <option value="Grade II">Grade II</option>
@@ -1603,7 +1603,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     placeholder="e.g., Downtown Commercial"
                     value={newBranchLocation}
                     onChange={(e) => setNewBranchLocation(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -1615,7 +1615,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   placeholder="e.g., W/ro Bethlehem Tesfaye"
                   value={newBranchManager}
                   onChange={(e) => setNewBranchManager(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
 
@@ -1627,7 +1627,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     placeholder="e.g., +251 11 890 1234"
                     value={newBranchPhone}
                     onChange={(e) => setNewBranchPhone(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   />
                 </div>
                 <div>
@@ -1635,7 +1635,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <select
                     value={newBranchStatus}
                     onChange={(e) => setNewBranchStatus(e.target.value as 'Active' | 'Inactive')}
-                    className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -1653,7 +1653,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold"
+                  className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold"
                 >
                   Create Branch
                 </button>
@@ -1666,9 +1666,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: VIEW DISTRICT DETAILS */}
       {viewingDistrict && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
-              <h3 className="font-bold text-lg text-[#D4AF37] flex items-center space-x-2">
+              <h3 className="font-bold text-lg text-[#C89A2B] flex items-center space-x-2">
                 <MapPin className="w-5 h-5" />
                 <span>{viewingDistrict.name}</span>
               </h3>
@@ -1679,7 +1679,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="space-y-3 text-xs text-gray-200">
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">District Code / SOL ID:</span>
-                <span className="font-bold text-[#D4AF37] font-mono">{viewingDistrict.code} {viewingDistrict.solId ? `(SOL ${viewingDistrict.solId})` : ''}</span>
+                <span className="font-bold text-[#C89A2B] font-mono">{viewingDistrict.code} {viewingDistrict.solId ? `(SOL ${viewingDistrict.solId})` : ''}</span>
               </div>
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Region / Zone:</span>
@@ -1729,7 +1729,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               )}
             </div>
             <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingDistrict(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+              <button onClick={() => setViewingDistrict(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
                 Close Details
               </button>
             </div>
@@ -1740,10 +1740,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: EDIT DISTRICT */}
       {editingDistrict && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <Edit2 className="w-5 h-5 text-[#D4AF37]" />
+                <Edit2 className="w-5 h-5 text-[#C89A2B]" />
                 <span>Edit District Entry</span>
               </h3>
               <button onClick={() => setEditingDistrict(null)} className="text-gray-400 hover:text-white">
@@ -1757,7 +1757,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingDistrict.name}
                   onChange={(e) => setEditingDistrict({ ...editingDistrict, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1767,7 +1767,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingDistrict.code}
                   onChange={(e) => setEditingDistrict({ ...editingDistrict, code: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1777,7 +1777,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingDistrict.region}
                   onChange={(e) => setEditingDistrict({ ...editingDistrict, region: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1787,14 +1787,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingDistrict.managerName}
                   onChange={(e) => setEditingDistrict({ ...editingDistrict, managerName: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
               <div className="flex justify-end space-x-2 pt-2">
                 <button type="button" onClick={() => setEditingDistrict(null)} className="px-4 py-2 rounded-xl bg-white/10 text-xs text-gray-300">
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold">
                   Save Changes
                 </button>
               </div>
@@ -1806,9 +1806,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: VIEW BRANCH DETAILS */}
       {viewingBranch && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
-              <h3 className="font-bold text-lg text-[#D4AF37] flex items-center space-x-2">
+              <h3 className="font-bold text-lg text-[#C89A2B] flex items-center space-x-2">
                 <Building className="w-5 h-5" />
                 <span>{viewingBranch.name}</span>
               </h3>
@@ -1819,7 +1819,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="space-y-3 text-xs text-gray-200">
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Branch Sol ID / Code:</span>
-                <span className="font-bold text-[#D4AF37] font-mono">{viewingBranch.code}</span>
+                <span className="font-bold text-[#C89A2B] font-mono">{viewingBranch.code}</span>
               </div>
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Parent District:</span>
@@ -1827,7 +1827,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Grade / Type:</span>
-                <span className="bg-[#D4AF37]/20 text-[#D4AF37] px-2 py-0.5 rounded-full text-[10px] font-bold">{viewingBranch.type}</span>
+                <span className="bg-[#C89A2B]/20 text-[#C89A2B] px-2 py-0.5 rounded-full text-[10px] font-bold">{viewingBranch.type}</span>
               </div>
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Commercial Location:</span>
@@ -1839,7 +1839,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             </div>
             <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingBranch(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+              <button onClick={() => setViewingBranch(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
                 Close Details
               </button>
             </div>
@@ -1850,10 +1850,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: EDIT BRANCH */}
       {editingBranch && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <Edit2 className="w-5 h-5 text-[#D4AF37]" />
+                <Edit2 className="w-5 h-5 text-[#C89A2B]" />
                 <span>Edit Branch Record</span>
               </h3>
               <button onClick={() => setEditingBranch(null)} className="text-gray-400 hover:text-white">
@@ -1867,7 +1867,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingBranch.name}
                   onChange={(e) => setEditingBranch({ ...editingBranch, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1877,7 +1877,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingBranch.code}
                   onChange={(e) => setEditingBranch({ ...editingBranch, code: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -1886,7 +1886,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <select
                   value={editingBranch.type}
                   onChange={(e) => setEditingBranch({ ...editingBranch, type: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 >
                   <option value="Grade I">Grade I</option>
                   <option value="Grade II">Grade II</option>
@@ -1901,7 +1901,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingBranch.location}
                   onChange={(e) => setEditingBranch({ ...editingBranch, location: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
               <div>
@@ -1910,14 +1910,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingBranch.managerName}
                   onChange={(e) => setEditingBranch({ ...editingBranch, managerName: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
               <div className="flex justify-end space-x-2 pt-2">
                 <button type="button" onClick={() => setEditingBranch(null)} className="px-4 py-2 rounded-xl bg-white/10 text-xs text-gray-300">
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold">
                   Save Changes
                 </button>
               </div>
@@ -1929,9 +1929,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: VIEW EMPLOYEE DETAILS */}
       {viewingEmployee && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
-              <h3 className="font-bold text-lg text-[#D4AF37] flex items-center space-x-2">
+              <h3 className="font-bold text-lg text-[#C89A2B] flex items-center space-x-2">
                 <UserCheck className="w-5 h-5" />
                 <span>{getUserFullName(viewingEmployee)}</span>
               </h3>
@@ -1942,7 +1942,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="space-y-3 text-xs text-gray-200">
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Staff User ID:</span>
-                <span className="font-bold text-[#D4AF37] font-mono">{viewingEmployee.userId}</span>
+                <span className="font-bold text-[#C89A2B] font-mono">{viewingEmployee.userId}</span>
               </div>
               <div className="flex justify-between border-b border-white/5 pb-2">
                 <span className="text-gray-400">Access Role:</span>
@@ -1966,7 +1966,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             </div>
             <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingEmployee(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+              <button onClick={() => setViewingEmployee(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
                 Close
               </button>
             </div>
@@ -1977,10 +1977,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: EDIT EMPLOYEE */}
       {editingEmployee && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <Edit2 className="w-5 h-5 text-[#D4AF37]" />
+                <Edit2 className="w-5 h-5 text-[#C89A2B]" />
                 <span>Edit User Profile & Role</span>
               </h3>
               <button onClick={() => setEditingEmployee(null)} className="text-gray-400 hover:text-white">
@@ -1994,7 +1994,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingEmployee.firstName}
                   onChange={(e) => setEditingEmployee({ ...editingEmployee, firstName: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2004,7 +2004,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingEmployee.lastName}
                   onChange={(e) => setEditingEmployee({ ...editingEmployee, lastName: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2013,7 +2013,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <select
                   value={editingEmployee.role}
                   onChange={(e) => setEditingEmployee({ ...editingEmployee, role: e.target.value as any })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 >
                   <option value="EMPLOYEE">EMPLOYEE (Staff Member)</option>
                   <option value="MANAGER">MANAGER (Branch Operations)</option>
@@ -2026,14 +2026,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingEmployee.jobTitle}
                   onChange={(e) => setEditingEmployee({ ...editingEmployee, jobTitle: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
               <div className="flex justify-end space-x-2 pt-2">
                 <button type="button" onClick={() => setEditingEmployee(null)} className="px-4 py-2 rounded-xl bg-white/10 text-xs text-gray-300">
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold">
                   Save Profile
                 </button>
               </div>
@@ -2045,10 +2045,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: VIEW REPORT DETAILS */}
       {viewingReport && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-lg text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-lg text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <div>
-                <h3 className="font-bold text-lg text-[#D4AF37]">Daily Report Details</h3>
+                <h3 className="font-bold text-lg text-[#C89A2B]">Daily Report Details</h3>
                 <p className="text-xs text-gray-300">{viewingReport.reportDate} • {viewingReport.employeeName}</p>
               </div>
               <button onClick={() => setViewingReport(null)} className="text-gray-400 hover:text-white">
@@ -2066,7 +2066,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
               <div className="p-3 bg-white/5 rounded-xl">
                 <span className="text-gray-400 block text-[10px]">Digital Financial Services</span>
-                <strong className="text-[#D4AF37] text-sm font-bold">ETB {viewingReport.digitalFinancialServicesETB.toLocaleString()}</strong>
+                <strong className="text-[#C89A2B] text-sm font-bold">ETB {viewingReport.digitalFinancialServicesETB.toLocaleString()}</strong>
               </div>
               <div className="p-3 bg-white/5 rounded-xl">
                 <span className="text-gray-400 block text-[10px]">Account Openings</span>
@@ -2082,13 +2082,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             </div>
             {viewingReport.managerComment && (
-              <div className="p-3 bg-[#08321E] border border-[#D4AF37]/30 rounded-xl text-xs">
-                <span className="text-[#D4AF37] font-bold block mb-0.5">Manager Feedback:</span>
+              <div className="p-3 bg-[#4A2C17] border border-[#C89A2B]/30 rounded-xl text-xs">
+                <span className="text-[#C89A2B] font-bold block mb-0.5">Manager Feedback:</span>
                 <p className="text-gray-200">{viewingReport.managerComment}</p>
               </div>
             )}
             <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingReport(null)} className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] font-bold text-xs">
+              <button onClick={() => setViewingReport(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
                 Close
               </button>
             </div>
@@ -2099,10 +2099,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: EDIT / DEFINE KPI */}
       {editingKpi && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <Award className="w-5 h-5 text-[#D4AF37]" />
+                <Award className="w-5 h-5 text-[#C89A2B]" />
                 <span>Configure KPI Metric</span>
               </h3>
               <button onClick={() => setEditingKpi(null)} className="text-gray-400 hover:text-white">
@@ -2116,7 +2116,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingKpi.code}
                   onChange={(e) => setEditingKpi({ ...editingKpi, code: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2126,7 +2126,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingKpi.name}
                   onChange={(e) => setEditingKpi({ ...editingKpi, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2136,7 +2136,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="number"
                   value={editingKpi.weight}
                   onChange={(e) => setEditingKpi({ ...editingKpi, weight: Number(e.target.value) })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2145,7 +2145,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <textarea
                   value={editingKpi.description}
                   onChange={(e) => setEditingKpi({ ...editingKpi, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   rows={3}
                 />
               </div>
@@ -2153,7 +2153,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button type="button" onClick={() => setEditingKpi(null)} className="px-4 py-2 rounded-xl bg-white/10 text-xs text-gray-300">
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold">
                   Save Metric
                 </button>
               </div>
@@ -2165,10 +2165,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* MODAL: EDIT / CREATE HOLIDAY */}
       {editingHoliday && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B4228] border border-[#D4AF37]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
+          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
             <div className="flex justify-between items-center border-b border-white/10 pb-3">
               <h3 className="font-bold text-lg text-white flex items-center space-x-2">
-                <CalendarIcon className="w-5 h-5 text-[#D4AF37]" />
+                <CalendarIcon className="w-5 h-5 text-[#C89A2B]" />
                 <span>Configure Bank Holiday</span>
               </h3>
               <button onClick={() => setEditingHoliday(null)} className="text-gray-400 hover:text-white">
@@ -2182,7 +2182,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingHoliday.name}
                   onChange={(e) => setEditingHoliday({ ...editingHoliday, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2192,7 +2192,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="date"
                   value={editingHoliday.date}
                   onChange={(e) => setEditingHoliday({ ...editingHoliday, date: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                   required
                 />
               </div>
@@ -2202,14 +2202,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   type="text"
                   value={editingHoliday.description}
                   onChange={(e) => setEditingHoliday({ ...editingHoliday, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#08321E] border border-white/20 text-xs text-white focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-[#4A2C17] border border-white/20 text-xs text-white focus:outline-none"
                 />
               </div>
               <div className="flex justify-end space-x-2 pt-2">
                 <button type="button" onClick={() => setEditingHoliday(null)} className="px-4 py-2 rounded-xl bg-white/10 text-xs text-gray-300">
                   Cancel
                 </button>
-                <button type="submit" className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#0B4228] text-xs font-bold">
+                <button type="submit" className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] text-xs font-bold">
                   Save Holiday
                 </button>
               </div>

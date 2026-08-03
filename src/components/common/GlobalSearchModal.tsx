@@ -35,11 +35,11 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-md flex items-start justify-center pt-20 px-4">
-      <div className="w-full max-w-2xl bg-[#08321E] border border-[#D4AF37]/40 rounded-2xl shadow-2xl text-white overflow-hidden">
+      <div className="w-full max-w-2xl bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-2xl shadow-2xl text-white overflow-hidden">
         
         {/* Search Bar Input */}
-        <div className="p-4 border-b border-white/10 flex items-center space-x-3 bg-[#0B4228]">
-          <Search className="w-5 h-5 text-[#D4AF37]" />
+        <div className="p-4 border-b border-white/10 flex items-center space-x-3 bg-[#4A2C17]">
+          <Search className="w-5 h-5 text-[#C89A2B]" />
           <input
             type="text"
             value={query}
@@ -67,7 +67,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               {/* Employees */}
               {matchedEmployees.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-2 flex items-center space-x-2">
+                  <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider mb-2 flex items-center space-x-2">
                     <User className="w-4 h-4" />
                     <span>Employees ({matchedEmployees.length})</span>
                   </h4>
@@ -78,7 +78,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                           <p className="font-bold text-white">{getUserFullName(e)}</p>
                           <p className="text-gray-400 text-[10px]">{e.jobTitle} • {e.branchName}</p>
                         </div>
-                        <span className="bg-[#D4AF37]/20 text-[#D4AF37] px-2 py-0.5 rounded-md text-[10px] font-semibold">{e.role}</span>
+                        <span className="bg-[#C89A2B]/20 text-[#C89A2B] px-2 py-0.5 rounded-md text-[10px] font-semibold">{e.role}</span>
                       </div>
                     ))}
                   </div>
@@ -88,7 +88,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               {/* Branches */}
               {matchedBranches.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-2 flex items-center space-x-2">
+                  <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider mb-2 flex items-center space-x-2">
                     <Building className="w-4 h-4" />
                     <span>Branches ({matchedBranches.length})</span>
                   </h4>
@@ -99,7 +99,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                           <p className="font-bold text-white">{b.name} ({b.code})</p>
                           <p className="text-gray-400 text-[10px]">{b.districtName} • Manager: {b.managerName}</p>
                         </div>
-                        <span className="text-xs font-bold text-[#D4AF37]">{b.type}</span>
+                        <span className="text-xs font-bold text-[#C89A2B]">{b.type}</span>
                       </div>
                     ))}
                   </div>
@@ -109,7 +109,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               {/* Districts */}
               {matchedDistricts.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-2 flex items-center space-x-2">
+                  <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider mb-2 flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
                     <span>Districts ({matchedDistricts.length})</span>
                   </h4>
@@ -130,7 +130,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               {/* Reports */}
               {matchedReports.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-2 flex items-center space-x-2">
+                  <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider mb-2 flex items-center space-x-2">
                     <FileText className="w-4 h-4" />
                     <span>Daily Reports ({matchedReports.length})</span>
                   </h4>
@@ -153,7 +153,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
               {/* KPIs */}
               {matchedKPIs.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-2 flex items-center space-x-2">
+                  <h4 className="text-xs font-bold text-[#C89A2B] uppercase tracking-wider mb-2 flex items-center space-x-2">
                     <Target className="w-4 h-4" />
                     <span>KPIs ({matchedKPIs.length})</span>
                   </h4>
@@ -164,7 +164,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                           <p className="font-bold text-white">{k.name} ({k.code})</p>
                           <p className="text-gray-400 text-[10px]">{k.description}</p>
                         </div>
-                        <span className="text-xs font-bold text-[#D4AF37]">{k.weight}% Weight</span>
+                        <span className="text-xs font-bold text-[#C89A2B]">{k.weight}% Weight</span>
                       </div>
                     ))}
                   </div>

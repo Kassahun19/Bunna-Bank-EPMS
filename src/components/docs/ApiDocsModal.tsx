@@ -94,20 +94,20 @@ CREATE TABLE daily_performance_reports (
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 relative">
+      <div className="w-full max-w-3xl bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl shadow-2xl text-white overflow-hidden p-6 relative">
         
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300"
+          className="absolute top-5 right-5 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="flex items-center space-x-3 mb-6">
-          <Code className="w-6 h-6 text-[#D4AF37]" />
+          <Code className="w-6 h-6 text-[#C89A2B]" />
           <div>
             <h3 className="font-extrabold text-xl text-white">Developer API & MySQL Schema Docs</h3>
-            <p className="text-xs text-[#D4AF37]">Bunna Bank EPMS Technical Specifications</p>
+            <p className="text-xs text-[#C89A2B]">Bunna Bank EPMS Technical Specifications</p>
           </div>
         </div>
 
@@ -116,7 +116,7 @@ CREATE TABLE daily_performance_reports (
           <button
             onClick={() => setActiveTab('api')}
             className={`px-4 py-2 rounded-xl transition-all ${
-              activeTab === 'api' ? 'bg-[#D4AF37] text-[#0B4228]' : 'bg-white/5 text-gray-300'
+              activeTab === 'api' ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'bg-white/10 text-gray-200 hover:bg-white/20'
             }`}
           >
             REST API Endpoints
@@ -124,7 +124,7 @@ CREATE TABLE daily_performance_reports (
           <button
             onClick={() => setActiveTab('sql')}
             className={`px-4 py-2 rounded-xl transition-all ${
-              activeTab === 'sql' ? 'bg-[#D4AF37] text-[#0B4228]' : 'bg-white/5 text-gray-300'
+              activeTab === 'sql' ? 'bg-[#C89A2B] text-[#6B3F1D]' : 'bg-white/10 text-gray-200 hover:bg-white/20'
             }`}
           >
             MySQL Database DDL Schema
@@ -133,32 +133,32 @@ CREATE TABLE daily_performance_reports (
 
         {activeTab === 'api' ? (
           <div className="space-y-3 text-xs max-h-[60vh] overflow-y-auto pr-2">
-            <div className="p-3 bg-[#0B4228] rounded-xl border border-white/10">
-              <p className="font-mono font-bold text-[#D4AF37]">POST /api/auth/login</p>
-              <p className="text-gray-300 mt-1">Authenticates staff credentials and returns JWT bearer token + user profile.</p>
+            <div className="p-3 bg-[#4A2C17] rounded-xl border border-white/10">
+              <p className="font-mono font-bold text-[#C89A2B]">POST /api/auth/login</p>
+              <p className="text-gray-200 mt-1">Authenticates staff credentials and returns JWT bearer token + user profile.</p>
             </div>
-            <div className="p-3 bg-[#0B4228] rounded-xl border border-white/10">
-              <p className="font-mono font-bold text-[#D4AF37]">POST /api/auth/register</p>
-              <p className="text-gray-300 mt-1">5-Step user account registration wizard with District/Branch validation.</p>
+            <div className="p-3 bg-[#4A2C17] rounded-xl border border-white/10">
+              <p className="font-mono font-bold text-[#C89A2B]">POST /api/auth/register</p>
+              <p className="text-gray-200 mt-1">5-Step user account registration wizard with District/Branch validation.</p>
             </div>
-            <div className="p-3 bg-[#0B4228] rounded-xl border border-white/10">
-              <p className="font-mono font-bold text-[#D4AF37]">POST /api/reports/submit</p>
-              <p className="text-gray-300 mt-1">Submits daily financial & digital metrics. Enforces working day & holiday rules.</p>
+            <div className="p-3 bg-[#4A2C17] rounded-xl border border-white/10">
+              <p className="font-mono font-bold text-[#C89A2B]">POST /api/reports/submit</p>
+              <p className="text-gray-200 mt-1">Submits daily financial & digital metrics. Enforces working day & holiday rules.</p>
             </div>
-            <div className="p-3 bg-[#0B4228] rounded-xl border border-white/10">
-              <p className="font-mono font-bold text-[#D4AF37]">POST /api/reports/manager-action</p>
-              <p className="text-gray-300 mt-1">Executes bulk report approvals, returns, rejections, suspensions, and deletions.</p>
+            <div className="p-3 bg-[#4A2C17] rounded-xl border border-white/10">
+              <p className="font-mono font-bold text-[#C89A2B]">POST /api/reports/manager-action</p>
+              <p className="text-gray-200 mt-1">Executes bulk report approvals, returns, rejections, suspensions, and deletions.</p>
             </div>
-            <div className="p-3 bg-[#0B4228] rounded-xl border border-white/10">
-              <p className="font-mono font-bold text-[#D4AF37]">POST /api/ai/assistant</p>
-              <p className="text-gray-300 mt-1">Queries Gemini LLM with system RAG context for performance insight generation.</p>
+            <div className="p-3 bg-[#4A2C17] rounded-xl border border-white/10">
+              <p className="font-mono font-bold text-[#C89A2B]">POST /api/ai/assistant</p>
+              <p className="text-gray-200 mt-1">Queries Gemini LLM with system RAG context for performance insight generation.</p>
             </div>
           </div>
         ) : (
           <div className="relative">
             <button
               onClick={copyToClipboard}
-              className="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-[#D4AF37] text-[#0B4228] font-bold text-[10px] flex items-center space-x-1"
+              className="absolute top-3 right-3 px-3 py-1.5 rounded-lg bg-[#C89A2B] text-[#6B3F1D] font-bold text-[10px] flex items-center space-x-1"
             >
               {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
               <span>{copied ? 'Copied SQL' : 'Copy DDL'}</span>

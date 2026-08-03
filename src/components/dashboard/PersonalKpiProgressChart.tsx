@@ -118,8 +118,8 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#051F13] border border-[#D4AF37]/40 p-3 rounded-xl shadow-2xl text-xs space-y-1.5 min-w-[180px]">
-          <p className="font-bold text-[#D4AF37] border-b border-white/10 pb-1 flex items-center justify-between">
+        <div className="bg-[#362011] border border-[#C89A2B]/40 p-3 rounded-xl shadow-2xl text-xs space-y-1.5 min-w-[180px]">
+          <p className="font-bold text-[#C89A2B] border-b border-white/10 pb-1 flex items-center justify-between">
             <span>{label}</span>
             <span className="text-[10px] text-gray-400">KPI Performance</span>
           </p>
@@ -145,12 +145,12 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
   };
 
   return (
-    <div className="bg-[#08321E] border border-[#D4AF37]/40 rounded-3xl p-6 shadow-xl text-white space-y-6">
+    <div className="bg-[#4A2C17] border border-[#C89A2B]/40 rounded-3xl p-6 shadow-xl text-white space-y-6">
       {/* Header & Tabs */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
           <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#C89A2B]/20 border border-[#C89A2B]/40 text-[#C89A2B] uppercase tracking-wider">
               Personal Performance Analytics
             </span>
             <span className="text-xs text-emerald-400 font-medium flex items-center gap-1">
@@ -158,7 +158,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
             </span>
           </div>
           <h3 className="text-xl font-extrabold text-white mt-1 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-[#D4AF37]" />
+            <TrendingUp className="w-5 h-5 text-[#C89A2B]" />
             Personal KPI Progress Visualization ({employeeName})
           </h3>
           <p className="text-xs text-gray-300">
@@ -172,7 +172,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
             onClick={() => setActiveMetric('overall')}
             className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all ${
               activeMetric === 'overall'
-                ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
+                ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -182,7 +182,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
             onClick={() => setActiveMetric('deposits')}
             className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all ${
               activeMetric === 'deposits'
-                ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
+                ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -192,7 +192,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
             onClick={() => setActiveMetric('digital')}
             className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all ${
               activeMetric === 'digital'
-                ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
+                ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -202,7 +202,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
             onClick={() => setActiveMetric('accounts')}
             className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all ${
               activeMetric === 'accounts'
-                ? 'bg-[#D4AF37] text-[#0B4228] shadow-md'
+                ? 'bg-[#C89A2B] text-[#6B3F1D] shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -213,15 +213,15 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
 
       {/* Summary Highlights Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
-        <div className="bg-[#0B4228]/80 border border-[#D4AF37]/25 rounded-2xl p-4">
+        <div className="bg-[#6B3F1D]/80 border border-[#C89A2B]/25 rounded-2xl p-4">
           <span className="text-xs text-gray-400 font-medium block">6-Month Avg KPI Score</span>
           <div className="flex items-baseline space-x-1.5 mt-1">
-            <span className="text-2xl font-black text-[#D4AF37]">{avg6MonthScore}%</span>
+            <span className="text-2xl font-black text-[#C89A2B]">{avg6MonthScore}%</span>
             <span className="text-[10px] text-emerald-400 font-semibold">/ 100% Target</span>
           </div>
         </div>
 
-        <div className="bg-[#0B4228]/80 border border-[#D4AF37]/25 rounded-2xl p-4">
+        <div className="bg-[#6B3F1D]/80 border border-[#C89A2B]/25 rounded-2xl p-4">
           <span className="text-xs text-gray-400 font-medium block">6-Month Total Deposits</span>
           <div className="flex items-baseline space-x-1 mt-1">
             <span className="text-2xl font-black text-emerald-400">
@@ -230,7 +230,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
           </div>
         </div>
 
-        <div className="bg-[#0B4228]/80 border border-[#D4AF37]/25 rounded-2xl p-4">
+        <div className="bg-[#6B3F1D]/80 border border-[#C89A2B]/25 rounded-2xl p-4">
           <span className="text-xs text-gray-400 font-medium block">6-Month Digital Activations</span>
           <div className="flex items-baseline space-x-1 mt-1">
             <span className="text-2xl font-black text-white">{total6MonthDigital}</span>
@@ -238,7 +238,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
           </div>
         </div>
 
-        <div className="bg-[#0B4228]/80 border border-[#D4AF37]/25 rounded-2xl p-4">
+        <div className="bg-[#6B3F1D]/80 border border-[#C89A2B]/25 rounded-2xl p-4">
           <span className="text-xs text-gray-400 font-medium block">6-Month Account Openings</span>
           <div className="flex items-baseline space-x-1 mt-1">
             <span className="text-2xl font-black text-sky-400">{total6MonthAccounts}</span>
@@ -248,15 +248,15 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
       </div>
 
       {/* Recharts Chart Section */}
-      <div className="bg-[#0B4228]/40 border border-white/10 rounded-2xl p-4 sm:p-5 pt-6">
+      <div className="bg-[#6B3F1D]/40 border border-white/10 rounded-2xl p-4 sm:p-5 pt-6">
         <div className="h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
             {activeMetric === 'overall' ? (
               <AreaChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="scoreGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#D4AF37" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="#C89A2B" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#C89A2B" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff15" />
@@ -268,7 +268,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
                   type="monotone"
                   dataKey="overallScore"
                   name="Achieved KPI Score (%)"
-                  stroke="#D4AF37"
+                  stroke="#C89A2B"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#scoreGradient)"
@@ -277,7 +277,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
                   type="monotone"
                   dataKey="targetBenchmark"
                   name="100% Target Benchmark"
-                  stroke="#10B981"
+                  stroke="#2E7D32"
                   strokeDasharray="4 4"
                   strokeWidth={2}
                   dot={false}
@@ -294,8 +294,8 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ paddingTop: 10, fontSize: 12 }} />
-                <Bar dataKey="depositsActual" name="Actual Deposits (ETB)" fill="#10B981" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="depositsTarget" name="Target Deposits (ETB)" fill="#D4AF37" radius={[6, 6, 0, 0]} opacity={0.4} />
+                <Bar dataKey="depositsActual" name="Actual Deposits (ETB)" fill="#2E7D32" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="depositsTarget" name="Target Deposits (ETB)" fill="#C89A2B" radius={[6, 6, 0, 0]} opacity={0.4} />
               </BarChart>
             ) : activeMetric === 'digital' ? (
               <BarChart data={chartData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
@@ -304,7 +304,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
                 <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 12 }} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ paddingTop: 10, fontSize: 12 }} />
-                <Bar dataKey="mobileActual" name="Bunna Mobile" stackId="a" fill="#10B981" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="mobileActual" name="Bunna Mobile" stackId="a" fill="#2E7D32" radius={[0, 0, 0, 0]} />
                 <Bar dataKey="ibActual" name="Internet Banking" stackId="a" fill="#38BDF8" radius={[0, 0, 0, 0]} />
                 <Bar dataKey="atmActual" name="ATM Cards" stackId="a" fill="#C084FC" radius={[0, 0, 0, 0]} />
                 <Bar dataKey="merchantActual" name="Merchant POS/QR" stackId="a" fill="#FBBF24" radius={[6, 6, 0, 0]} />
@@ -328,7 +328,7 @@ export const PersonalKpiProgressChart: React.FC<PersonalKpiProgressChartProps> =
                   type="monotone"
                   dataKey="accountsTarget"
                   name="Monthly Account Target"
-                  stroke="#D4AF37"
+                  stroke="#C89A2B"
                   strokeDasharray="4 4"
                   strokeWidth={2}
                   dot={false}
