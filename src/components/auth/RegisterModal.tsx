@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check, AlertCircle, Shield, Building, MapPin, User as UserIcon, Lock, Phone, Mail } from 'lucide-react';
+import { X, Check, AlertCircle, Shield, Building, MapPin, User as UserIcon, Lock, Phone, Mail, Search, Filter, RotateCcw } from 'lucide-react';
 import { District, Branch, User } from '../../types';
 import { api } from '../../services/api';
 import { initialDistricts, initialBranches } from '../../data/mockData';
@@ -24,6 +24,45 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   // Form State
   const [selectedDistrictId, setSelectedDistrictId] = useState('');
   const [selectedBranchId, setSelectedBranchId] = useState('');
+  const [districtSearchQuery, setDistrictSearchQuery] = useState('');
+  const [selectedRegionFilter, setSelectedRegionFilter] = useState('ALL');
+  const [branchSearchQuery, setBranchSearchQuery] = useState('');
+  const [selectedBranchTypeFilter, setSelectedBranchTypeFilter] = useState('ALL');
+
+  // Derived search engine filter computations for Step 1 (Districts)
+  const availableRegions = Array.from(new Set(districts.map(d => d.region).filter(Boolean))) as string[];
+  const filteredDistricts = districts.filter(d => {
+    const query = districtSearchQuery.toLowerCase().trim();
+    const matchesQuery = !query || (
+      d.name.toLowerCase().includes(query) ||
+      (d.solId && d.solId.toLowerCase().includes(query)) ||
+      (d.code && d.code.toLowerCase().includes(query)) ||
+      (d.region && d.region.toLowerCase().includes(query)) ||
+      (d.managerName && d.managerName.toLowerCase().includes(query)) ||
+      (d.type && d.type.toLowerCase().includes(query))
+    );
+    const matchesRegion = selectedRegionFilter === 'ALL' || d.region === selectedRegionFilter;
+    return matchesQuery && matchesRegion;
+  });
+
+  // Derived search engine filter computations for Step 2 (Branches)
+  const districtBranches = selectedDistrictId
+    ? branches.filter(b => b.districtId === selectedDistrictId)
+    : branches;
+  const availableBranchTypes = Array.from(new Set(districtBranches.map(b => b.type).filter(Boolean))) as string[];
+  const filteredBranches = districtBranches.filter(b => {
+    const query = branchSearchQuery.toLowerCase().trim();
+    const matchesQuery = !query || (
+      b.name.toLowerCase().includes(query) ||
+      (b.code && b.code.toLowerCase().includes(query)) ||
+      (b.solId && b.solId.toLowerCase().includes(query)) ||
+      (b.type && b.type.toLowerCase().includes(query)) ||
+      (b.location && b.location.toLowerCase().includes(query)) ||
+      (b.managerName && b.managerName.toLowerCase().includes(query))
+    );
+    const matchesType = selectedBranchTypeFilter === 'ALL' || b.type === selectedBranchTypeFilter;
+    return matchesQuery && matchesType;
+  });
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -242,25 +281,174 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
 
         <form onSubmit={handleSubmit}>
           
-          {/* STEP 1: District */}
+          {/* STEP 1: District Search Engine */}
           {step === 1 && (
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 mb-2">
-                <MapPin className="w-6 h-6 text-[#C89A2B]" />
-                <h3 className="text-lg font-bold text-white">Step 1: Select District</h3>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-6 h-6 text-[#C89A2B]" />
+                  <h3 className="text-lg font-bold text-white">Step 1: Select District / Area Office</h3>
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/40">
+                  Search Engine Active
+                </span>
               </div>
               <p className="text-xs text-gray-200">
-                Choose your assigned District Office across Ethiopia.
+                Use the search engine below to quickly locate your assigned District Office by Name, SOL ID, Region, or Code across Ethiopia.
               </p>
+
+              {/* District Search Bar */}
+              <div className="space-y-2">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" />
+                  <input
+                    type="text"
+                    value={districtSearchQuery}
+                    onChange={(e) => setDistrictSearchQuery(e.target.value)}
+                    placeholder="Search district by name, SOL ID (e.g. 0101), region, or code..."
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-xs text-white placeholder-gray-400 focus:outline-none transition-all"
+                  />
+                  {districtSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setDistrictSearchQuery('')}
+                      className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                      title="Clear search"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Region Filter Tags */}
+                {availableRegions.length > 0 && (
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] no-scrollbar">
+                    <span className="text-gray-300 text-[10px] font-semibold shrink-0 flex items-center gap-1">
+                      <Filter className="w-3 h-3 text-[#C89A2B]" /> Region:
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedRegionFilter('ALL')}
+                      className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
+                        selectedRegionFilter === 'ALL'
+                          ? 'bg-[#C89A2B] text-[#6B3F1D] font-bold shadow'
+                          : 'bg-white/10 text-gray-200 hover:text-white hover:bg-white/20'
+                      }`}
+                    >
+                      All ({districts.length})
+                    </button>
+                    {availableRegions.map(reg => (
+                      <button
+                        key={reg}
+                        type="button"
+                        onClick={() => setSelectedRegionFilter(reg)}
+                        className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
+                          selectedRegionFilter === reg
+                            ? 'bg-[#C89A2B] text-[#6B3F1D] font-bold shadow'
+                            : 'bg-white/10 text-gray-200 hover:text-white hover:bg-white/20'
+                        }`}
+                      >
+                        {reg} ({districts.filter(d => d.region === reg).length})
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Results Stats & Reset */}
+                <div className="flex items-center justify-between text-[11px] text-gray-300 px-1">
+                  <span>
+                    Found <strong className="text-[#C89A2B]">{filteredDistricts.length}</strong> district{filteredDistricts.length === 1 ? '' : 's'} matching criteria
+                  </span>
+                  {(districtSearchQuery || selectedRegionFilter !== 'ALL') && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDistrictSearchQuery('');
+                        setSelectedRegionFilter('ALL');
+                      }}
+                      className="text-[#C89A2B] hover:underline flex items-center gap-1 text-[10px] font-semibold"
+                    >
+                      <RotateCcw className="w-3 h-3" /> Reset Filters
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* District Search Results List */}
+              <div className="max-h-52 overflow-y-auto pr-1 space-y-2 rounded-2xl p-1.5 bg-black/30 border border-white/10">
+                {filteredDistricts.length === 0 ? (
+                  <div className="p-6 text-center text-xs text-gray-300 space-y-2">
+                    <MapPin className="w-8 h-8 mx-auto opacity-40 text-[#C89A2B]" />
+                    <p>No district or area office found matching "{districtSearchQuery}"</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDistrictSearchQuery('');
+                        setSelectedRegionFilter('ALL');
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-[11px] inline-block hover:bg-[#D8B45C]"
+                    >
+                      Clear Search Query
+                    </button>
+                  </div>
+                ) : (
+                  filteredDistricts.map(d => {
+                    const isSelected = selectedDistrictId === d.id;
+                    return (
+                      <div
+                        key={d.id}
+                        onClick={() => {
+                          setSelectedDistrictId(d.id);
+                          setSelectedBranchId('');
+                        }}
+                        className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                          isSelected
+                            ? 'bg-[#C89A2B]/20 border-[#C89A2B] shadow-lg ring-1 ring-[#C89A2B]/40'
+                            : 'bg-white/5 border-white/10 hover:border-[#C89A2B]/50 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-xs text-white truncate">{d.name}</span>
+                            {d.solId && (
+                              <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/30">
+                                SOL {d.solId}
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-[11px] text-gray-300 flex flex-wrap gap-x-3 gap-y-0.5">
+                            <span>Region: <strong className="text-white">{d.region}</strong></span>
+                            <span>Code: <strong className="text-white">{d.code}</strong></span>
+                            {d.managerName && <span>Manager: <strong className="text-gray-200">{d.managerName}</strong></span>}
+                          </div>
+                        </div>
+                        <div className="shrink-0 flex items-center space-x-2 pt-0.5">
+                          {isSelected ? (
+                            <div className="w-5 h-5 rounded-full bg-[#C89A2B] text-[#6B3F1D] flex items-center justify-center font-bold">
+                              <Check className="w-3.5 h-3.5" />
+                            </div>
+                          ) : (
+                            <div className="w-5 h-5 rounded-full border border-white/30 hover:border-[#C89A2B]" />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Quick Dropdown Sync */}
               <div>
-                <label className="block text-xs font-semibold text-gray-200 mb-1">District Office</label>
+                <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                  Or select directly from District dropdown:
+                </label>
                 <select
                   value={selectedDistrictId}
                   onChange={(e) => {
                     setSelectedDistrictId(e.target.value);
                     setSelectedBranchId('');
                   }}
-                  className="w-full px-4 py-3 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-sm text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-xs text-white focus:outline-none"
                 >
                   <option value="">-- Choose District Office --</option>
                   {districts.map(d => (
@@ -288,28 +476,173 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
             </div>
           )}
 
-          {/* STEP 2: Branch */}
+          {/* STEP 2: Branch Search Engine */}
           {step === 2 && (
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 mb-2">
-                <Building className="w-6 h-6 text-[#C89A2B]" />
-                <h3 className="text-lg font-bold text-white">Step 2: Select Branch</h3>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center space-x-3">
+                  <Building className="w-6 h-6 text-[#C89A2B]" />
+                  <h3 className="text-lg font-bold text-white">Step 2: Select Branch</h3>
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/40">
+                  Search Engine Active
+                </span>
               </div>
               <p className="text-xs text-gray-200">
-                Select your specific branch under <span className="text-[#C89A2B] font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'Selected District'}</span>.
+                Use the branch search engine below to locate your specific branch under <span className="text-[#C89A2B] font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'Selected District'}</span>.
               </p>
+
+              {/* Branch Search Bar */}
+              <div className="space-y-2">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" />
+                  <input
+                    type="text"
+                    value={branchSearchQuery}
+                    onChange={(e) => setBranchSearchQuery(e.target.value)}
+                    placeholder="Search branch by name, code, type (Grade I, Grade II), location..."
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-xs text-white placeholder-gray-400 focus:outline-none transition-all"
+                  />
+                  {branchSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setBranchSearchQuery('')}
+                      className="absolute right-3 top-3 text-gray-400 hover:text-white"
+                      title="Clear branch search"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Branch Type Filter Tags */}
+                {availableBranchTypes.length > 0 && (
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] no-scrollbar">
+                    <span className="text-gray-300 text-[10px] font-semibold shrink-0 flex items-center gap-1">
+                      <Filter className="w-3 h-3 text-[#C89A2B]" /> Type:
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedBranchTypeFilter('ALL')}
+                      className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
+                        selectedBranchTypeFilter === 'ALL'
+                          ? 'bg-[#C89A2B] text-[#6B3F1D] font-bold shadow'
+                          : 'bg-white/10 text-gray-200 hover:text-white hover:bg-white/20'
+                      }`}
+                    >
+                      All ({districtBranches.length})
+                    </button>
+                    {availableBranchTypes.map(type => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setSelectedBranchTypeFilter(type)}
+                        className={`px-2.5 py-1 rounded-lg shrink-0 font-medium transition-all ${
+                          selectedBranchTypeFilter === type
+                            ? 'bg-[#C89A2B] text-[#6B3F1D] font-bold shadow'
+                            : 'bg-white/10 text-gray-200 hover:text-white hover:bg-white/20'
+                        }`}
+                      >
+                        {type} ({districtBranches.filter(b => b.type === type).length})
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Branch Results Stats & Reset */}
+                <div className="flex items-center justify-between text-[11px] text-gray-300 px-1">
+                  <span>
+                    Found <strong className="text-[#C89A2B]">{filteredBranches.length}</strong> branch{filteredBranches.length === 1 ? '' : 'es'} in <span className="text-white font-semibold">{districts.find(d => d.id === selectedDistrictId)?.name || 'District'}</span>
+                  </span>
+                  {(branchSearchQuery || selectedBranchTypeFilter !== 'ALL') && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBranchSearchQuery('');
+                        setSelectedBranchTypeFilter('ALL');
+                      }}
+                      className="text-[#C89A2B] hover:underline flex items-center gap-1 text-[10px] font-semibold"
+                    >
+                      <RotateCcw className="w-3 h-3" /> Reset Filters
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Branch Search Results List */}
+              <div className="max-h-52 overflow-y-auto pr-1 space-y-2 rounded-2xl p-1.5 bg-black/30 border border-white/10">
+                {filteredBranches.length === 0 ? (
+                  <div className="p-6 text-center text-xs text-gray-300 space-y-2">
+                    <Building className="w-8 h-8 mx-auto opacity-40 text-[#C89A2B]" />
+                    <p>No branch found matching "{branchSearchQuery}"</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBranchSearchQuery('');
+                        setSelectedBranchTypeFilter('ALL');
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-[11px] inline-block hover:bg-[#D8B45C]"
+                    >
+                      Clear Branch Search
+                    </button>
+                  </div>
+                ) : (
+                  filteredBranches.map(b => {
+                    const isSelected = selectedBranchId === b.id;
+                    return (
+                      <div
+                        key={b.id}
+                        onClick={() => setSelectedBranchId(b.id)}
+                        className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                          isSelected
+                            ? 'bg-[#C89A2B]/20 border-[#C89A2B] shadow-lg ring-1 ring-[#C89A2B]/40'
+                            : 'bg-white/5 border-white/10 hover:border-[#C89A2B]/50 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-xs text-white truncate">{b.name}</span>
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/30">
+                              Code: {b.code}
+                            </span>
+                            {b.type && (
+                              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-white/10 text-gray-200">
+                                {b.type}
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-[11px] text-gray-300 flex flex-wrap gap-x-3 gap-y-0.5">
+                            <span>Location: <strong className="text-white">{b.location}</strong></span>
+                            {b.managerName && <span>Manager: <strong className="text-gray-200">{b.managerName}</strong></span>}
+                          </div>
+                        </div>
+                        <div className="shrink-0 flex items-center space-x-2 pt-0.5">
+                          {isSelected ? (
+                            <div className="w-5 h-5 rounded-full bg-[#C89A2B] text-[#6B3F1D] flex items-center justify-center font-bold">
+                              <Check className="w-3.5 h-3.5" />
+                            </div>
+                          ) : (
+                            <div className="w-5 h-5 rounded-full border border-white/30 hover:border-[#C89A2B]" />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Quick Branch Dropdown Sync */}
               <div>
-                <label className="block text-xs font-semibold text-gray-200 mb-1">Branch Name</label>
+                <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                  Or select directly from Branch dropdown:
+                </label>
                 <select
                   value={selectedBranchId}
                   onChange={(e) => setSelectedBranchId(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-sm text-white focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#4A2C17] border border-white/20 focus:border-[#C89A2B] text-xs text-white focus:outline-none"
                 >
                   <option value="">-- Choose Branch --</option>
-                  {(selectedDistrictId
-                    ? branches.filter(b => b.districtId === selectedDistrictId)
-                    : branches
-                  ).map(b => (
+                  {districtBranches.map(b => (
                     <option key={b.id} value={b.id}>
                       {b.name} ({b.code}) — {b.type} [{b.location}]
                     </option>
