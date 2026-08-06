@@ -28,6 +28,7 @@ import {
   MessageSquare,
   Award,
   ChevronRight,
+  Bot,
   User as UserIcon
 } from 'lucide-react';
 import { User, Language, UserRole, getUserFullName } from '../../types';
@@ -46,6 +47,7 @@ interface HeaderProps {
   onOpenAiAssistant?: () => void;
   onOpenSearch: () => void;
   onOpenApiDocs: () => void;
+  onOpenTelegramBot?: () => void;
   onOpenCalendar?: () => void;
   activeRoleView?: UserRole | null;
   onSelectRoleView?: (role: UserRole) => void;
@@ -70,6 +72,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
     onOpenAiAssistant,
     onOpenSearch,
     onOpenApiDocs,
+    onOpenTelegramBot,
     activeRoleView,
     onSelectRoleView,
     onRoleSwitch,
@@ -228,6 +231,17 @@ export const Header: React.FC<HeaderProps> = (props) => {
             >
               <FileCode2 className="w-4 h-4 text-[#C89A2B]" />
             </button>
+
+            {/* Telegram Bot */}
+            {onOpenTelegramBot && (
+              <button
+                onClick={onOpenTelegramBot}
+                className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-gray-200 transition-colors"
+                title="BBEPMS Telegram Bot Integration"
+              >
+                <Bot className="w-4 h-4 text-[#C89A2B]" />
+              </button>
+            )}
 
             {/* Notifications */}
             {activeUser && (

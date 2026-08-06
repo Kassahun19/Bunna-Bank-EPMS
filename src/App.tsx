@@ -24,6 +24,7 @@ import { AIAssistantDrawer } from './components/ai/AIAssistantDrawer';
 import { CalendarView } from './components/calendar/CalendarView';
 import { ReportExportModal } from './components/reports/ReportExportModal';
 import { ApiDocsModal } from './components/docs/ApiDocsModal';
+import { TelegramBotModal } from './components/common/TelegramBotModal';
 
 export const App: React.FC = () => {
   // Global State
@@ -67,6 +68,7 @@ export const App: React.FC = () => {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isApiDocsOpen, setIsApiDocsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isTelegramBotOpen, setIsTelegramBotOpen] = useState(false);
   const [adminActiveTab, setAdminActiveTab] = useState<'overview' | 'products' | 'districts' | 'branches' | 'employees' | 'kpis' | 'reports' | 'audit' | 'holidays'>('overview');
 
   const [roleHint, setRoleHint] = useState<UserRole | null>(null);
@@ -173,6 +175,7 @@ export const App: React.FC = () => {
         onOpenApiDocs={() => setIsApiDocsOpen(true)}
         onOpenAiAssistant={() => setIsAiDrawerOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenTelegramBot={() => setIsTelegramBotOpen(true)}
         onSelectTab={handleSelectNavTab}
         currentNavView={currentNavView}
         onNavigate={(view) => setCurrentNavView(view)}
@@ -329,6 +332,12 @@ export const App: React.FC = () => {
       <ApiDocsModal
         isOpen={isApiDocsOpen}
         onClose={() => setIsApiDocsOpen(false)}
+      />
+
+      <TelegramBotModal
+        isOpen={isTelegramBotOpen}
+        onClose={() => setIsTelegramBotOpen(false)}
+        currentUser={currentUser}
       />
 
       {currentUser && (
