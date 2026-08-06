@@ -2,15 +2,82 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 3000;
 
+// Enable CORS for Vercel and multi-origin production access
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    cloudSqlConnected: isCloudSqlConnected,
+    timestamp: new Date().toISOString()
+  });
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Google Cloud SQL (MySQL) Pool Initialization & Startup Validation
+let mysqlPool: mysql.Pool | null = null;
+let isCloudSqlConnected = false;
+
+async function initCloudSql() {
+  const dbHost = process.env.DB_HOST || process.env.MYSQL_HOST || process.env.CLOUD_SQL_HOST;
+  const dbUser = process.env.DB_USER || process.env.MYSQL_USER || process.env.CLOUD_SQL_USER || 'root';
+  const dbPassword = process.env.DB_PASSWORD || process.env.MYSQL_PASSWORD || process.env.CLOUD_SQL_PASSWORD || '';
+  const dbName = process.env.DB_NAME || process.env.MYSQL_DATABASE || process.env.CLOUD_SQL_DATABASE || 'bunna_epms_db';
+  const dbPort = parseInt(process.env.DB_PORT || process.env.MYSQL_PORT || '3306', 10);
+  const databaseUrl = process.env.DATABASE_URL;
+
+  try {
+    if (databaseUrl) {
+      mysqlPool = mysql.createPool(databaseUrl);
+    } else if (dbHost) {
+      mysqlPool = mysql.createPool({
+        host: dbHost,
+        user: dbUser,
+        password: dbPassword,
+        database: dbName,
+        port: dbPort,
+        waitForConnections: true,
+        connectionLimit: 15,
+        queueLimit: 0,
+        connectTimeout: 10000,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 10000
+      });
+    }
+
+    if (mysqlPool) {
+      const connection = await mysqlPool.getConnection();
+      await connection.query('SELECT 1');
+      connection.release();
+      isCloudSqlConnected = true;
+      console.log(`[Cloud SQL] Successfully connected to Google Cloud SQL MySQL database at ${dbHost || 'DATABASE_URL'}`);
+    } else {
+      console.log('[Cloud SQL] No DB_HOST or DATABASE_URL provided. Operating in robust local JSON persistence mode with failover safeguards.');
+    }
+  } catch (error: any) {
+    isCloudSqlConnected = false;
+    console.error('[Cloud SQL Connection Warning]: Failed to connect to MySQL/Cloud SQL instance:', error.message || error);
+    console.warn('[Cloud SQL] Automatically falling back to local persistent store & in-memory backup state to ensure 100% continuous uptime.');
+  }
+}
+
+initCloudSql();
 
 // We load everything from epms_persistent_data.json with robust path resolution for Vercel/Cloud Run
 const possiblePaths = [
