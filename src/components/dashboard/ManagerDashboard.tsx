@@ -24,6 +24,7 @@ import { api } from '../../services/api';
 import { AllProductsOverview } from './AllProductsOverview';
 import { BranchCampaignWidget } from './BranchCampaignWidget';
 import { BranchEmployeeTargetManager } from './BranchEmployeeTargetManager';
+import { BranchEmployeeManagementPanel } from './BranchEmployeeManagementPanel';
 import { EmployeePerformanceModal } from './EmployeePerformanceModal';
 
 interface ManagerDashboardProps {
@@ -327,6 +328,14 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({
         employees={employees}
         targets={targets}
         onTargetsUpdated={onRefreshData}
+        onOpenAiSummary={onOpenAiSummary}
+      />
+
+      {/* Branch Employee Management Section */}
+      <BranchEmployeeManagementPanel
+        currentUser={user}
+        employees={employees}
+        onRefreshData={onRefreshData}
         onOpenAiSummary={onOpenAiSummary}
       />
 

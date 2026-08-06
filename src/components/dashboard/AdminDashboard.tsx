@@ -1,3 +1,4 @@
+import { BranchPerformanceDetailsModal } from './BranchPerformanceDetailsModal';
 import React, { useState, useMemo } from 'react';
 import {
   Users,
@@ -1805,46 +1806,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* MODAL: VIEW BRANCH DETAILS */}
       {viewingBranch && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#6B3F1D] border border-[#C89A2B]/40 rounded-3xl p-6 w-full max-w-md text-white space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-white/10 pb-3">
-              <h3 className="font-bold text-lg text-[#C89A2B] flex items-center space-x-2">
-                <Building className="w-5 h-5" />
-                <span>{viewingBranch.name}</span>
-              </h3>
-              <button onClick={() => setViewingBranch(null)} className="text-gray-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="space-y-3 text-xs text-gray-200">
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-gray-400">Branch Sol ID / Code:</span>
-                <span className="font-bold text-[#C89A2B] font-mono">{viewingBranch.code}</span>
-              </div>
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-gray-400">Parent District:</span>
-                <span className="font-semibold">{viewingBranch.districtName}</span>
-              </div>
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-gray-400">Grade / Type:</span>
-                <span className="bg-[#C89A2B]/20 text-[#C89A2B] px-2 py-0.5 rounded-full text-[10px] font-bold">{viewingBranch.type}</span>
-              </div>
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-gray-400">Commercial Location:</span>
-                <span className="font-medium text-white">{viewingBranch.location}</span>
-              </div>
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-gray-400">Branch Operations Manager:</span>
-                <span className="font-medium text-emerald-400">{viewingBranch.managerName}</span>
-              </div>
-            </div>
-            <div className="flex justify-end pt-2">
-              <button onClick={() => setViewingBranch(null)} className="px-4 py-2 rounded-xl bg-[#C89A2B] text-[#6B3F1D] font-bold text-xs">
-                Close Details
-              </button>
-            </div>
-          </div>
-        </div>
+        <BranchPerformanceDetailsModal
+          branch={viewingBranch}
+          onClose={() => setViewingBranch(null)}
+          users={employees}
+          reports={reports}
+          kpis={kpis}
+          targets={targets}
+        />
       )}
 
       {/* MODAL: EDIT BRANCH */}

@@ -29,6 +29,7 @@ import { User, DailyPerformanceReport, PerformanceTarget, BankHoliday, getUserFu
 import { api } from '../../services/api';
 import { AllProductsOverview } from './AllProductsOverview';
 import { BranchCampaignWidget } from './BranchCampaignWidget';
+import { EmployeePerformanceTable } from './EmployeePerformanceTable';
 import { PersonalKpiProgressChart } from './PersonalKpiProgressChart';
 import { SubmitReportSection } from '../reports/SubmitReportSection';
 import { downloadReportCSV, downloadReportExcel, downloadReportWord, printOrDownloadPDF } from '../../utils/exportUtils';
@@ -215,6 +216,10 @@ export const EmployeeDashboard: React.FC<EmployeeDashboardProps> = ({
         targets={targets}
         employeeName={getUserFullName(user)}
       />
+
+      {/* Comprehensive KPI Performance Calculation */}
+      <EmployeePerformanceTable reports={reports} targets={targets} employeeId={user.id} />
+
 
       {/* Speedometer & Target Gauge Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

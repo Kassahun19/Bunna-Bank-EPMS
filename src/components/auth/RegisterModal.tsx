@@ -593,30 +593,18 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                       <div
                         key={b.id}
                         onClick={() => setSelectedBranchId(b.id)}
-                        className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                        className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-center justify-between gap-3 ${
                           isSelected
                             ? 'bg-[#C89A2B]/20 border-[#C89A2B] shadow-lg ring-1 ring-[#C89A2B]/40'
                             : 'bg-white/5 border-white/10 hover:border-[#C89A2B]/50 hover:bg-white/10'
                         }`}
                       >
-                        <div className="space-y-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-xs text-white truncate">{b.name}</span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#C89A2B]/20 text-[#C89A2B] border border-[#C89A2B]/30">
-                              Code: {b.code}
-                            </span>
-                            {b.type && (
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-white/10 text-gray-200">
-                                {b.type}
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-[11px] text-gray-300 flex flex-wrap gap-x-3 gap-y-0.5">
-                            <span>Location: <strong className="text-white">{b.location}</strong></span>
-                            {b.managerName && <span>Manager: <strong className="text-gray-200">{b.managerName}</strong></span>}
-                          </div>
+                        <div className="space-y-0.5 min-w-0">
+                          <span className="font-bold text-xs text-white truncate block">
+                            {b.name.replace(/Branch/gi, '').trim()} Branch — SOL ID: {b.solId || b.code}
+                          </span>
                         </div>
-                        <div className="shrink-0 flex items-center space-x-2 pt-0.5">
+                        <div className="shrink-0 flex items-center space-x-2">
                           {isSelected ? (
                             <div className="w-5 h-5 rounded-full bg-[#C89A2B] text-[#6B3F1D] flex items-center justify-center font-bold">
                               <Check className="w-3.5 h-3.5" />
@@ -644,7 +632,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   <option value="">-- Choose Branch --</option>
                   {districtBranches.map(b => (
                     <option key={b.id} value={b.id}>
-                      {b.name} ({b.code}) — {b.type} [{b.location}]
+                      {b.name.replace(/Branch/gi, '').trim()} Branch — SOL ID: {b.solId || b.code}
                     </option>
                   ))}
                 </select>

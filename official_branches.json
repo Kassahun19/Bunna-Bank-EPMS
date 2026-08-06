@@ -1,342 +1,4 @@
-import { District, Branch } from '../types';
-
-export const bunnaDistrictsAndAreaOffices: District[] = [
-  {
-    "id": "DIST-001",
-    "region": "Addis Ababa",
-    "totalEmployees": 850,
-    "code": "AAN",
-    "managerName": "Abebe Kebede",
-    "name": "Addis Ababa North District",
-    "branchCount": 42
-  },
-  {
-    "id": "DIST-002",
-    "totalEmployees": 790,
-    "code": "AAS",
-    "region": "Addis Ababa",
-    "managerName": "Tigist Haile",
-    "branchCount": 38,
-    "name": "Addis Ababa South District"
-  },
-  {
-    "id": "DIST-003",
-    "code": "AAE",
-    "name": "Addis Ababa East District",
-    "managerName": "Dawit Yohannes",
-    "branchCount": 45,
-    "region": "Addis Ababa",
-    "totalEmployees": 910
-  },
-  {
-    "id": "DIST-004",
-    "managerName": "Genet Worku",
-    "branchCount": 40,
-    "code": "AAW",
-    "region": "Addis Ababa",
-    "totalEmployees": 820,
-    "name": "Addis Ababa West District"
-  },
-  {
-    "id": "DIST-005",
-    "region": "Sidama / SNNPR",
-    "code": "HWA",
-    "name": "Hawassa District",
-    "totalEmployees": 580,
-    "managerName": "Mulugeta Tadesse",
-    "branchCount": 32
-  },
-  {
-    "id": "DIST-006",
-    "managerName": "Beti Assefa",
-    "branchCount": 35,
-    "code": "ADM",
-    "name": "Adama District",
-    "region": "Oromia",
-    "totalEmployees": 640
-  },
-  {
-    "id": "DIST-007",
-    "totalEmployees": 540,
-    "region": "Amhara",
-    "branchCount": 30,
-    "managerName": "Kassahun Belay",
-    "name": "Bahir Dar District",
-    "code": "BDR"
-  },
-  {
-    "id": "DIST-008",
-    "name": "Dire Dawa District",
-    "code": "DDW",
-    "totalEmployees": 430,
-    "region": "Dire Dawa & Harari",
-    "managerName": "Fatima Ahmed",
-    "branchCount": 25
-  },
-  {
-    "id": "DIST-009",
-    "name": "Jimma District",
-    "region": "Oromia / SW",
-    "code": "JMA",
-    "totalEmployees": 490,
-    "managerName": "Girma Demissie",
-    "branchCount": 28
-  },
-  {
-    "id": "DIST-010",
-    "code": "MKL",
-    "name": "Mekelle District",
-    "managerName": "Berhane Tekle",
-    "totalEmployees": 410,
-    "branchCount": 24,
-    "region": "Tigray"
-  },
-  {
-    "id": "DIST-011",
-    "managerName": "Tolosa Bekele",
-    "branchCount": 2,
-    "code": "BSH",
-    "totalEmployees": 130,
-    "region": "East Shewa Zone, Oromia",
-    "name": "Bishoftu District"
-  },
-  {
-    "id": "DIST-012",
-    "name": "Dessie District",
-    "code": "DES",
-    "managerName": "Yirga Worku",
-    "branchCount": 2,
-    "totalEmployees": 160,
-    "region": "South Wollo Zone, Amhara"
-  },
-  {
-    "id": "DIST-013",
-    "region": "East Gojjam Zone, Amhara",
-    "totalEmployees": 125,
-    "name": "Debre Markos District",
-    "branchCount": 2,
-    "code": "DBM",
-    "managerName": "Getachew Assefa"
-  },
-  {
-    "id": "DIST-014",
-    "branchCount": 2,
-    "managerName": "Lammaa Gudina",
-    "code": "NKT",
-    "region": "East Welega Zone, Oromia",
-    "totalEmployees": 135,
-    "name": "Nekemte District"
-  },
-  {
-    "id": "DIST-015",
-    "name": "Hosanna District",
-    "code": "HSN",
-    "totalEmployees": 115,
-    "managerName": "Hailemariam Desalegn",
-    "branchCount": 2,
-    "region": "Hadiya Zone, Central Ethiopia"
-  },
-  {
-    "id": "DIST-016",
-    "managerName": "Teshale Markos",
-    "name": "Arba Minch District",
-    "branchCount": 2,
-    "totalEmployees": 140,
-    "code": "AMN",
-    "region": "Gamo Zone, South Ethiopia"
-  },
-  {
-    "id": "DIST-017",
-    "totalEmployees": 130,
-    "branchCount": 2,
-    "managerName": "Bedria Oumer",
-    "name": "Shashemene District",
-    "region": "West Arsi Zone, Oromia",
-    "code": "SHM"
-  },
-  {
-    "id": "DIST-018",
-    "managerName": "Abebech Bassa",
-    "branchCount": 2,
-    "region": "Wolaita Zone, South Ethiopia",
-    "totalEmployees": 125,
-    "code": "WSD",
-    "name": "Wolaita Sodo District"
-  },
-  {
-    "id": "DIST-019",
-    "totalEmployees": 105,
-    "code": "HRR",
-    "region": "Harari Region / Zone",
-    "name": "Harar District",
-    "branchCount": 2,
-    "managerName": "Abdi Yusuf"
-  },
-  {
-    "id": "DIST-020",
-    "managerName": "Kifle Wolde",
-    "code": "ASO",
-    "branchCount": 1,
-    "totalEmployees": 95,
-    "name": "Asosa District",
-    "region": "Benishangul-Gumuz"
-  },
-  {
-    "id": "DIST-021",
-    "branchCount": 1,
-    "managerName": "Othow Omot",
-    "code": "GMB",
-    "name": "Gambela District",
-    "totalEmployees": 90,
-    "region": "Gambela Region"
-  },
-  {
-    "id": "DIST-ADM",
-    "totalEmployees": 430,
-    "managerName": "Ato Nebiyou Samuel",
-    "type": "Area Office",
-    "status": "Active",
-    "solId": "955",
-    "code": "ADM",
-    "branchCount": 24,
-    "name": "Adama Area Office",
-    "region": "Oromia"
-  },
-  {
-    "id": "DIST-BDR",
-    "managerName": "Ato Mengistu Wolelaw",
-    "type": "District",
-    "solId": "954",
-    "region": "Amhara",
-    "code": "BDR",
-    "totalEmployees": 390,
-    "branchCount": 22,
-    "name": "Bahir Dar District",
-    "status": "Active"
-  },
-  {
-    "id": "DIST-DBA",
-    "status": "Active",
-    "code": "DBA",
-    "branchCount": 14,
-    "type": "Area Office",
-    "name": "Debre Birhan Area Office",
-    "region": "Amhara",
-    "managerName": "Ato Gibreyesus Kassaye",
-    "totalEmployees": 250,
-    "solId": "960"
-  },
-  {
-    "id": "DIST-DES",
-    "type": "District",
-    "status": "Active",
-    "totalEmployees": 340,
-    "code": "DES",
-    "managerName": "Ato Girma Workneh",
-    "region": "Amhara",
-    "solId": "956",
-    "branchCount": 19,
-    "name": "Dessie District"
-  },
-  {
-    "id": "DIST-DMA",
-    "type": "Area Office",
-    "status": "Active",
-    "totalEmployees": 290,
-    "code": "DMA",
-    "branchCount": 16,
-    "region": "Amhara",
-    "managerName": "Ato Abew",
-    "solId": "961",
-    "name": "Debre Markos Area Office"
-  },
-  {
-    "id": "DIST-EAD",
-    "name": "East A.A District",
-    "branchCount": 35,
-    "solId": "951",
-    "region": "Addis Ababa",
-    "code": "EAD",
-    "totalEmployees": 620,
-    "managerName": "Ato Million Kiflie",
-    "type": "District",
-    "status": "Active"
-  },
-  {
-    "id": "DIST-HO",
-    "managerName": "Ato Zena Asefa",
-    "name": "Main / Head Office",
-    "status": "Active",
-    "totalEmployees": 120,
-    "branchCount": 1,
-    "region": "Addis Ababa",
-    "code": "HQ",
-    "solId": "100",
-    "type": "District"
-  },
-  {
-    "id": "DIST-HWA",
-    "region": "Central / Sidama",
-    "managerName": "Ato Alem Muluneh",
-    "name": "Hawassa Area Office",
-    "solId": "958",
-    "totalEmployees": 460,
-    "type": "Area Office",
-    "status": "Active",
-    "code": "HWA",
-    "branchCount": 26
-  },
-  {
-    "id": "DIST-JMA",
-    "type": "Area Office",
-    "branchCount": 20,
-    "code": "JMA",
-    "solId": "957",
-    "region": "Oromia",
-    "totalEmployees": 360,
-    "managerName": "Ato Desta W/senbet",
-    "status": "Active",
-    "name": "Jimma Area Office"
-  },
-  {
-    "id": "DIST-MKL",
-    "solId": "959",
-    "region": "Tigray",
-    "branchCount": 18,
-    "name": "Mekele District",
-    "type": "District",
-    "totalEmployees": 310,
-    "code": "MKL",
-    "managerName": "Ato Aklilu G/Medhin",
-    "status": "Active"
-  },
-  {
-    "id": "DIST-SAD",
-    "code": "SAD",
-    "managerName": "Ato Mesfin Fikre",
-    "type": "District",
-    "solId": "953",
-    "region": "Addis Ababa",
-    "name": "South A.A District",
-    "status": "Active",
-    "branchCount": 28,
-    "totalEmployees": 510
-  },
-  {
-    "id": "DIST-WAD",
-    "code": "WAD",
-    "region": "Addis Ababa",
-    "managerName": "Ato Semere Tirfu",
-    "type": "District",
-    "status": "Active",
-    "totalEmployees": 580,
-    "branchCount": 32,
-    "name": "West A.A District",
-    "solId": "952"
-  }
-];
-
-export const bunnaBranchDirectory: Branch[] = [
+[
   {
     "id": "BR-101",
     "solId": "101",
@@ -4478,6 +4140,21 @@ export const bunnaBranchDirectory: Branch[] = [
     "status": "Active"
   },
   {
+    "id": "BR-381",
+    "solId": "381",
+    "districtId": "DIST-BDR",
+    "districtName": "Bahir Dar District",
+    "name": "DURBETE",
+    "code": "381",
+    "phone": "058-335-33-44",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "DURBETE, Amhara",
+    "region": "Amhara",
+    "status": "Active"
+  },
+  {
     "id": "BR-382",
     "solId": "382",
     "districtId": "DIST-EAD",
@@ -7208,6 +6885,156 @@ export const bunnaBranchDirectory: Branch[] = [
     "status": "Active"
   },
   {
+    "id": "BR-565",
+    "solId": "565",
+    "districtId": "DIST-HWA",
+    "districtName": "Hawassa Area Office",
+    "name": "HAGEREMARIAM",
+    "code": "565",
+    "phone": "046-443-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "HAGEREMARIAM, Oromia",
+    "region": "Oromia",
+    "status": "Active"
+  },
+  {
+    "id": "BR-566",
+    "solId": "566",
+    "districtId": "DIST-ADM",
+    "districtName": "Adama Area Office",
+    "name": "DUGDA DAKE",
+    "code": "566",
+    "phone": "022-116-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "DUGDA DAKE, Oromia",
+    "region": "Oromia",
+    "status": "Active"
+  },
+  {
+    "id": "BR-567",
+    "solId": "567",
+    "districtId": "DIST-DBA",
+    "districtName": "Debre Birhan Area Office",
+    "name": "REMA",
+    "code": "567",
+    "phone": "011-689-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "REMA, Amhara",
+    "region": "Amhara",
+    "status": "Active"
+  },
+  {
+    "id": "BR-568",
+    "solId": "568",
+    "districtId": "DIST-EAD",
+    "districtName": "East A.A District",
+    "name": "BOLE BRHANE",
+    "code": "568",
+    "phone": "011-662-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "BOLE BRHANE, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-569",
+    "solId": "569",
+    "districtId": "DIST-SAD",
+    "districtName": "South A.A District",
+    "name": "SARIS",
+    "code": "569",
+    "phone": "011-443-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "SARIS, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-570",
+    "solId": "570",
+    "districtId": "DIST-EAD",
+    "districtName": "East A.A District",
+    "name": "MEGENAGNA",
+    "code": "570",
+    "phone": "011-667-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "MEGENAGNA, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-571",
+    "solId": "571",
+    "districtId": "DIST-WAD",
+    "districtName": "West A.A District",
+    "name": "PIASSA",
+    "code": "571",
+    "phone": "011-126-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "PIASSA, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-572",
+    "solId": "572",
+    "districtId": "DIST-EAD",
+    "districtName": "East A.A District",
+    "name": "KAZANCHIS",
+    "code": "572",
+    "phone": "011-557-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "KAZANCHIS, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-573",
+    "solId": "573",
+    "districtId": "DIST-EAD",
+    "districtName": "East A.A District",
+    "name": "CMC",
+    "code": "573",
+    "phone": "011-667-11-33",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "CMC, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-574",
+    "solId": "574",
+    "districtId": "DIST-EAD",
+    "districtName": "East A.A District",
+    "name": "GERJI",
+    "code": "574",
+    "phone": "011-639-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "GERJI, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
     "id": "BR-575",
     "solId": "575",
     "districtId": "DIST-EAD",
@@ -7219,6 +7046,21 @@ export const bunnaBranchDirectory: Branch[] = [
     "employeeCount": 25,
     "managerName": "Branch Manager",
     "location": "BOLE MEDHANI ALEM, Addis Ababa",
+    "region": "Addis Ababa",
+    "status": "Active"
+  },
+  {
+    "id": "BR-576",
+    "solId": "576",
+    "districtId": "DIST-SAD",
+    "districtName": "South A.A District",
+    "name": "OLD AIRPORT",
+    "code": "576",
+    "phone": "011-372-11-33",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "OLD AIRPORT, Addis Ababa",
     "region": "Addis Ababa",
     "status": "Active"
   },
@@ -7236,5 +7078,35 @@ export const bunnaBranchDirectory: Branch[] = [
     "location": "BISHOFTU, Oromia",
     "region": "Oromia",
     "status": "Active"
+  },
+  {
+    "id": "BR-578",
+    "solId": "578",
+    "districtId": "DIST-BDR",
+    "districtName": "Bahir Dar District",
+    "name": "BAHIR DAR",
+    "code": "578",
+    "phone": "058-220-11-22",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "BAHIR DAR, Amhara",
+    "region": "Amhara",
+    "status": "Active"
+  },
+  {
+    "id": "BR-579",
+    "solId": "579",
+    "districtId": "DIST-DBA",
+    "districtName": "Debre Birhan Area Office",
+    "name": "REMA",
+    "code": "579",
+    "phone": "011-689-11-33",
+    "type": "Standard Branch",
+    "employeeCount": 25,
+    "managerName": "Branch Manager",
+    "location": "REMA, Amhara",
+    "region": "Amhara",
+    "status": "Active"
   }
-];
+]

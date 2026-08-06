@@ -89,7 +89,11 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
   const activeEmployee = selectedUser || user;
 
-  const [phone, setPhone] = useState(activeEmployee.phone || '+251 911 000 000');
+  const [firstName, setFirstName] = useState(activeEmployee.firstName || '');
+  const [middleName, setMiddleName] = useState(activeEmployee.middleName || '');
+  const [lastName, setLastName] = useState(activeEmployee.lastName || '');
+  const [userIdInput, setUserIdInput] = useState(activeEmployee.userId || '');
+  const [phone, setPhone] = useState(activeEmployee.phone || '');
   const [email, setEmail] = useState(activeEmployee.email || 'employee@bunnabanksc.com');
   const [emergencyContact, setEmergencyContact] = useState('+251 912 345 678');
   const [isSaved, setIsSaved] = useState(false);
@@ -111,10 +115,31 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   const userReports = reports.filter(r => r.employeeName === getUserFullName(activeEmployee) || r.employeeId === activeEmployee.id);
   const approvedCount = userReports.filter(r => r.status === 'Approved').length;
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+    try {
+      const res = await fetch(`/api/employees/${activeEmployee.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName,
+          middleName,
+          lastName,
+          userId: userIdInput,
+          email,
+          phone,
+        })
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        if (onUserUpdated) onUserUpdated(updated);
+        localStorage.setItem('bunna_user', JSON.stringify(updated));
+        setIsSaved(true);
+        setTimeout(() => setIsSaved(false), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // Password requirement flags
@@ -472,22 +497,38 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <label className="block text-xs font-bold text-gray-300 mb-1">First Name</label>
                   <input
                     type="text"
-                    readOnly
-                    value={user.firstName}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/30 border border-white/10 text-xs text-gray-300 cursor-not-allowed"
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-gray-300 mb-1">Middle Name (Father's Name)</label>
+                  <label className="block text-xs font-bold text-gray-300 mb-1">Middle Name</label>
                   <input
                     type="text"
-                    readOnly
-                    value={user.middleName || user.lastName}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/30 border border-white/10 text-xs text-gray-300 cursor-not-allowed"
+                    value={middleName}
+                    onChange={e => setMiddleName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
                   />
                 </div>
-
+                <div>
+                  <label className="block text-xs font-bold text-gray-300 mb-1">Last Name</label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-gray-300 mb-1">User ID</label>
+                  <input
+                    type="text"
+                    value={userIdInput}
+                    onChange={e => setUserIdInput(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-[#C89A2B]"
+                  />
+                </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-300 mb-1">Email Address</label>
                   <input

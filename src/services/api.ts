@@ -1120,6 +1120,57 @@ export const api = {
     });
   },
 
+  addBranchEmployee: async (data: any): Promise<User> => {
+    const res = await fetchJsonOrFallback<{ success: boolean; employee: User }>('/api/manager/employees', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.data?.employee) return res.data.employee;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    throw new Error('Failed to add employee');
+  },
+
+  updateBranchEmployee: async (id: string, data: any): Promise<User> => {
+    const res = await fetchJsonOrFallback<{ success: boolean; employee: User }>(`/api/manager/employees/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.data?.employee) return res.data.employee;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    throw new Error('Failed to update employee');
+  },
+
+  deleteBranchEmployee: async (id: string, managerId: string): Promise<void> => {
+    const res = await fetchJsonOrFallback<{ success: boolean }>(`/api/manager/employees/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ managerId })
+    });
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+  },
+
+  resetEmployeePassword: async (id: string, managerId: string, newPassword: string): Promise<void> => {
+    const res = await fetchJsonOrFallback<{ success: boolean }>(`/api/manager/employees/${id}/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ managerId, newPassword })
+    });
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+  },
+
+  updateEmployeeStatus: async (id: string, managerId: string, status: string): Promise<User> => {
+    const res = await fetchJsonOrFallback<{ success: boolean; employee: User }>(`/api/manager/employees/${id}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ managerId, status })
+    });
+    if (res.data?.employee) return res.data.employee;
+    if (res.error && !res.isHtmlOrOffline) throw new Error(res.error);
+    throw new Error('Failed to update employee status');
+  },
+
   // Vercel / Express vercel.json helper
   getVercelConfigSnippet: () => {
     return {

@@ -29,8 +29,18 @@ export const BranchEmployeeTargetManager: React.FC<BranchEmployeeTargetManagerPr
   onTargetsUpdated,
   onOpenAiSummary
 }) => {
-  // Filter employees for manager's branch if user is MANAGER
+  // Filter employees for manager's branch, strictly excluding branch managers and Negash Adugna
   const branchEmployees = employees.filter(e => {
+    const fullName = `${e.firstName || ''} ${e.lastName || ''}`.toLowerCase();
+    if (
+      e.role === 'MANAGER' ||
+      e.roleType === 'Managerial' ||
+      (e.jobTitle && e.jobTitle.toLowerCase().includes('manager')) ||
+      fullName.includes('negash') ||
+      fullName.includes('adugna')
+    ) {
+      return false;
+    }
     if (currentUser.role === 'ADMINISTRATOR') return true;
     if (!currentUser.branchId) return true;
     return e.branchId === currentUser.branchId || e.branchName === currentUser.branchName;
