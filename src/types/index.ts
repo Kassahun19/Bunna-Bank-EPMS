@@ -56,6 +56,8 @@ export interface User {
   middleName: string;
   lastName: string;
   role: UserRole;
+  roleType?: string;
+  managerId?: string;
   jobTitle: string;
   districtId: string;
   districtName: string;

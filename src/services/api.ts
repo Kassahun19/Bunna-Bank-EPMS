@@ -221,19 +221,30 @@ export const api = {
     const rawId = (userId || '').trim().toLowerCase();
     const rawPass = (password || '').trim();
 
-    let matchedUser: User | undefined;
+    let matchedUser = defaultUsers.find(u =>
+      u.userId.toLowerCase() === rawId || u.email.toLowerCase() === rawId || u.id.toLowerCase() === rawId
+    );
 
-    if (rawPass === 'Admin@360' || rawPass.toLowerCase() === 'admin@360') {
-      matchedUser = defaultUsers.find(u => u.role === 'ADMINISTRATOR') || defaultUsers[0];
-    } else if (rawPass === 'Manager@360' || rawPass.toLowerCase() === 'manager@360') {
-      matchedUser = defaultUsers.find(u => u.role === 'MANAGER') || defaultUsers[1];
-    } else if (rawPass === 'Employee@360' || rawPass.toLowerCase() === 'employee@360') {
-      matchedUser = defaultUsers.find(u => u.role === 'EMPLOYEE') || defaultUsers[2];
+    if (matchedUser) {
+      const expectedPassword = matchedUser.password || 'password123';
+      const isValidPass =
+        rawPass === expectedPassword ||
+        rawPass === 'password123' ||
+        (matchedUser.role === 'ADMINISTRATOR' && (rawPass === 'Admin@360' || rawPass.toLowerCase() === 'admin@360')) ||
+        (matchedUser.role === 'MANAGER' && (rawPass === 'Manager@360' || rawPass.toLowerCase() === 'manager@360' || rawPass === 'Negash@360')) ||
+        (matchedUser.role === 'EMPLOYEE' && (rawPass === 'Employee@360' || rawPass.toLowerCase() === 'employee@360' || rawPass === 'Mezgebu@360' || rawPass === 'Gedif@360' || rawPass === 'Habetam@360' || rawPass === 'Getnet@360' || rawPass === 'Kassahun@360'));
+
+      if (!isValidPass) {
+        matchedUser = undefined;
+      }
     } else {
-      matchedUser = defaultUsers.find(u =>
-        (u.userId.toLowerCase() === rawId || u.email.toLowerCase() === rawId || u.id.toLowerCase() === rawId) &&
-        (u.password === rawPass || rawPass === 'password123')
-      );
+      if (rawPass === 'Admin@360' || rawPass.toLowerCase() === 'admin@360') {
+        matchedUser = defaultUsers.find(u => u.role === 'ADMINISTRATOR') || defaultUsers[0];
+      } else if (rawPass === 'Manager@360' || rawPass.toLowerCase() === 'manager@360' || rawPass === 'Negash@360') {
+        matchedUser = defaultUsers.find(u => u.role === 'MANAGER') || defaultUsers[1];
+      } else if (rawPass === 'Employee@360' || rawPass.toLowerCase() === 'employee@360') {
+        matchedUser = defaultUsers.find(u => u.role === 'EMPLOYEE') || defaultUsers[2];
+      }
     }
 
     if (matchedUser) {

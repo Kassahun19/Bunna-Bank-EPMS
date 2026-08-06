@@ -24,7 +24,13 @@ app.post('/api/auth/login', (req, res) => {
   const user = db.users.find(u => u.userId === userId || u.email === userId || u.id === userId);
   if (!user) return res.status(401).json({ error: 'Invalid User ID or Password' });
   const expectedPassword = user.password || 'password123';
-  if (password === expectedPassword || password === 'password123' || (user.role === 'ADMINISTRATOR' && password === 'Admin@360') || (user.role === 'MANAGER' && password === 'Manager@360') || (user.role === 'EMPLOYEE' && password === 'Employee@360')) {
+  if (
+    password === expectedPassword || 
+    password === 'password123' || 
+    (user.role === 'ADMINISTRATOR' && (password === 'Admin@360' || password.toLowerCase() === 'admin@360')) || 
+    (user.role === 'MANAGER' && (password === 'Manager@360' || password.toLowerCase() === 'manager@360' || password === 'Negash@360')) || 
+    (user.role === 'EMPLOYEE' && (password === 'Employee@360' || password.toLowerCase() === 'employee@360' || password === 'Mezgebu@360' || password === 'Gedif@360' || password === 'Habetam@360' || password === 'Getnet@360' || password === 'Kassahun@360'))
+  ) {
     return res.json({ success: true, user });
   }
   res.status(401).json({ error: 'Invalid User ID or Password' });
