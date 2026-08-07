@@ -29,8 +29,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _appFilename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
+const _appDirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(_appFilename);
 
 // Google Cloud SQL (MySQL) Pool Initialization & Startup Validation
 let mysqlPool: mysql.Pool | null = null;
@@ -102,7 +102,7 @@ try {
 
 // We load everything from epms_persistent_data.json with robust path resolution for Vercel/Cloud Run
 const possiblePaths = [
-  path.join(__dirname, 'epms_persistent_data.json'),
+  path.join(_appDirname, 'epms_persistent_data.json'),
   path.join(process.cwd(), 'epms_persistent_data.json'),
   './epms_persistent_data.json'
 ];
@@ -645,6 +645,27 @@ app.get('/api/telegram/config', (req, res) => {
   });
 });
 
+// Explicit endpoint to manually set/refresh Telegram webhook from production or local browser
+app.get('/api/telegram/set-webhook', async (req, res) => {
+  try {
+    const token = process.env.TELEGRAM_BOT_TOKEN || '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
+    const webhookUrl = 'https://bbepms.vercel.app/api/telegram/webhook';
+    const response = await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${encodeURIComponent(webhookUrl)}`);
+    const data: any = await response.json();
+    res.json({
+      success: true,
+      message: 'Set Telegram Webhook trigger executed successfully.',
+      webhookUrl,
+      result: data
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      error: err.message || String(err)
+    });
+  }
+});
+
 // Telegram Bot Webhook endpoint for 24/7 serverless execution on Vercel
 interface TelegramSession {
   state: string;
@@ -802,6 +823,10 @@ async function startTelegramBot() {
     if (pollingInterval) {
       clearInterval(pollingInterval);
       pollingInterval = null;
+    }
+    if (process.env.VERCEL) {
+      console.log('[Telegram Bot] Running on Vercel; skipping synchronous webhook setup check to prevent cold-start overhead.');
+      return;
     }
     try {
       const infoRes = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`);

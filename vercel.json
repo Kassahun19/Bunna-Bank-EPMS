@@ -4,7 +4,11 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.ts": {
-      "includeFiles": "dist/server.cjs"
+      "includeFiles": [
+        "dist/server.cjs",
+        "epms_persistent_data.json",
+        "dist/epms_persistent_data.json"
+      ]
     }
   },
   "rewrites": [
