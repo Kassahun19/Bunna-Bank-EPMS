@@ -693,15 +693,64 @@ app.post('/api/telegram/webhook', async (req, res) => {
   }
 });
 
+let lastUpdateId = 0;
+let pollingInterval: any = null;
+
 async function startTelegramBot() {
-  const token = process.env.TELEGRAM_BOT_TOKEN || '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
-  const url = 'https://bbepms.vercel.app/api/telegram/webhook';
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${encodeURIComponent(url)}`);
-    const data: any = await res.json();
-    console.log('[Telegram Webhook Register]:', data);
-  } catch (e: any) {
-    console.error('[Telegram setWebhook Failed]:', e);
+  const defaultProdToken = '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
+  const token = process.env.TELEGRAM_BOT_TOKEN || defaultProdToken;
+  const isDevWorkspace = (process.env.APP_URL && process.env.APP_URL.includes('ais-dev-')) || process.env.NODE_ENV !== 'production';
+
+  const webhookUrl = 'https://bbepms.vercel.app/api/telegram/webhook';
+
+  if (isDevWorkspace && token !== defaultProdToken) {
+    console.log('[Telegram Bot] Detected custom development token in AI Studio Workspace. Initiating outbound Long Polling loop.');
+    try {
+      // Delete any active webhooks to allow long polling on this bot token
+      await fetch(`https://api.telegram.org/bot${token}/deleteWebhook`);
+      console.log('[Telegram Bot] Webhook deleted successfully to enable live development polling on custom token.');
+
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+
+      pollingInterval = setInterval(async () => {
+        try {
+          const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${lastUpdateId + 1}&timeout=1`);
+          const data: any = await res.json();
+          if (data.ok && data.result && data.result.length > 0) {
+            for (const update of data.result) {
+              lastUpdateId = Math.max(lastUpdateId, update.update_id);
+              if (update.message && update.message.chat && update.message.chat.id) {
+                console.log('[Telegram Poll] Processing Message:', update.message.text);
+                handleTelegramMessage(token, update.message).catch(e => console.error('[Telegram Msg Error]:', e));
+              } else if (update.callback_query && update.callback_query.message) {
+                console.log('[Telegram Poll] Processing Callback:', update.callback_query.data);
+                handleTelegramCallbackQuery(token, update.callback_query).catch(e => console.error('[Telegram Call Error]:', e));
+              }
+            }
+          }
+        } catch (pollErr: any) {
+          // Silent catch of transient polling exceptions
+        }
+      }, 1500);
+    } catch (e: any) {
+      console.error('[Telegram Poll Init Failed]:', e);
+    }
+  } else {
+    // Either production, or development workspace using the production token.
+    // We MUST keep the webhook active on the production Vercel app so it works 24/7!
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+    }
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${encodeURIComponent(webhookUrl)}`);
+      const data: any = await res.json();
+      console.log('[Telegram Webhook Register] Webhook URL set to production:', webhookUrl, 'Result:', data);
+    } catch (e: any) {
+      console.error('[Telegram setWebhook Failed]:', e);
+    }
   }
 }
 
@@ -818,7 +867,10 @@ async function handleTelegramMessage(token: string, message: any) {
         [{ text: '🔐 Login', callback_data: 'btn_login' }, { text: '🚀 Get Started', callback_data: 'btn_register' }]
       ]
     };
-    await send(startMsg, { ...getPublicKeyboard(), ...inline });
+    // Send persistent public reply keyboard first
+    await send("🦁 Bunna Bank EPMS companion bot ready.", getPublicKeyboard());
+    // Send welcome message with inline action buttons
+    await send(startMsg, inline);
     return;
   }
 
@@ -841,6 +893,30 @@ async function handleTelegramMessage(token: string, message: any) {
 
   if (text === '📞 Contact' || text === '/contact') {
     await send(`📞 <b>Corporate Contacts:</b>\n\n🏢 <b>Headquarters Office:</b>\nArat Kilo, Addis Ababa, Ethiopia\n\n☎️ <b>Support Desk:</b>\n• Toll-free Call Center: <b>8600</b>\n• Email: <b>epms.support@bunnabanksc.com</b>\n• Web Portal: <b>bbepms.vercel.app</b>`);
+    return;
+  }
+
+  if (text === '🔐 Login' || text === '/login') {
+    if (user) {
+      await send(`ℹ️ You are already logged in as <b>${user.firstName} ${user.lastName}</b>. Type /logout or tap 🔒 Logout if you wish to switch accounts.`);
+      await showRoleDashboard(send, user);
+    } else {
+      session.state = 'login_username';
+      await send('🔑 <b>Step 1/2:</b> Please enter your Employee ID or registered Email:');
+    }
+    return;
+  }
+
+  if (text === '🚀 Get Started' || text === '/register') {
+    if (user) {
+      await send(`ℹ️ You are already registered and logged in as <b>${user.firstName} ${user.lastName}</b>.`);
+      await showRoleDashboard(send, user);
+    } else {
+      session.state = 'reg_district';
+      session.regData = {};
+      const buttons = (db.districts || []).map((d: any) => [{ text: d.name, callback_data: `reg_dist_${d.id}` }]);
+      await send('🗺️ <b>Step 1/12: Select District</b>', { inline_keyboard: buttons });
+    }
     return;
   }
 
@@ -979,6 +1055,12 @@ async function handleTelegramMessage(token: string, message: any) {
   if (!user) {
     if (text === '🔐 Login' || text === '/login' || text === '🚀 Get Started' || text === '/register') return;
     await send('🔒 <b>Access Protected:</b> Please /login or /register first.', getPublicKeyboard());
+    return;
+  }
+
+  // Authenticated Actions
+  if (text === '📊 Dashboard' || text === '/dashboard' || text === '📊 System Overview' || text === '/admin') {
+    await showRoleDashboard(send, user);
     return;
   }
 
@@ -1174,16 +1256,17 @@ async function handleTelegramMessage(token: string, message: any) {
 
 async function showRoleDashboard(send: any, user: any) {
   const r = user.role;
+  const keyboard = getRoleKeyboard(user);
   if (r === 'ADMINISTRATOR') {
-    await send(`📊 <b>Bunna Bank EPMS - Administrator Portal</b>\n\nWelcome back, <b>${user.firstName}</b>.\n\n• Registered Employees: ${db.users.length}\n• Network Branches: ${db.branches.length}\n• Global Submitted Logs: ${db.reports.length}\n\nCentral controls are active on your keyboard below.`);
+    await send(`📊 <b>Bunna Bank EPMS - Administrator Portal</b>\n\nWelcome back, <b>${user.firstName}</b>.\n\n• Registered Employees: ${db.users.length}\n• Network Branches: ${db.branches.length}\n• Global Submitted Logs: ${db.reports.length}\n\nCentral controls are active on your keyboard below.`, keyboard);
   } else if (r === 'MANAGER') {
     const list = (db.reports || []).filter((rp: any) => rp.branchId === user.branchId);
     let dep = 0; list.forEach((rp: any) => dep += Number(rp.depositsETB || 0));
-    await send(`📊 <b>Bunna Bank EPMS - Branch Manager</b>\n\nWelcome, Manager <b>${user.firstName}</b>.\n🏢 Branch: ${user.branchName}\n\n• Cumulative Branch Deposits: ${dep.toLocaleString()} ETB\n• Pending Audits: ${list.filter(rp => rp.status === 'Pending').length} logs\n\nUse your keyboard to review or monitor targets.`);
+    await send(`📊 <b>Bunna Bank EPMS - Branch Manager</b>\n\nWelcome, Manager <b>${user.firstName}</b>.\n🏢 Branch: ${user.branchName}\n\n• Cumulative Branch Deposits: ${dep.toLocaleString()} ETB\n• Pending Audits: ${list.filter(rp => rp.status === 'Pending').length} logs\n\nUse your keyboard to review or monitor targets.`, keyboard);
   } else {
     const list = (db.reports || []).filter((rp: any) => rp.employeeUserId === user.userId || rp.employeeId === user.id);
     let dep = 0; list.forEach((rp: any) => dep += Number(rp.depositsETB || 0));
-    await send(`📊 <b>Bunna Bank EPMS - Employee Portal</b>\n\nWelcome, <b>${user.firstName}</b>.\n🏦 Branch: ${user.branchName}\n\n• Your Mobilized Deposits: ${dep.toLocaleString()} ETB\n• Your Submitted Reports: ${list.length}\n\nTap 📋 Submit Daily Report below to log today's achievements.`);
+    await send(`📊 <b>Bunna Bank EPMS - Employee Portal</b>\n\nWelcome, <b>${user.firstName}</b>.\n🏦 Branch: ${user.branchName}\n\n• Your Mobilized Deposits: ${dep.toLocaleString()} ETB\n• Your Submitted Reports: ${list.length}\n\nTap 📋 Submit Daily Report below to log today's achievements.`, keyboard);
   }
 }
 
