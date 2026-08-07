@@ -5,7 +5,7 @@ import { Router } from 'express';
 import authRoutes from './authRoutes';
 import installRoutes from './installRoutes';
 import { getDbCollection, saveLocalJsonDb } from '../services/dataService';
-import { getPrismaClient } from '../config/db';
+import { getPrismaClient, checkDatabaseConnection } from '../config/db';
 
 const router = Router();
 
@@ -14,20 +14,11 @@ router.use('/', installRoutes);
 
 // Health check endpoint
 router.get('/health', async (req, res) => {
-  const prisma = getPrismaClient();
-  let dbStatus = 'JSON Fallback';
-  if (prisma) {
-    try {
-      await prisma.$queryRaw`SELECT 1`;
-      dbStatus = 'Supabase PostgreSQL (Connected)';
-    } catch (e) {
-      dbStatus = 'Supabase PostgreSQL (Unreachable, using JSON fallback)';
-    }
-  }
+  const status = await checkDatabaseConnection();
   res.json({
-    success: true,
-    status: 'ok',
-    database: dbStatus,
+    success: status.connected,
+    status: status.connected ? 'ok' : 'degraded',
+    database: status.provider,
     timestamp: new Date().toISOString()
   });
 });
@@ -70,7 +61,10 @@ for (const col of collections) {
       }
 
       if (!created) {
-        // Fallback to local JSON
+        if (process.env.NODE_ENV === 'production') {
+          return res.status(500).json({ success: false, error: `Database error: Unable to create record in ${col} using Supabase PostgreSQL.` });
+        }
+        // Fallback to local JSON (development only)
         const db: any = {};
         for (const c of collections) {
           db[c] = await getDbCollection(c);

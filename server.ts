@@ -20,10 +20,15 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.get('/api/health', (req, res) => {
+let isSupabaseConnected = false;
+
+app.get('/api/health', async (req, res) => {
+  const status = await checkDatabaseConnection();
+  isSupabaseConnected = status.connected;
   res.json({ 
-    status: 'ok', 
-    cloudSqlConnected: isCloudSqlConnected,
+    status: status.connected ? 'ok' : 'degraded', 
+    database: status.provider,
+    connected: status.connected,
     timestamp: new Date().toISOString()
   });
 });
@@ -39,19 +44,17 @@ import installRoutes from './server/src/routes/installRoutes';
 app.use('/install', installRoutes);
 app.use('/api', installRoutes);
 
-let isCloudSqlConnected = false;
-
 async function initSupabase() {
   try {
     const status = await checkDatabaseConnection();
-    isCloudSqlConnected = status.connected;
+    isSupabaseConnected = status.connected;
     if (status.connected) {
-      console.log(`[Supabase PostgreSQL] Successfully connected to Supabase database (Project: fgqnwncebofkdsnugesg)`);
+      console.log(`[Supabase PostgreSQL] Successfully connected to Supabase database.`);
     } else {
       console.log(`[Supabase PostgreSQL] Connection status: ${status.provider}. Operating with fallback mode.`);
     }
   } catch (error: any) {
-    isCloudSqlConnected = false;
+    isSupabaseConnected = false;
     console.error('[Supabase PostgreSQL Connection Warning]:', error.message || error);
   }
 }

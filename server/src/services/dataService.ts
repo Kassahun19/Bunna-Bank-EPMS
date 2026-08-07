@@ -95,12 +95,19 @@ export async function getDbCollection(collectionName: string) {
         case 'systemSettings': return await prisma.systemSetting.findMany();
         default: break;
       }
-    } catch (err) {
+    } catch (err: any) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error(`Database query failed for ${collectionName}: ${err?.message || err}`);
+      }
       console.warn(`[Prisma Query Warning] Falling back to JSON for collection ${collectionName}:`, err);
     }
   }
 
-  // Fallback to local JSON storage
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(`Database not available (Prisma client not initialized) in production for collection ${collectionName}`);
+  }
+
+  // Fallback to local JSON storage (development only)
   const db = loadLocalJsonDb();
   return db[collectionName] || [];
 }

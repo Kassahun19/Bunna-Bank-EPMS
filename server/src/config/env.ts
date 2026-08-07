@@ -9,18 +9,9 @@ export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
   appUrl: process.env.APP_URL || 'https://bbepms.vercel.app',
 
-  // Database Connection (Supabase PostgreSQL / Cloud SQL / MySQL)
+  // Database Connection (Supabase PostgreSQL)
   databaseUrl: process.env.DATABASE_URL || process.env.SUPABASE_DATABASE_URL || process.env.POSTGRES_PRISMA_URL || '',
   directUrl: process.env.DIRECT_URL || process.env.POSTGRES_URL_NON_POOLING || '',
-
-  // MySQL / Cloud SQL Fallback Credentials
-  mysql: {
-    host: process.env.DB_HOST || process.env.MYSQL_HOST || process.env.CLOUD_SQL_HOST,
-    user: process.env.DB_USER || process.env.MYSQL_USER || process.env.CLOUD_SQL_USER || 'root',
-    password: process.env.DB_PASSWORD || process.env.MYSQL_PASSWORD || process.env.CLOUD_SQL_PASSWORD || '',
-    database: process.env.DB_NAME || process.env.MYSQL_DATABASE || process.env.CLOUD_SQL_DATABASE || 'bunna_epms_db',
-    port: parseInt(process.env.DB_PORT || process.env.MYSQL_PORT || '3306', 10),
-  },
 
   // JWT Authentication Secrets & Lifespans
   jwt: {
