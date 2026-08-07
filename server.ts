@@ -3,8 +3,8 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import mysql from 'mysql2/promise';
-import { initializeApp, getApps, applicationDefault } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { initializeApp, getApp, getApps } from 'firebase/app';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const app = express();
 const PORT = 3000;
@@ -81,19 +81,23 @@ async function initCloudSql() {
 
 initCloudSql();
 
-// Firebase Admin & Firestore Initialization for Permanent Persistence across Server Restarts
-let firestoreDb: any = null;
+// Firebase Client SDK & Firestore Initialization for Permanent Persistence across Server Restarts
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY || "AIzaSyBw427eVaswPMfF45BTKSQgReoVKAIjBNg",
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN || "curious-stream-pf4nj.firebaseapp.com",
+  projectId: process.env.FIREBASE_PROJECT_ID || "curious-stream-pf4nj",
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "curious-stream-pf4nj.firebasestorage.app",
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "285188962715",
+  appId: process.env.FIREBASE_APP_ID || "1:285188962715:web:fbd667b2c81fcb3d43893e"
+};
+
+let clientDb: any = null;
 try {
-  if (!getApps().length) {
-    initializeApp({
-      credential: applicationDefault(),
-      projectId: 'curious-stream-pf4nj'
-    });
-  }
-  firestoreDb = getFirestore();
-  console.log('[Firestore] Firebase Admin initialized successfully for permanent cross-restart persistence.');
+  const fApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  clientDb = getFirestore(fApp, process.env.FIREBASE_DATABASE_ID || "ai-studio-bunnabankscepms-3a3ddc66-e2a1-4df7-9b2b-3c1fb20fb708");
+  console.log('[Firestore] Firebase Client SDK initialized successfully.');
 } catch (e: any) {
-  console.warn('[Firestore] Firebase Admin initialization warning:', e?.message || e);
+  console.warn('[Firestore] Firebase Client SDK initialization warning:', e?.message || e);
 }
 
 // We load everything from epms_persistent_data.json with robust path resolution for Vercel/Cloud Run
@@ -127,20 +131,39 @@ try {
 }
 
 // Sync from Firestore if available
-if (firestoreDb) {
-  firestoreDb.collection('epms_state').doc('singleton').get().then((docSnap) => {
-    if (docSnap.exists) {
+let dbPromise: Promise<void> | null = null;
+if (clientDb) {
+  const docRef = doc(clientDb, 'epms_state', 'singleton');
+
+  const timeoutPromise = new Promise<void>((resolve) => {
+    setTimeout(() => {
+      console.warn('[Firestore] Initial fetch timed out (safeguard triggered). Continuing with local fallback database state.');
+      resolve();
+    }, 3500);
+  });
+
+  const fetchPromise = getDoc(docRef).then((docSnap) => {
+    if (docSnap.exists()) {
       const cloudData = docSnap.data();
       if (cloudData && cloudData.users && Array.isArray(cloudData.users) && cloudData.users.length > 0) {
         db = { ...db, ...cloudData };
         console.log('[Firestore] Successfully synced database state from Firestore (permanent storage).');
       }
     } else {
-      firestoreDb?.collection('epms_state').doc('singleton').set(db).catch(() => {});
+      setDoc(docRef, db).catch(() => {});
     }
   }).catch((e) => {
     console.warn('[Firestore] Failed initial fetch from Firestore:', e?.message || e);
   });
+
+  dbPromise = Promise.race([fetchPromise, timeoutPromise]);
+}
+
+// Ensure database is fully synced before proceeding (critical for serverless / Vercel cold starts)
+async function ensureDbSynced() {
+  if (dbPromise) {
+    await dbPromise;
+  }
 }
 
 // Ensure essential default users are always present if missing
@@ -303,17 +326,20 @@ for (const defUser of defaultFallbackUsers) {
   }
 }
 
-const saveDb = () => {
+const saveDb = async () => {
   try {
     fs.writeFileSync(dataPath, JSON.stringify(db, null, 2));
   } catch (e) {
     // Read-only filesystem on Vercel serverless functions handled gracefully
   }
 
-  if (firestoreDb) {
-    firestoreDb.collection('epms_state').doc('singleton').set(db).catch((e: any) => {
+  if (clientDb) {
+    try {
+      const docRef = doc(clientDb, 'epms_state', 'singleton');
+      await setDoc(docRef, db);
+    } catch (e: any) {
       console.warn('[Firestore] Background save failed:', e?.message || e);
-    });
+    }
   }
 };
 
@@ -629,9 +655,39 @@ interface TelegramSession {
   annData?: any;
 }
 const telegramSessions = new Map<number, TelegramSession>();
-const getSession = (chatId: number): TelegramSession => {
-  if (!telegramSessions.has(chatId)) telegramSessions.set(chatId, { state: 'idle' });
-  return telegramSessions.get(chatId)!;
+
+const getSession = async (chatId: number): Promise<TelegramSession> => {
+  if (telegramSessions.has(chatId)) {
+    return telegramSessions.get(chatId)!;
+  }
+  if (clientDb) {
+    try {
+      const docRef = doc(clientDb, 'telegram_sessions', String(chatId));
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data() as TelegramSession;
+        telegramSessions.set(chatId, data);
+        return data;
+      }
+    } catch (e) {
+      console.warn('[Firestore Session Load Fail]:', e);
+    }
+  }
+  const defaultSession: TelegramSession = { state: 'idle' };
+  telegramSessions.set(chatId, defaultSession);
+  return defaultSession;
+};
+
+const saveSession = async (chatId: number, session: TelegramSession) => {
+  telegramSessions.set(chatId, session);
+  if (clientDb) {
+    try {
+      const docRef = doc(clientDb, 'telegram_sessions', String(chatId));
+      await setDoc(docRef, session);
+    } catch (e) {
+      console.warn('[Firestore Session Save Fail]:', e);
+    }
+  }
 };
 
 const getPublicKeyboard = () => ({
@@ -679,11 +735,12 @@ app.post('/api/telegram/webhook', async (req, res) => {
   try {
     const token = process.env.TELEGRAM_BOT_TOKEN || '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
     const update = req.body;
+    await ensureDbSynced();
     if (update) {
       if (update.message && update.message.chat && update.message.chat.id) {
-        handleTelegramMessage(token, update.message).catch(e => console.error('[Telegram Msg Error]:', e));
+        await handleTelegramMessage(token, update.message);
       } else if (update.callback_query && update.callback_query.message) {
-        handleTelegramCallbackQuery(token, update.callback_query).catch(e => console.error('[Telegram Call Error]:', e));
+        await handleTelegramCallbackQuery(token, update.callback_query);
       }
     }
     res.status(200).send('ok');
@@ -723,10 +780,12 @@ async function startTelegramBot() {
               lastUpdateId = Math.max(lastUpdateId, update.update_id);
               if (update.message && update.message.chat && update.message.chat.id) {
                 console.log('[Telegram Poll] Processing Message:', update.message.text);
-                handleTelegramMessage(token, update.message).catch(e => console.error('[Telegram Msg Error]:', e));
+                await ensureDbSynced();
+                await handleTelegramMessage(token, update.message).catch(e => console.error('[Telegram Msg Error]:', e));
               } else if (update.callback_query && update.callback_query.message) {
                 console.log('[Telegram Poll] Processing Callback:', update.callback_query.data);
-                handleTelegramCallbackQuery(token, update.callback_query).catch(e => console.error('[Telegram Call Error]:', e));
+                await ensureDbSynced();
+                await handleTelegramCallbackQuery(token, update.callback_query).catch(e => console.error('[Telegram Call Error]:', e));
               }
             }
           }
@@ -745,11 +804,17 @@ async function startTelegramBot() {
       pollingInterval = null;
     }
     try {
-      const res = await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${encodeURIComponent(webhookUrl)}`);
-      const data: any = await res.json();
-      console.log('[Telegram Webhook Register] Webhook URL set to production:', webhookUrl, 'Result:', data);
+      const infoRes = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`);
+      const info: any = await infoRes.json();
+      if (info.ok && info.result && info.result.url === webhookUrl) {
+        console.log('[Telegram Webhook] Webhook is already correctly set to production:', webhookUrl);
+      } else {
+        const res = await fetch(`https://api.telegram.org/bot${token}/setWebhook?url=${encodeURIComponent(webhookUrl)}`);
+        const data: any = await res.json();
+        console.log('[Telegram Webhook Register] Webhook URL updated to production:', webhookUrl, 'Result:', data);
+      }
     } catch (e: any) {
-      console.error('[Telegram setWebhook Failed]:', e);
+      console.error('[Telegram setWebhook / getWebhookInfo Failed]:', e);
     }
   }
 }
@@ -764,10 +829,29 @@ async function answerCallbackQuery(token: string, id: string) {
   } catch (e) {}
 }
 
+async function handleTelegramMessage(token: string, message: any) {
+  const chatId = message.chat.id;
+  const session = await getSession(chatId);
+  try {
+    await processTelegramMessage(token, message, session);
+  } finally {
+    await saveSession(chatId, session);
+  }
+}
+
 async function handleTelegramCallbackQuery(token: string, query: any) {
   const chatId = query.message.chat.id;
+  const session = await getSession(chatId);
+  try {
+    await processTelegramCallbackQuery(token, query, session);
+  } finally {
+    await saveSession(chatId, session);
+  }
+}
+
+async function processTelegramCallbackQuery(token: string, query: any, session: TelegramSession) {
+  const chatId = query.message.chat.id;
   const data = query.data || '';
-  const session = getSession(chatId);
   await answerCallbackQuery(token, query.id);
 
   const send = async (text: string, markup?: any) => {
@@ -836,10 +920,9 @@ async function handleTelegramCallbackQuery(token: string, query: any) {
   }
 }
 
-async function handleTelegramMessage(token: string, message: any) {
+async function processTelegramMessage(token: string, message: any, session: TelegramSession) {
   const chatId = message.chat.id;
   const text = (message.text || '').trim();
-  const session = getSession(chatId);
   const user = db.users.find((u: any) => u.telegramChatId === chatId);
 
   const send = async (replyText: string, replyMarkup?: any) => {
@@ -1287,7 +1370,9 @@ if (process.env.NODE_ENV !== "production") {
   const distPath = path.join(process.cwd(), 'dist');
   app.use(express.static(distPath));
   app.get('*', (req, res) => res.sendFile(path.join(distPath, 'index.html')));
-  app.listen(PORT, "0.0.0.0", () => console.log("Server running"));
+  if (!process.env.VERCEL) {
+    app.listen(PORT, "0.0.0.0", () => console.log("Server running"));
+  }
 }
 
 export default app;
