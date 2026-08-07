@@ -2,7 +2,7 @@
 // Bunna Bank S.C. EPMS - Centralized Environment Configuration
 // =============================================================================
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ override: true });
 
 export const config = {
   env: process.env.NODE_ENV || 'development',
