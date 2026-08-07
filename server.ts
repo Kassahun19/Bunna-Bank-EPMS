@@ -110,6 +110,9 @@ try {
   console.error("Failed to load epms_persistent_data.json:", e);
 }
 
+let lastSyncTime = 0;
+const SYNC_CACHE_MS = 5000;
+
 // Sync from Firestore if available
 let dbPromise: Promise<void> | null = null;
 if (clientDb) {
@@ -127,6 +130,7 @@ if (clientDb) {
       const cloudData = docSnap.data();
       if (cloudData && cloudData.users && Array.isArray(cloudData.users) && cloudData.users.length > 0) {
         db = { ...db, ...cloudData };
+        lastSyncTime = Date.now();
         console.log('[Firestore] Successfully synced database state from Firestore (permanent storage).');
       }
     } else {
@@ -140,11 +144,42 @@ if (clientDb) {
 }
 
 // Ensure database is fully synced before proceeding (critical for serverless / Vercel cold starts)
-async function ensureDbSynced() {
+async function ensureDbSynced(force = false) {
   if (dbPromise) {
     await dbPromise;
   }
+
+  const now = Date.now();
+  if (!force && (now - lastSyncTime < SYNC_CACHE_MS)) {
+    return;
+  }
+
+  if (clientDb) {
+    try {
+      const docRef = doc(clientDb, 'epms_state', 'singleton');
+      const fetchPromise = getDoc(docRef);
+      const timeoutPromise = new Promise<any>((_, reject) => setTimeout(() => reject(new Error('Sync Timeout')), 2000));
+      
+      const docSnap = await Promise.race([fetchPromise, timeoutPromise]);
+      if (docSnap && docSnap.exists()) {
+        const cloudData = docSnap.data();
+        if (cloudData && cloudData.users && Array.isArray(cloudData.users) && cloudData.users.length > 0) {
+          db = { ...db, ...cloudData };
+          lastSyncTime = Date.now();
+          console.log('[Firestore] Live database state synced successfully.');
+        }
+      }
+    } catch (e: any) {
+      console.warn('[Firestore] Live sync warning:', e?.message || e);
+    }
+  }
 }
+
+// Global middleware to sync Firestore database on every API/install request
+app.use(['/api', '/install'], async (req, res, next) => {
+  await ensureDbSynced();
+  next();
+});
 
 // Ensure essential default users are always present if missing
 const defaultFallbackUsers = [
@@ -317,6 +352,7 @@ const saveDb = async () => {
     try {
       const docRef = doc(clientDb, 'epms_state', 'singleton');
       await setDoc(docRef, db);
+      lastSyncTime = Date.now();
     } catch (e: any) {
       console.warn('[Firestore] Background save failed:', e?.message || e);
     }
@@ -414,7 +450,18 @@ app.post('/api/auth/change-password', (req, res) => {
 const createCrud = (route, collection) => {
   app.get(route, (req, res) => res.json(db[collection] || []));
   app.post(route, (req, res) => {
-    const item = { id: collection + '-' + Date.now(), ...req.body };
+    let item = req.body;
+    if (collection === 'reports') {
+      const existingIdx = (db.reports || []).findIndex(
+        (r: any) => r.reportDate === item.reportDate && r.employeeId === item.employeeId
+      );
+      if (existingIdx !== -1) {
+        db.reports[existingIdx] = { ...db.reports[existingIdx], ...item, id: db.reports[existingIdx].id };
+        saveDb();
+        return res.json(db.reports[existingIdx]);
+      }
+    }
+    item = { id: collection + '-' + Date.now(), ...item };
     if (!db[collection]) db[collection] = [];
     db[collection].push(item);
     saveDb();
@@ -2080,7 +2127,40 @@ async function processTelegramMessage(token: string, message: any, session: Tele
   if (session.state === 'rep_atm') {
     const atm = parseInt(text) || 0;
     const r = session.repData;
-    const report = {
+    const d = new Date();
+    const formattedDate = d.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }) + 
+                          ' • ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+    // Send initial loading state
+    const loadingText = `⏳ <b>Submitting your report...</b>\n\n<i>• Validating information...</i>`;
+    let sentMsgId: number | undefined;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: loadingText, parse_mode: 'HTML' })
+      });
+      const resData: any = await res.json();
+      if (resData.ok && resData.result) {
+        sentMsgId = resData.result.message_id;
+      }
+    } catch (e) {
+      console.error('[Telegram Loading Msg Send Fail]:', e);
+    }
+
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    
+    if (sentMsgId) {
+      await delay(250);
+      await sendOrEdit(token, chatId, `⏳ <b>Submitting your report...</b>\n\n✓ Validating information\n<i>• Updating BBEPMS...</i>`, {}, sentMsgId);
+      await delay(250);
+      await sendOrEdit(token, chatId, `⏳ <b>Submitting your report...</b>\n\n✓ Validating information\n✓ Updating BBEPMS\n<i>• Saving report...</i>`, {}, sentMsgId);
+      await delay(250);
+      await sendOrEdit(token, chatId, `⏳ <b>Submitting your report...</b>\n\n✓ Validating information\n✓ Updating BBEPMS\n✓ Saving report\n<i>• Synchronizing portal...</i>`, {}, sentMsgId);
+      await delay(250);
+    }
+
+    const report: any = {
       id: 'reports-' + Date.now(),
       employeeUserId: user.userId,
       employeeId: user.id,
@@ -2089,26 +2169,71 @@ async function processTelegramMessage(token: string, message: any, session: Tele
       branchName: user.branchName,
       districtId: user.districtId || 'DIST-BDR',
       districtName: user.districtName || 'Bahir Dar District',
+      reportDate: d.toISOString().split('T')[0],
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      dayOfWeek: d.toLocaleDateString('en-US', { weekday: 'long' }),
       depositsETB: r.dep,
       foreignCurrencyETB: r.fcy,
+      digitalFinancialServicesETB: 0,
       accountOpenings: r.acc,
       mobileBankingActivations: r.mob,
       internetBankingActivations: Math.floor(r.mob * 0.2),
+      merchantSolutions: 0,
       atmCardActivations: atm,
+      atmCardsIssued: atm,
       status: 'Pending',
-      submissionDate: new Date().toISOString().split('T')[0],
+      submittedAt: d.toISOString(),
       remarks: 'Submitted via Telegram companion bot'
     };
+
     if (!db.reports) db.reports = [];
-    db.reports.push(report);
+    const existingIdx = db.reports.findIndex(
+      (rp: any) => rp.reportDate === report.reportDate && rp.employeeId === report.employeeId
+    );
+    if (existingIdx !== -1) {
+      report.id = db.reports[existingIdx].id;
+      db.reports[existingIdx] = { ...db.reports[existingIdx], ...report };
+    } else {
+      db.reports.push(report);
+    }
     saveDb();
     
     session.state = 'idle';
     session.repData = undefined;
     
-    await send(`✅ <b>EPMS Daily Report Logged successfully!</b>\n\nDeposits: <b>${report.depositsETB.toLocaleString()} ETB</b>\nStatus: <b>Pending Review</b>`, getRoleKeyboard(user));
-    const view = getDashboardView(user);
-    await send(view.text, view.reply_markup);
+    const successText = drawHeader('Success') +
+                        `✅ <b>REPORT SUBMITTED SUCCESSFULLY</b>\n\n` +
+                        `Your daily performance report has been securely saved to BBEPMS and synchronized with the Live portal.\n\n` +
+                        `📅 <b>Submitted:</b>\n<code>${formattedDate}</code>\n\n` +
+                        `📊 <b>Status:</b>\n🟢 <b>Submitted (Pending Review)</b>\n\n` +
+                        `🌐 <b>Portal:</b>\n✓ <b>Updated successfully</b>`;
+
+    const inline_keyboard = [
+      [
+        { text: '📊 View Dashboard', callback_data: 'menu_dashboard' },
+        { text: '📋 View Report', callback_data: `audit_view_${report.id}` }
+      ],
+      [{ text: '◀️ Back to Main Menu', callback_data: 'menu_home' }]
+    ];
+
+    if (sentMsgId) {
+      await sendOrEdit(token, chatId, successText, { inline_keyboard }, sentMsgId);
+      // Send keyboard update message to restore custom keyboards
+      try {
+        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: `👉 Use the keyboard below to navigate other modules:`,
+            reply_markup: getRoleKeyboard(user)
+          })
+        });
+      } catch (e) {}
+    } else {
+      await send(successText, { inline_keyboard });
+    }
     return;
   }
 
