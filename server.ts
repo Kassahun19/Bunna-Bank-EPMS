@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import mysql from 'mysql2/promise';
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -32,54 +31,30 @@ app.get('/api/health', (req, res) => {
 const _appFilename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
 const _appDirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(_appFilename);
 
-// Google Cloud SQL (MySQL) Pool Initialization & Startup Validation
-let mysqlPool: mysql.Pool | null = null;
+import { checkDatabaseConnection, getPrismaClient } from './server/src/config/db';
+import installRoutes from './server/src/routes/installRoutes';
+
+app.use('/install', installRoutes);
+app.use('/api', installRoutes);
+
 let isCloudSqlConnected = false;
 
-async function initCloudSql() {
-  const dbHost = process.env.DB_HOST || process.env.MYSQL_HOST || process.env.CLOUD_SQL_HOST;
-  const dbUser = process.env.DB_USER || process.env.MYSQL_USER || process.env.CLOUD_SQL_USER || 'root';
-  const dbPassword = process.env.DB_PASSWORD || process.env.MYSQL_PASSWORD || process.env.CLOUD_SQL_PASSWORD || '';
-  const dbName = process.env.DB_NAME || process.env.MYSQL_DATABASE || process.env.CLOUD_SQL_DATABASE || 'bunna_epms_db';
-  const dbPort = parseInt(process.env.DB_PORT || process.env.MYSQL_PORT || '3306', 10);
-  const databaseUrl = process.env.DATABASE_URL;
-
+async function initSupabase() {
   try {
-    if (databaseUrl) {
-      mysqlPool = mysql.createPool(databaseUrl);
-    } else if (dbHost) {
-      mysqlPool = mysql.createPool({
-        host: dbHost,
-        user: dbUser,
-        password: dbPassword,
-        database: dbName,
-        port: dbPort,
-        waitForConnections: true,
-        connectionLimit: 15,
-        queueLimit: 0,
-        connectTimeout: 10000,
-        enableKeepAlive: true,
-        keepAliveInitialDelay: 10000
-      });
-    }
-
-    if (mysqlPool) {
-      const connection = await mysqlPool.getConnection();
-      await connection.query('SELECT 1');
-      connection.release();
-      isCloudSqlConnected = true;
-      console.log(`[Cloud SQL] Successfully connected to Google Cloud SQL MySQL database at ${dbHost || 'DATABASE_URL'}`);
+    const status = await checkDatabaseConnection();
+    isCloudSqlConnected = status.connected;
+    if (status.connected) {
+      console.log(`[Supabase PostgreSQL] Successfully connected to Supabase database (Project: fgqnwncebofkdsnugesg)`);
     } else {
-      console.log('[Cloud SQL] No DB_HOST or DATABASE_URL provided. Operating in robust local JSON persistence mode with failover safeguards.');
+      console.log(`[Supabase PostgreSQL] Connection status: ${status.provider}. Operating with fallback mode.`);
     }
   } catch (error: any) {
     isCloudSqlConnected = false;
-    console.error('[Cloud SQL Connection Warning]: Failed to connect to MySQL/Cloud SQL instance:', error.message || error);
-    console.warn('[Cloud SQL] Automatically falling back to local persistent store & in-memory backup state to ensure 100% continuous uptime.');
+    console.error('[Supabase PostgreSQL Connection Warning]:', error.message || error);
   }
 }
 
-initCloudSql();
+initSupabase();
 
 // Firebase Client SDK & Firestore Initialization for Permanent Persistence across Server Restarts
 const firebaseConfig = {

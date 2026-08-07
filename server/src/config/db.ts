@@ -2,6 +2,9 @@
 // Bunna Bank S.C. EPMS - Prisma Client & Database Manager
 // =============================================================================
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pkg from 'pg';
+const { Pool } = pkg;
 import { config } from './env';
 
 let prismaClient: PrismaClient | null = null;
@@ -12,18 +15,29 @@ export function getPrismaClient(): PrismaClient | null {
     return prismaClient;
   }
 
-  if (!config.databaseUrl) {
+  const databaseUrl = config.databaseUrl || process.env.DATABASE_URL;
+  if (!databaseUrl) {
     return null;
   }
 
   try {
+    const pool = new Pool({ connectionString: databaseUrl });
+    const adapter = new PrismaPg(pool);
     prismaClient = new PrismaClient({
+      adapter,
       log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
     } as any);
     return prismaClient;
   } catch (err: any) {
-    console.warn('[Prisma Init Warning]: Unable to create Prisma instance:', err?.message || err);
-    return null;
+    console.warn('[Prisma Init Warning]: Unable to create Prisma instance with pg adapter:', err?.message || err);
+    try {
+      prismaClient = new PrismaClient({
+        log: ['error'],
+      } as any);
+      return prismaClient;
+    } catch (fallbackErr: any) {
+      return null;
+    }
   }
 }
 
