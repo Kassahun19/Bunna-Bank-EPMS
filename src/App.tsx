@@ -69,7 +69,7 @@ export const App: React.FC = () => {
   const [isApiDocsOpen, setIsApiDocsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isTelegramBotOpen, setIsTelegramBotOpen] = useState(false);
-  const [adminActiveTab, setAdminActiveTab] = useState<'overview' | 'products' | 'districts' | 'branches' | 'employees' | 'kpis' | 'reports' | 'audit' | 'holidays'>('overview');
+  const [adminActiveTab, setAdminActiveTab] = useState<'overview' | 'products' | 'districts' | 'branches' | 'employees' | 'kpis' | 'reports' | 'audit' | 'holidays' | 'competitor'>('overview');
 
   const [roleHint, setRoleHint] = useState<UserRole | null>(null);
 

@@ -92,6 +92,7 @@ export interface KPI {
 export interface PerformanceTarget {
   id: string;
   kpiId: string;
+  kpiCode?: string;
   kpiName: string;
   employeeId?: string;
   branchId?: string;
@@ -111,6 +112,7 @@ export interface DailyPerformanceReport {
   districtId: string;
   districtName: string;
   reportDate: string; // YYYY-MM-DD
+  date?: string;
   year: number;
   month: number;
   dayOfWeek: string;
@@ -120,6 +122,8 @@ export interface DailyPerformanceReport {
   depositsETB: number;
   foreignCurrencyETB: number;
   digitalFinancialServicesETB: number;
+  actualValue?: number;
+  kpiId?: string;
   
   // Digital Banking Activations (Counts)
   accountOpenings: number;

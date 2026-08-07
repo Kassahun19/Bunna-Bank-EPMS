@@ -124,6 +124,7 @@ export interface AreaRanking {
 
 export interface AiRecommendationItem {
   id: string;
+  category?: string;
   title: string;
   actionItem: string;
   expectedRankImprovement: string;
