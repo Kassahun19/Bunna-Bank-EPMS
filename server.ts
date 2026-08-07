@@ -28,8 +28,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-const _appFilename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
-const _appDirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(_appFilename);
+const _appFilename = (typeof globalThis !== 'undefined' && (globalThis as any).__filename) 
+  || (typeof import.meta !== 'undefined' && (import.meta as any)?.url ? fileURLToPath((import.meta as any).url) : process.cwd());
+const _appDirname = (typeof globalThis !== 'undefined' && (globalThis as any).__dirname) 
+  || path.dirname(_appFilename);
 
 import { checkDatabaseConnection, getPrismaClient } from './server/src/config/db';
 import installRoutes from './server/src/routes/installRoutes';

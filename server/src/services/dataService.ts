@@ -6,7 +6,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getPrismaClient } from '../config/db';
 
-const __filename = fileURLToPath(import.meta.url);
+const _resolvedFile = (typeof globalThis !== 'undefined' && (globalThis as any).__filename) 
+  || (typeof import.meta !== 'undefined' && (import.meta as any)?.url ? fileURLToPath((import.meta as any).url) : process.cwd());
+const __filename = typeof _resolvedFile === 'string' ? _resolvedFile : process.cwd();
 const __dirname = path.dirname(__filename);
 
 const possiblePaths = [
