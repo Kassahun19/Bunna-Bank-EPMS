@@ -772,6 +772,20 @@ const listReportsCount = (userId: string): number => {
 
 // Unified performance statistics retriever (strictly reads from DB, never mocked)
 const getPerformanceStats = (user: any) => {
+  if (!user) {
+    return {
+      actualDeposits: 0,
+      targetDeposits: 0,
+      pctDeposits: 0,
+      actualDigital: 0,
+      targetDigital: 0,
+      pctDigital: 0,
+      actualATM: 0,
+      targetATM: 0,
+      pctATM: 0,
+      overallPct: 0
+    };
+  }
   const isManager = user.role === 'MANAGER';
   const reportsList = db.reports || [];
   
@@ -840,6 +854,26 @@ const getPerformanceStats = (user: any) => {
 
 // UI Screen content generators
 const getHomeView = (user: any) => {
+  if (!user) {
+    let text = drawHeader('Welcome to EPMS') +
+               `🏦 <b>Bunna Bank S.C. EPMS Companion</b>\n` +
+               `<i>Empowering Performance, Driving Excellence</i>\n\n` +
+               `Welcome to the professional Employee Performance Management System (EPMS) companion portal for Bunna Bank S.C.\n\n` +
+               `This premium digital environment provides secure, real-time access to your KPIs, branch targets, submission audits, and interactive AI performance coaching.\n\n` +
+               `🔒 <b>Secure Authentication Required:</b>\n` +
+               `Please select 🔐 Login or 🚀 Get Started to authenticate your device and access your performance console.\n\n` +
+               `━━━━━━━━━━━━━━━━━━━━\n` +
+               `👉 <i>Select an action from the keyboard menu below to begin.</i>`;
+               
+    const inline_keyboard = [
+      [
+        { text: '🔐 Secure Login', callback_data: 'btn_login' },
+        { text: '🚀 Get Started', callback_data: 'btn_register' }
+      ]
+    ];
+    return { text, reply_markup: { inline_keyboard } };
+  }
+
   const stats = getPerformanceStats(user);
   const isMgr = user.role === 'MANAGER';
   const isAdm = user.role === 'ADMINISTRATOR';
@@ -899,7 +933,7 @@ const getHomeView = (user: any) => {
       ],
       [
         { text: '👥 Team Roster', callback_data: 'menu_team_members' },
-        { text: '🧠 AI Performance Coach', callback_data: 'menu_ai_coach' }
+        { text: '🧠 AI Performance Coach', callback_data: 'menu_coaching' }
       ],
       [
         { text: '📋 Submission Audit', callback_data: 'menu_audit' },
@@ -930,7 +964,7 @@ const getHomeView = (user: any) => {
       ],
       [
         { text: '📋 Submit Daily Report', callback_data: 'menu_submit_report' },
-        { text: '🧠 AI Performance Coach', callback_data: 'menu_ai_coach' }
+        { text: '🧠 AI Performance Coach', callback_data: 'menu_coaching' }
       ],
       [
         { text: '📢 Announcements', callback_data: 'menu_announcements' },
@@ -946,6 +980,16 @@ const getHomeView = (user: any) => {
 };
 
 const getDashboardView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('Performance Dashboard') + 
+            `🔒 <b>Authentication Required</b>\n\n` +
+            `You must be securely authenticated to access the Performance Dashboard.\n\n` +
+            `Please sign in using your employee credentials to continue.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const stats = getPerformanceStats(user);
   const isMgr = user.role === 'MANAGER';
   
@@ -978,7 +1022,7 @@ const getDashboardView = (user: any) => {
   const inline_keyboard = [
     [
       { text: '🎯 Target Breakdown', callback_data: 'menu_targets' },
-      { text: '🧠 Consult AI Coach', callback_data: 'menu_ai_coach' }
+      { text: '🧠 Consult AI Coach', callback_data: 'menu_coaching' }
     ],
     isMgr ? [{ text: '👥 Team Roster', callback_data: 'menu_team_members' }] : [],
     [{ text: '◀️ Back to Main Menu', callback_data: 'menu_home' }]
@@ -988,6 +1032,16 @@ const getDashboardView = (user: any) => {
 };
 
 const getTargetsView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('Target Allocation') + 
+            `🔒 <b>Authentication Required</b>\n\n` +
+            `You must be securely authenticated to access target allocations.\n\n` +
+            `Please sign in to view your target values and performance quotas.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const stats = getPerformanceStats(user);
   const isMgr = user.role === 'MANAGER';
   const label = isMgr ? 'Branch Target Allocations' : 'My Individual Quotas';
@@ -1025,6 +1079,16 @@ const getTargetsView = (user: any) => {
 };
 
 const getAiCoachView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('AI Performance Coach') + 
+            `🔒 <b>Authentication Required</b>\n\n` +
+            `You must be securely authenticated to consult the AI Coach.\n\n` +
+            `Please sign in with your employee credentials to continue.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const stats = getPerformanceStats(user);
   
   let weakestKpi = 'Digital Activation';
@@ -1040,7 +1104,7 @@ const getAiCoachView = (user: any) => {
   
   let text = drawHeader('AI Performance Coach') +
              `🤖 <b>EPMS AI Coach Workspace</b>\n` +
-             `<i>Powered by Gemini 3.6-Flash</i>\n\n` +
+             `<i>Powered by Gemini 2.5-Flash</i>\n\n` +
              `🔍 <b>Performance Diagnosis:</b>\n` +
              `• Cumulative Rating: <b>${stats.overallPct.toFixed(1)}%</b>\n` +
              `• Strongest KPI: <b>${stats.pctDeposits >= stats.pctDigital ? 'Deposit Mobilization' : 'Digital Services'}</b>\n` +
@@ -1063,6 +1127,15 @@ const getAiCoachView = (user: any) => {
 };
 
 const getTeamRosterView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('Branch Staff Roster') + 
+            `🔒 <b>Authentication Required</b>\n\n` +
+            `Access restricted. Please log in to view team members.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const list = db.users.filter((u: any) => u.branchId === user.branchId && u.role === 'EMPLOYEE');
   
   let text = drawHeader('Branch Staff Roster') +
@@ -1126,6 +1199,15 @@ const getEmployeeDetailView = (employeeUserId: string) => {
 };
 
 const getSubmissionAuditView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('Submission Audit') + 
+            `🔒 <b>Authentication Required</b>\n\n` +
+            `Access restricted. Please log in first to access the report audit interface.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const isMgr = user.role === 'MANAGER';
   
   let list = db.reports || [];
@@ -1177,6 +1259,14 @@ const getReportDetailView = (reportId: string, currentUser: any) => {
     };
   }
   
+  if (!currentUser) {
+    return {
+      text: drawHeader('Report Details') + 
+            `🔒 <b>Authentication Required</b>\n\nPlease log in to audit report details.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const isMgr = currentUser.role === 'MANAGER';
   
   let text = drawHeader('Report Details') +
@@ -1262,6 +1352,14 @@ const getAnnouncementDetailView = (annId: string) => {
 };
 
 const getProfileView = (user: any) => {
+  if (!user) {
+    return {
+      text: drawHeader('Employee Profile') + 
+            `🔒 <b>Authentication Required</b>\n\nPlease log in to view your account profile details.`,
+      reply_markup: { inline_keyboard: [[{ text: '🔐 Secure Login', callback_data: 'btn_login' }]] }
+    };
+  }
+
   const stats = getPerformanceStats(user);
   
   let text = drawHeader('Employee Profile') +
@@ -1307,15 +1405,16 @@ const getNotificationsView = () => {
 
 // Gemini API Caller helper
 async function askGeminiCoach(user: any, promptText: string): Promise<string> {
+  const branchName = user?.branchName || 'your branch';
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return `[Bunna Bank EPMS AI Coach - Offline Mode Advice]:\n\n• <b>Customer Relationships:</b> Build proactive sales channels by reaching out to local traders near ${user.branchName || 'your branch'}.\n• <b>Cross-selling:</b> Promote internet banking and ATM cards when opening savings accounts to double activation coefficients.\n• <b>Local Outreach:</b> Organize weekly staff campaigns targeting institutions nearby for salary account mandates.`;
+    return `[Bunna Bank EPMS AI Coach - Offline Mode Advice]:\n\n• <b>Customer Relationships:</b> Build proactive sales channels by reaching out to local traders near ${branchName}.\n• <b>Cross-selling:</b> Promote internet banking and ATM cards when opening savings accounts to double activation coefficients.\n• <b>Local Outreach:</b> Organize weekly staff campaigns targeting institutions nearby for salary account mandates.`;
   }
   try {
     const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-2.5-flash',
       contents: promptText,
       config: {
         systemInstruction: "You are the premium, expert AI Performance Coach of Bunna Bank S.C. (Ethiopia). Your tone is highly professional, banking-grade, actionable, and encouraging. Answer in under 120 words with clear bold bullet points.",
@@ -1324,7 +1423,7 @@ async function askGeminiCoach(user: any, promptText: string): Promise<string> {
     return response.text || `No advice generated.`;
   } catch (err: any) {
     console.warn('[Gemini Call Error]:', err?.message || err);
-    return `[Bunna Bank EPMS AI Coach - Offline Mode Advice]:\n\n• <b>Customer Relationships:</b> Build proactive sales channels by reaching out to local traders near ${user.branchName || 'your branch'}.\n• <b>Cross-selling:</b> Promote internet banking and ATM cards when opening savings accounts to double activation coefficients.\n• <b>Local Outreach:</b> Organize weekly staff campaigns targeting institutions nearby for salary account mandates.`;
+    return `[Bunna Bank EPMS AI Coach - Offline Mode Advice]:\n\n• <b>Customer Relationships:</b> Build proactive sales channels by reaching out to local traders near ${branchName}.\n• <b>Cross-selling:</b> Promote internet banking and ATM cards when opening savings accounts to double activation coefficients.\n• <b>Local Outreach:</b> Organize weekly staff campaigns targeting institutions nearby for salary account mandates.`;
   }
 }
 
@@ -1353,7 +1452,7 @@ let pollingInterval: any = null;
 async function startTelegramBot() {
   const defaultProdToken = '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
   const token = process.env.TELEGRAM_BOT_TOKEN || defaultProdToken;
-  const isDevWorkspace = (process.env.APP_URL && process.env.APP_URL.includes('ais-dev-')) || process.env.NODE_ENV !== 'production';
+  const isDevWorkspace = (process.env.APP_URL && process.env.APP_URL.includes('ais-dev-')) || process.env.NODE_ENV !== 'production' || !process.env.VERCEL;
 
   const webhookUrl = 'https://bbepms.vercel.app/api/telegram/webhook';
 
