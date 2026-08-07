@@ -21,7 +21,10 @@ export function getPrismaClient(): PrismaClient | null {
   }
 
   try {
-    const pool = new Pool({ connectionString: databaseUrl });
+    const pool = new Pool({ 
+      connectionString: databaseUrl,
+      ssl: { rejectUnauthorized: false }
+    });
     const adapter = new PrismaPg(pool);
     prismaClient = new PrismaClient({
       adapter,
