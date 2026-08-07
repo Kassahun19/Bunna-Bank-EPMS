@@ -1496,6 +1496,33 @@ app.post('/api/telegram/webhook', async (req, res) => {
 let lastUpdateId = 0;
 let pollingInterval: any = null;
 
+const processedMessages = new Set<string>();
+function isDuplicateMessage(chatId: number, messageId: number): boolean {
+  const key = `${chatId}:${messageId}`;
+  if (processedMessages.has(key)) {
+    return true;
+  }
+  processedMessages.add(key);
+  if (processedMessages.size > 2000) {
+    const firstKey = processedMessages.values().next().value;
+    if (firstKey) processedMessages.delete(firstKey);
+  }
+  return false;
+}
+
+const processedCallbacks = new Set<string>();
+function isDuplicateCallback(queryId: string): boolean {
+  if (processedCallbacks.has(queryId)) {
+    return true;
+  }
+  processedCallbacks.add(queryId);
+  if (processedCallbacks.size > 2000) {
+    const firstKey = processedCallbacks.values().next().value;
+    if (firstKey) processedCallbacks.delete(firstKey);
+  }
+  return false;
+}
+
 async function startTelegramBot() {
   const defaultProdToken = '8966989429:AAGpqUHIKmYNfjGG5KBE7P83X6kLTk1QK_4';
   const token = process.env.TELEGRAM_BOT_TOKEN || defaultProdToken;
@@ -1513,7 +1540,10 @@ async function startTelegramBot() {
         clearInterval(pollingInterval);
       }
 
+      let isPolling = false;
       pollingInterval = setInterval(async () => {
+        if (isPolling) return;
+        isPolling = true;
         try {
           const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${lastUpdateId + 1}&timeout=1`);
           const data: any = await res.json();
@@ -1531,6 +1561,8 @@ async function startTelegramBot() {
           }
         } catch (pollErr: any) {
           // Silent catch of transient polling exceptions
+        } finally {
+          isPolling = false;
         }
       }, 1500);
     } catch (e: any) {
@@ -1568,6 +1600,11 @@ async function answerCallbackQuery(token: string, id: string) {
 
 async function handleTelegramMessage(token: string, message: any) {
   const chatId = message.chat.id;
+  const messageId = message.message_id;
+  if (messageId && isDuplicateMessage(chatId, messageId)) {
+    console.log(`[Telegram Bot] Ignoring duplicate message ${messageId} in chat ${chatId}`);
+    return;
+  }
   const session = await getSession(chatId);
   try {
     await processTelegramMessage(token, message, session);
@@ -1578,6 +1615,11 @@ async function handleTelegramMessage(token: string, message: any) {
 
 async function handleTelegramCallbackQuery(token: string, query: any) {
   const chatId = query.message.chat.id;
+  const queryId = query.id;
+  if (queryId && isDuplicateCallback(queryId)) {
+    console.log(`[Telegram Bot] Ignoring duplicate callback query ${queryId} in chat ${chatId}`);
+    return;
+  }
   const session = await getSession(chatId);
   try {
     await processTelegramCallbackQuery(token, query, session);
