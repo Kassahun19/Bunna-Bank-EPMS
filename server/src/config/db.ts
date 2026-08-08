@@ -16,7 +16,7 @@ export function getPrismaClient(): PrismaClient | null {
   }
 
   const databaseUrl = config.databaseUrl || process.env.DATABASE_URL;
-  if (!databaseUrl) {
+  if (!databaseUrl || databaseUrl.trim() === '') {
     return null;
   }
 
@@ -33,14 +33,7 @@ export function getPrismaClient(): PrismaClient | null {
     return prismaClient;
   } catch (err: any) {
     console.warn('[Prisma Init Warning]: Unable to create Prisma instance with pg adapter:', err?.message || err);
-    try {
-      prismaClient = new PrismaClient({
-        log: ['error'],
-      } as any);
-      return prismaClient;
-    } catch (fallbackErr: any) {
-      return null;
-    }
+    return null;
   }
 }
 

@@ -6,14 +6,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getPrismaClient } from '../config/db';
 
-const _resolvedFile = (typeof globalThis !== 'undefined' && (globalThis as any).__filename) 
-  || (typeof import.meta !== 'undefined' && (import.meta as any)?.url ? fileURLToPath((import.meta as any).url) : process.cwd());
-const __filename = typeof _resolvedFile === 'string' ? _resolvedFile : process.cwd();
-const __dirname = path.dirname(__filename);
+const _resolvedFilename = typeof __filename !== 'undefined' ? __filename : process.cwd();
+const _resolvedDirname = typeof __dirname !== 'undefined' ? __dirname : process.cwd();
 
 const possiblePaths = [
   path.join(process.cwd(), 'epms_persistent_data.json'),
-  path.join(__dirname, '../../epms_persistent_data.json'),
+  path.join(_resolvedDirname, '../../epms_persistent_data.json'),
   './epms_persistent_data.json'
 ];
 
